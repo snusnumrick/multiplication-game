@@ -81,8 +81,8 @@ Enhance Foxy's presence from a static image with text to an animated character w
         *   3. *Combine into Sprite Sheet:* Arrange frames into a single image grid. Tools like Aseprite, TexturePacker, or online generators can automate this.
         *   4. *Define Animation Metadata (Recommended):* Create a JSON file per animation or one master JSON. This file describes frame coordinates (x, y, width, height), animation sequences (which frames belong to "idle", "talking", etc.), and frame durations.
     *   *Automation & AI:*
-        *   *Full AI Animation Generation:* Directly generating complete, consistent sprite animations from text prompts is currently not mature. AI can assist with concept art or individual poses, but significant manual work is needed for animation sequences.
-        *   *Pipeline Automation:* Tools can automate combining frames into sprite sheets and generating metadata if individual frames are provided.
+        *   *AI Image/Video Generation for Sprites:* Directly generating complete, consistent sprite animations from text prompts using AI image generators (e.g., DALL-E, Midjourney) or AI video generators (e.g., Google Veo, Sora) is currently not mature for game-ready assets. While these tools can generate concepts or individual poses/clips, achieving consistent character appearance, style, transparent backgrounds, and precise animation loops suitable for sprite sheets typically requires significant manual cleanup, editing, and assembly. The effort to adapt such outputs often outweighs the benefits for simple, controlled animations.
+        *   *Pipeline Automation:* Tools can automate combining manually created frames into sprite sheets and generating metadata.
     *   *Storage:* Animations and metadata to be stored in `src/assets/animations/foxy/`.
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
