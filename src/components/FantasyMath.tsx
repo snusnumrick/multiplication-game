@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGame } from '../contexts/GameContext';
+import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Sparkles, Crown, Heart, Zap, Shield, Star } from 'lucide-react';
 
 interface FantasyScenario {

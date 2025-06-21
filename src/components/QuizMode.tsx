@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useGame } from '../contexts/GameContext';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Clock, Star, Trophy, RotateCcw } from 'lucide-react';
 
 interface QuizQuestion {
@@ -100,7 +100,7 @@ export function QuizMode() {
     }, 2000);
   };
 
-  const finishQuiz = () => {
+  const finishQuiz = useCallback(() => {
     setGameState('finished');
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -113,7 +113,7 @@ export function QuizMode() {
     }
     
     playSound('success');
-  };
+  }, [score, addStars, playSound]);
 
   // Timer logic
   useEffect(() => {
@@ -130,7 +130,7 @@ export function QuizMode() {
         clearTimeout(timerRef.current);
       }
     };
-  }, [gameState, timeLeft]);
+  }, [gameState, timeLeft, finishQuiz]);
 
   const resetQuiz = () => {
     setGameState('setup');

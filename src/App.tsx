@@ -1,5 +1,6 @@
 import React from 'react';
-import { GameProvider, useGame } from './contexts/GameContext';
+import { GameProvider } from './contexts/GameContext';
+import { useGame } from './contexts/game-hooks';
 import { MainMenu } from './components/MainMenu';
 import { PracticeMode } from './components/PracticeMode';
 import { QuizMode } from './components/QuizMode';

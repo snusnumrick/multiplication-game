@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useGame } from '../contexts/GameContext';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Star, Lock, Play, CheckCircle, Trophy, Crown } from 'lucide-react';
 
 interface Level {
@@ -25,14 +25,22 @@ export function AdventureMode() {
   const { t, setCurrentScreen, playSound, addStars, progress, updateProgress } = useGame();
   
   // Get localized level title and description
-  const getLevelTitle = (levelId: number) => {
+  const getLevelTitle = (levelId: number): string => {
     const titleKey = `level${levelId}Title` as keyof typeof t;
-    return t[titleKey] || t.levelDefaultTitle.replace('{id}', levelId.toString());
+    const result = t[titleKey];
+    if (typeof result === 'string') {
+      return result;
+    }
+    return t.levelDefaultTitle.replace('{id}', levelId.toString());
   };
   
-  const getLevelDesc = (levelId: number) => {
+  const getLevelDesc = (levelId: number): string => {
     const descKey = `level${levelId}Desc` as keyof typeof t;
-    return t[descKey] || t.levelDefaultDesc.replace('{id}', levelId.toString());
+    const result = t[descKey];
+    if (typeof result === 'string') {
+      return result;
+    }
+    return t.levelDefaultDesc.replace('{id}', levelId.toString());
   };
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
   const [gameState, setGameState] = useState<'levelSelect' | 'playing' | 'completed'>('levelSelect');
@@ -45,7 +53,7 @@ export function AdventureMode() {
   const [showResult, setShowResult] = useState(false);
   const [starsEarned, setStarsEarned] = useState(0);
 
-  const levels: Level[] = [
+  const levels: Level[] = useMemo(() => [
     {
       id: 1,
       title: 'Kleine Schritte',
@@ -166,7 +174,7 @@ export function AdventureMode() {
       unlocked: false,
       completed: false,
     },
-  ];
+  ], []);
 
   // Update levels based on progress
   useEffect(() => {
@@ -186,7 +194,7 @@ export function AdventureMode() {
         level.unlocked = prevLevelProgress?.completed || false;
       }
     });
-  }, [progress.adventureLevels]);
+  }, [progress.adventureLevels, levels]);
 
   const generateQuestions = (level: Level) => {
     const newQuestions: Question[] = [];
@@ -249,7 +257,7 @@ export function AdventureMode() {
     }, 1500);
   };
 
-  const completeLevel = () => {
+  const completeLevel = useCallback(() => {
     if (!selectedLevel) return;
     
     const accuracy = (correctAnswers / questions.length) * 100;
@@ -280,7 +288,7 @@ export function AdventureMode() {
       addStars(earnedStars * 5); // 5 stars per level star
       playSound('success');
     }
-  };
+  }, [selectedLevel, correctAnswers, questions.length, timeLeft, score, progress.adventureLevels, updateProgress, addStars, playSound]);
 
   // Timer logic
   useEffect(() => {
@@ -292,7 +300,7 @@ export function AdventureMode() {
     } else if (timeLeft === 0 && gameState === 'playing') {
       completeLevel();
     }
-  }, [gameState, timeLeft]);
+  }, [gameState, timeLeft, completeLevel]);
 
   const renderLevelSelect = () => (
     <div className="text-center">

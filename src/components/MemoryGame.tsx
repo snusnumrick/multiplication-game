@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useGame } from '../contexts/GameContext';
+import React, { useState } from 'react';
+import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, RotateCcw, Star, Trophy } from 'lucide-react';
 
 interface Card {

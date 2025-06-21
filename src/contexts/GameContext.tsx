@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Translation, translations } from '../translations';
+import React, { useState, useEffect, ReactNode } from 'react';
+import { translations } from '../translations';
+import { GameContext } from './game-context-def';
 
 interface GameProgress {
   tablesLearned: number[];
@@ -15,28 +16,6 @@ interface GameSettings {
   difficulty: 'easy' | 'medium' | 'hard';
   soundEnabled: boolean;
 }
-
-interface GameContextType {
-  // Settings
-  settings: GameSettings;
-  updateSettings: (newSettings: Partial<GameSettings>) => void;
-  t: Translation;
-  
-  // Progress
-  progress: GameProgress;
-  updateProgress: (newProgress: Partial<GameProgress>) => void;
-  addStars: (count: number) => void;
-  completeTable: (table: number) => void;
-  
-  // Game State
-  currentScreen: string;
-  setCurrentScreen: (screen: string) => void;
-  
-  // Sound Effects
-  playSound: (type: 'correct' | 'incorrect' | 'success' | 'click') => void;
-}
-
-const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const defaultProgress: GameProgress = {
   tablesLearned: [],
@@ -168,10 +147,3 @@ export function GameProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useGame() {
-  const context = useContext(GameContext);
-  if (context === undefined) {
-    throw new Error('useGame must be used within a GameProvider');
-  }
-  return context;
-}

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useGame } from '../contexts/GameContext';
+import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Lightbulb, Check, RotateCcw, Star } from 'lucide-react';
 
 export function PracticeMode() {
-  const { t, setCurrentScreen, playSound, addStars, completeTable } = useGame();
+  const { t, setCurrentScreen, playSound, addStars} = useGame();
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [currentProblem, setCurrentProblem] = useState<{ a: number; b: number } | null>(null);
   const [userAnswer, setUserAnswer] = useState('');

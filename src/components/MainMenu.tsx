@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGame } from '../contexts/GameContext';
+import { useGame } from '../contexts/game-hooks';
 import { Star, Settings, Trophy, BookOpen, Puzzle, Gamepad2, Calculator, Sparkles } from 'lucide-react';
 
 export function MainMenu() {

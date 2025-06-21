@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGame } from '../contexts/GameContext';
+import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Star, Trophy, Award, Target, CheckCircle } from 'lucide-react';
 
 export function Progress() {

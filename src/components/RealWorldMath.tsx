@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGame } from '../contexts/GameContext';
+import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, ShoppingCart, Building, Car, Utensils, Gamepad2, TreePine } from 'lucide-react';
 
 interface Scenario {
