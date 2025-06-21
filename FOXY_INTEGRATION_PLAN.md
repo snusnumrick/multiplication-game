@@ -4,13 +4,14 @@
 
 Enhance Foxy's presence from a static image with text to an animated character with pre-recorded natural voice, making her a more engaging learning companion throughout the application.
 
-## Current Status (as of commit `01c32af`)
+## Current Status (as of commit `ab828cf`)
 
 *   A basic `AnimatedFoxy.tsx` component exists.
 *   Foxy displays a static image (`/images/foxy-mascot.jpg`) and a text message.
 *   Foxy's visibility and message content are managed via `GameContext.tsx`.
+*   A generic helper function `showFoxyMessage(messageKey, duration?)` is implemented in `GameContext.tsx` and used in game modes for showing Foxy's messages.
 *   Foxy appears on `MainMenu.tsx` with a welcome message.
-*   Foxy displays introductory messages when entering each game mode.
+*   Foxy displays introductory messages when entering each game mode using the new helper.
 *   Users can toggle Foxy's visibility in `Settings.tsx`.
 *   Contextual messages for Foxy (introductions, encouragement, congratulations, hints) are defined in `translations.ts`.
 
@@ -32,10 +33,10 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 2.  **[PARTIALLY COMPLETED] Integrate Contextual Messages in Game Modes:** (Intro messages done - Commit `01c32af`)
     *   Modify each game mode component (`PracticeMode.tsx`, `QuizMode.tsx`, etc.):
-        *   Use `useEffect` and `useGame` hook (`setFoxyMessage`, `setIsFoxyVisible`) to display relevant Foxy messages upon entering the mode.
+        *   Use `useEffect` and `useGame` hook (`showFoxyMessage`, `setIsFoxyVisible`) to display relevant Foxy messages upon entering the mode.
         *   **[PENDING]** Implement logic to show/hide Foxy or change her message based on game events within the mode (e.g., after a correct/incorrect answer streak, on level completion, showing encouragement/congrats messages).
     *   In `GameContext.tsx`:
-        *   **[PENDING]** Consider adding a more generic function like `showFoxyMessage(messageKey: keyof Translation, duration?: number)` to simplify showing messages and potentially auto-hiding them.
+        *   **[COMPLETED]** Added a generic function `showFoxyMessage(messageKey: keyof Translation, duration?: number)` to simplify showing messages and potentially auto-hiding them. (Commit `ab828cf`)
 
 3.  **[COMPLETED] User Control for Foxy's Visibility:** (Commit `25dced1`)
     *   Add a toggle button (e.g., in `Settings.tsx` or a persistent UI element) to allow users to show/hide Foxy.
@@ -161,9 +162,10 @@ Enhance Foxy's presence from a static image with text to an animated character w
 ## Timeline & Milestones
 
 *   **Milestone 1 (Phase 1 - Partially Complete):**
-    *   Foxy provides contextual text messages in all game modes (Intro messages done).
-    *   User can toggle Foxy's visibility (Done).
-    *   *Pending: In-game event messages, generic `showFoxyMessage` function, appearance refinement.*
+    *   Foxy provides contextual text messages in all game modes (Intro messages done - Commit `01c32af`).
+    *   User can toggle Foxy's visibility (Done - Commit `25dced1`).
+    *   Generic `showFoxyMessage` helper function implemented and used (Done - Commit `ab828cf`).
+    *   *Pending: In-game event messages (encouragement, congrats), appearance refinement.*
 *   **Milestone 2 (Phase 2 - Pending):** Foxy is animated with basic idle, talking, and happy states.
 *   **Milestone 3 (Phase 3 - Pending):** Foxy speaks pre-recorded voice lines in one language, synchronized with talking animation.
 *   **Milestone 4 (Phase 4 - Pending):** Advanced interactions, polish, and multilingual voice support implemented.
