@@ -23,161 +23,72 @@ export function FantasyMath() {
   const [userAnswer, setUserAnswer] = useState<string>('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
-  const getScenarios = (): FantasyScenario[] => {
-    if (settings.language === 'ru') {
-      return [
-        {
-          id: 1,
-          title: "Драконьи сокровища",
-          description: "Ева помогает дружелюбному дракону",
-          problem: "Дракон Фира охраняет 3 пещеры с сокровищами. В каждой пещере 7 золотых монет. Сколько всего золотых монет у дракона?",
-          calculation: "3 × 7",
-          answer: 21,
-          icon: Zap,
-          creature: 'dragon',
-          wrongOptions: ["3 + 7", "7 - 3", "3 ÷ 7"],
-          image: "/images/dragon-scenario.jpg"
-        },
-        {
-          id: 2,
-          title: "Единорог в лесу",
-          description: "Ева встречает волшебного единорога",
-          problem: "Единорог Старлайт создал 4 радуги. На каждой радуге 6 разноцветных полос. Сколько всего цветных полос создал единорог?",
-          calculation: "4 × 6",
-          answer: 24,
-          icon: Sparkles,
-          creature: 'unicorn',
-          wrongOptions: ["4 + 6", "6 - 4", "4 ÷ 6"],
-          image: "/images/unicorn-scenario.png"
-        },
-        {
-          id: 3,
-          title: "Русалочий замок",
-          description: "Ева ныряет к русалке в подводное царство",
-          problem: "Русалка Марина украшает свой замок. Она разложила жемчужины в 5 рядов по 8 жемчужин в каждом. Сколько всего жемчужин?",
-          calculation: "5 × 8",
-          answer: 40,
-          icon: Heart,
-          creature: 'mermaid',
-          wrongOptions: ["5 + 8", "8 - 5", "5 ÷ 8"],
-          image: "/images/mermaid-scenario.jpg"
-        },
-        {
-          id: 4,
-          title: "Фея цветов",
-          description: "Ева помогает цветочной фее",
-          problem: "Фея Блум садит волшебные цветы. Она посадила 6 клумб, на каждой клумбе 9 цветков. Сколько всего волшебных цветков посадила фея?",
-          calculation: "6 × 9",
-          answer: 54,
-          icon: Star,
-          creature: 'fairy',
-          wrongOptions: ["6 + 9", "9 - 6", "6 ÷ 9"],
-          image: "/images/fairy-scenario.jpg"
-        },
-        {
-          id: 5,
-          title: "Феникс и пламя",
-          description: "Ева наблюдает за огненной птицей",
-          problem: "Феникс Флэйм создаёт огненные перья. Он создал 7 групп перьев по 5 перьев в каждой группе. Сколько всего огненных перьев?",
-          calculation: "7 × 5",
-          answer: 35,
-          icon: Crown,
-          creature: 'phoenix',
-          wrongOptions: ["7 + 5", "7 - 5", "7 ÷ 5"],
-          image: "/images/phoenix-scenario.jpg"
-        },
-        {
-          id: 6,
-          title: "Волшебник Фокси",
-          description: "Фокси изучает магию вместе с Евой",
-          problem: "Волшебник Фокси варит зелья. У него есть 8 котлов, в каждом котле по 4 волшебных ингредиента. Сколько всего ингредиентов?",
-          calculation: "8 × 4",
-          answer: 32,
-          icon: Shield,
-          creature: 'wizard',
-          wrongOptions: ["8 + 4", "8 - 4", "8 ÷ 4"],
-          image: "/images/wizard-scenario.png"
-        }
-      ];
-    } else {
-      return [
-        {
-          id: 1,
-          title: "Drachenschätze",
-          description: "Eva hilft einem freundlichen Drachen",
-          problem: "Drache Fira bewacht 3 Schatzhöhlen. In jeder Höhle sind 7 Goldmünzen. Wie viele Goldmünzen hat der Drache insgesamt?",
-          calculation: "3 × 7",
-          answer: 21,
-          icon: Zap,
-          creature: 'dragon',
-          wrongOptions: ["3 + 7", "7 - 3", "3 ÷ 7"],
-          image: "/images/dragon-scenario.jpg"
-        },
-        {
-          id: 2,
-          title: "Einhorn im Wald",
-          description: "Eva trifft ein magisches Einhorn",
-          problem: "Einhorn Starlight hat 4 Regenbogen erschaffen. Jeder Regenbogen hat 6 bunte Streifen. Wie viele Farbstreifen hat das Einhorn insgesamt gemacht?",
-          calculation: "4 × 6",
-          answer: 24,
-          icon: Sparkles,
-          creature: 'unicorn',
-          wrongOptions: ["4 + 6", "6 - 4", "4 ÷ 6"],
-          image: "/images/unicorn-scenario.png"
-        },
-        {
-          id: 3,
-          title: "Meerjungfrau Schloss",
-          description: "Eva taucht zu einer Meerjungfrau ins Unterwasserreich",
-          problem: "Meerjungfrau Marina schmückt ihr Schloss. Sie hat Perlen in 5 Reihen mit je 8 Perlen gelegt. Wie viele Perlen sind das insgesamt?",
-          calculation: "5 × 8",
-          answer: 40,
-          icon: Heart,
-          creature: 'mermaid',
-          wrongOptions: ["5 + 8", "8 - 5", "5 ÷ 8"],
-          image: "/images/mermaid-scenario.jpg"
-        },
-        {
-          id: 4,
-          title: "Blütenfee",
-          description: "Eva hilft der Blumenfee",
-          problem: "Fee Bloom pflanzt Zauberblumen. Sie hat 6 Beete angelegt, auf jedem Beet sind 9 Blumen. Wie viele Zauberblumen hat die Fee insgesamt gepflanzt?",
-          calculation: "6 × 9",
-          answer: 54,
-          icon: Star,
-          creature: 'fairy',
-          wrongOptions: ["6 + 9", "9 - 6", "6 ÷ 9"],
-          image: "/images/fairy-scenario.jpg"
-        },
-        {
-          id: 5,
-          title: "Phönix und Flammen",
-          description: "Eva beobachtet den Feuervogel",
-          problem: "Phönix Flame erschafft Feuerfedern. Er hat 7 Gruppen mit je 5 Federn pro Gruppe gemacht. Wie viele Feuerfedern sind das insgesamt?",
-          calculation: "7 × 5",
-          answer: 35,
-          icon: Crown,
-          creature: 'phoenix',
-          wrongOptions: ["7 + 5", "7 - 5", "7 ÷ 5"],
-          image: "/images/phoenix-scenario.jpg"
-        },
-        {
-          id: 6,
-          title: "Zauberer Foxy",
-          description: "Foxy lernt Magie zusammen mit Eva",
-          problem: "Zauberer Foxy braut Zaubertränke. Er hat 8 Kessel, in jedem Kessel sind 4 magische Zutaten. Wie viele Zutaten sind das insgesamt?",
-          calculation: "8 × 4",
-          answer: 32,
-          icon: Shield,
-          creature: 'wizard',
-          wrongOptions: ["8 + 4", "8 - 4", "8 ÷ 4"],
-          image: "/images/wizard-scenario.png"
-        }
-      ];
+  const baseScenarios: Omit<FantasyScenario, 'title' | 'description' | 'problem'>[] = [
+    {
+      id: 1,
+      calculation: "3 × 7",
+      answer: 21,
+      icon: Zap,
+      creature: 'dragon',
+      wrongOptions: ["3 + 7", "7 - 3", "3 ÷ 7"],
+      image: "/images/dragon-scenario.jpg"
+    },
+    {
+      id: 2,
+      calculation: "4 × 6",
+      answer: 24,
+      icon: Sparkles,
+      creature: 'unicorn',
+      wrongOptions: ["4 + 6", "6 - 4", "4 ÷ 6"],
+      image: "/images/unicorn-scenario.png"
+    },
+    {
+      id: 3,
+      calculation: "5 × 8",
+      answer: 40,
+      icon: Heart,
+      creature: 'mermaid',
+      wrongOptions: ["5 + 8", "8 - 5", "5 ÷ 8"],
+      image: "/images/mermaid-scenario.jpg"
+    },
+    {
+      id: 4,
+      calculation: "6 × 9",
+      answer: 54,
+      icon: Star,
+      creature: 'fairy',
+      wrongOptions: ["6 + 9", "9 - 6", "6 ÷ 9"],
+      image: "/images/fairy-scenario.jpg"
+    },
+    {
+      id: 5,
+      calculation: "7 × 5",
+      answer: 35,
+      icon: Crown,
+      creature: 'phoenix',
+      wrongOptions: ["7 + 5", "7 - 5", "7 ÷ 5"],
+      image: "/images/phoenix-scenario.jpg"
+    },
+    {
+      id: 6,
+      calculation: "8 × 4",
+      answer: 32,
+      icon: Shield,
+      creature: 'wizard',
+      wrongOptions: ["8 + 4", "8 - 4", "8 ÷ 4"],
+      image: "/images/wizard-scenario.png"
     }
-  };
+  ];
 
-  const scenarios = getScenarios();
+  const scenarios: FantasyScenario[] = baseScenarios.map((baseScenario, index) => {
+    const scenarioTexts = t.fantasyScenarioData[index];
+    return {
+      ...baseScenario,
+      title: scenarioTexts.title,
+      description: scenarioTexts.description,
+      problem: scenarioTexts.problem,
+    };
+  });
 
   const selectScenario = (scenario: FantasyScenario) => {
     setSelectedScenario(scenario);
@@ -408,13 +319,10 @@ export function FantasyMath() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            ✨ {settings.language === 'ru' ? 'Волшебная математика' : 'Zauberhafte Mathematik'} 🪄
+            ✨ {t.fantasyMath} 🪄
           </h1>
           <p className="text-xl text-gray-600">
-            {settings.language === 'ru' ? 
-              'Отправься с Фокси в мир магии и изучай умножение с волшебными существами!' :
-              'Begib dich mit Foxy in die Welt der Magie und lerne Multiplikation mit Zauberwesen!'
-            }
+            {t.fantasyDesc}
           </p>
         </div>
 

@@ -27,12 +27,12 @@ export function AdventureMode() {
   // Get localized level title and description
   const getLevelTitle = (levelId: number) => {
     const titleKey = `level${levelId}Title` as keyof typeof t;
-    return t[titleKey] || `Level ${levelId}`;
+    return t[titleKey] || t.levelDefaultTitle.replace('{id}', levelId.toString());
   };
   
   const getLevelDesc = (levelId: number) => {
     const descKey = `level${levelId}Desc` as keyof typeof t;
-    return t[descKey] || `Description for level ${levelId}`;
+    return t[descKey] || t.levelDefaultDesc.replace('{id}', levelId.toString());
   };
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
   const [gameState, setGameState] = useState<'levelSelect' | 'playing' | 'completed'>('levelSelect');
@@ -336,8 +336,8 @@ export function AdventureMode() {
             <div className="text-sm space-y-1 mb-4">
               <div>{t.tables} {level.tables.join(', ')}</div>
               <div>{level.questionsCount} {t.questions}</div>
-              <div>{level.timeLimit}s {t.time}</div>
-              <div>{level.requiredAccuracy}% {t.required}</div>
+              <div>{level.timeLimit}{t.timeSecondsSuffix} {t.time}</div>
+              <div>{level.requiredAccuracy}{t.accuracyPercentSuffix} {t.required}</div>
             </div>
             
             {/* Stars */}
@@ -354,9 +354,9 @@ export function AdventureMode() {
               </div>
             )}
             
-            {!level.unlocked && (
+            {!level.unlocked && level.id > 1 && (
               <div className="text-xs opacity-75 mt-2">
-                {t.completeLevel} {level.id - 1}
+                {t.completeLevelRequirement.replace('{id}', (level.id - 1).toString())}
               </div>
             )}
           </div>
@@ -388,7 +388,7 @@ export function AdventureMode() {
             
             <div className="text-center">
               <div className={`text-xl font-bold ${timeLeft <= 10 ? 'text-red-600 animate-pulse' : 'text-gray-700'}`}>
-                {timeLeft}s
+                {timeLeft}{t.timeSecondsSuffix}
               </div>
             </div>
           </div>
@@ -491,12 +491,12 @@ export function AdventureMode() {
             <div className="flex justify-between">
               <span>{t.accuracyLabel}</span>
               <span className={`font-bold ${accuracy >= selectedLevel.requiredAccuracy ? 'text-green-600' : 'text-red-600'}`}>
-                {Math.round(accuracy)}%
+                {Math.round(accuracy)}{t.accuracyPercentSuffix}
               </span>
             </div>
             <div className="flex justify-between">
               <span>{t.required}</span>
-              <span className="font-bold">{selectedLevel.requiredAccuracy}%</span>
+              <span className="font-bold">{selectedLevel.requiredAccuracy}{t.accuracyPercentSuffix}</span>
             </div>
             {passed && (
               <div className="flex justify-between border-t pt-2">

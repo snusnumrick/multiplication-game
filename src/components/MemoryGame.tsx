@@ -157,8 +157,7 @@ export function MemoryGame() {
           className="bg-gradient-to-br from-green-400 to-green-600 text-white p-8 rounded-3xl shadow-xl transform transition-all duration-200 hover:scale-105 active:scale-95"
         >
           <div className="text-3xl font-bold mb-4">{t.easy}</div>
-          <div className="text-lg opacity-90">6 {t.pairs}</div>
-          <div className="text-lg opacity-90">{t.tables1to5}</div>
+          <div className="text-lg opacity-90">{t.easyDetails}</div>
         </button>
         
         <button
@@ -166,8 +165,7 @@ export function MemoryGame() {
           className="bg-gradient-to-br from-yellow-400 to-orange-600 text-white p-8 rounded-3xl shadow-xl transform transition-all duration-200 hover:scale-105 active:scale-95"
         >
           <div className="text-3xl font-bold mb-4">{t.medium}</div>
-          <div className="text-lg opacity-90">8 {t.pairs}</div>
-          <div className="text-lg opacity-90">1-8 {t.tables.replace(':', '')}</div>
+          <div className="text-lg opacity-90">{t.mediumDetails}</div>
         </button>
         
         <button
@@ -175,8 +173,7 @@ export function MemoryGame() {
           className="bg-gradient-to-br from-red-400 to-red-600 text-white p-8 rounded-3xl shadow-xl transform transition-all duration-200 hover:scale-105 active:scale-95"
         >
           <div className="text-3xl font-bold mb-4">{t.hard}</div>
-          <div className="text-lg opacity-90">10 {t.pairs}</div>
-          <div className="text-lg opacity-90">{t.tables1to10}</div>
+          <div className="text-lg opacity-90">{t.hardDetails}</div>
         </button>
       </div>
     </div>
@@ -236,7 +233,7 @@ export function MemoryGame() {
                 </div>
               ) : (
                 <div className="h-full flex items-center justify-center">
-                  <div className="text-4xl">🧩</div>
+                  <div className="text-4xl">{t.puzzleEmoji}</div>
                 </div>
               )}
             </button>

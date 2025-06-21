@@ -92,7 +92,7 @@ export function Settings() {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                🌟 {t.easy}
+                {t.difficultyEasyPrefix} {t.easy}
                 <div className="text-xs opacity-80 mt-1">{t.tables1to5}</div>
               </button>
               
@@ -104,7 +104,7 @@ export function Settings() {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                ⭐⭐ {t.medium}
+                {t.difficultyMediumPrefix} {t.medium}
                 <div className="text-xs opacity-80 mt-1">{t.tables1to10}</div>
               </button>
               
@@ -116,7 +116,7 @@ export function Settings() {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                ⭐⭐⭐ {t.hard}
+                {t.difficultyHardPrefix} {t.hard}
                 <div className="text-xs opacity-80 mt-1">{t.tables1to12}</div>
               </button>
             </div>

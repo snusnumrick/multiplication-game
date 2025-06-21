@@ -445,6 +445,99 @@ export const translations: Record<string, Translation> = {
     // Settings specific
     germanLanguage: "Deutsch",
     russianLanguage: "Русский",
+
+    // Scenario Data (RealWorldMath)
+    realWorldScenarioData: [
+      {
+        title: "Einkaufen im Laden",
+        description: "Eva kauft Geschenke für Freunde",
+        problem: "Eva möchte 4 Packungen Aufkleber kaufen. Jede Packung hat 6 Aufkleber. Wie viele Aufkleber wird sie insgesamt haben?",
+      },
+      {
+        title: "Bauen mit Blöcken",
+        description: "Eva baut ein Schloss aus Bauklötzen",
+        problem: "Eva baut ein Schloss. Jede Etage hat 7 Blöcke und es gibt 3 Etagen. Wie viele Blöcke braucht sie für das ganze Schloss?",
+      },
+      {
+        title: "Busfahrt zum Zoo",
+        description: "Ausflug in den Zoo",
+        problem: "Der Bus hat 8 Sitzreihen. In jeder Reihe können 4 Personen sitzen. Wie viele Menschen passen in den Bus?",
+      },
+      {
+        title: "Pizza für die Party",
+        description: "Eva bestellt Pizza für ihren Geburtstag",
+        problem: "Eva hat 3 Pizzen bestellt. Jede Pizza wurde in 8 Stücke geschnitten. Wie viele Pizzastücke gibt es insgesamt?",
+      },
+      {
+        title: "Brettspiel",
+        description: "Spiel mit Foxy und Freunden",
+        problem: "Eva spielt ein Brettspiel. Jeder der 5 Spieler hat 6 Karten. Wie viele Karten sind insgesamt im Spiel?",
+      },
+      {
+        title: "Blumengarten",
+        description: "Eva pflanzt Blumen im Garten",
+        problem: "Eva hat Blumen in 4 Reihen gepflanzt. In jeder Reihe sind 9 Blumen. Wie viele Blumen hat Eva insgesamt gepflanzt?",
+      },
+    ],
+
+    // Scenario Data (FantasyMath)
+    fantasyScenarioData: [
+      {
+        title: "Drachenschätze",
+        description: "Eva hilft einem freundlichen Drachen",
+        problem: "Drache Fira bewacht 3 Schatzhöhlen. In jeder Höhle sind 7 Goldmünzen. Wie viele Goldmünzen hat der Drache insgesamt?",
+      },
+      {
+        title: "Einhorn im Wald",
+        description: "Eva trifft ein magisches Einhorn",
+        problem: "Einhorn Starlight hat 4 Regenbogen erschaffen. Jeder Regenbogen hat 6 bunte Streifen. Wie viele Farbstreifen hat das Einhorn insgesamt gemacht?",
+      },
+      {
+        title: "Meerjungfrau Schloss",
+        description: "Eva taucht zu einer Meerjungfrau ins Unterwasserreich",
+        problem: "Meerjungfrau Marina schmückt ihr Schloss. Sie hat Perlen in 5 Reihen mit je 8 Perlen gelegt. Wie viele Perlen sind das insgesamt?",
+      },
+      {
+        title: "Blütenfee",
+        description: "Eva hilft der Blumenfee",
+        problem: "Fee Bloom pflanzt Zauberblumen. Sie hat 6 Beete angelegt, auf jedem Beet sind 9 Blumen. Wie viele Zauberblumen hat die Fee insgesamt gepflanzt?",
+      },
+      {
+        title: "Phönix und Flammen",
+        description: "Eva beobachtet den Feuervogel",
+        problem: "Phönix Flame erschafft Feuerfedern. Er hat 7 Gruppen mit je 5 Federn pro Gruppe gemacht. Wie viele Feuerfedern sind das insgesamt?",
+      },
+      {
+        title: "Zauberer Foxy",
+        description: "Foxy lernt Magie zusammen mit Eva",
+        problem: "Zauberer Foxy braut Zaubertränke. Er hat 8 Kessel, in jedem Kessel sind 4 magische Zutaten. Wie viele Zutaten sind das insgesamt?",
+      },
+    ],
+
+    // MemoryGame specific
+    easyDetails: "6 Paare • 1-5 Reihen",
+    mediumDetails: "8 Paare • 1-8 Reihen",
+    hardDetails: "10 Paare • 1-10 Reihen",
+    puzzleEmoji: "🧩",
+
+    // PracticeMode specific
+    tableButtonSuffix: "x",
+    mathSymbolsAlt: "Mathe Symbole",
+
+    // Progress specific
+    tableProgressSuffix: "x",
+
+    // AdventureMode specific
+    timeSecondsSuffix: "s",
+    accuracyPercentSuffix: "%",
+    levelDefaultTitle: "Level {id}",
+    levelDefaultDesc: "Beschreibung für Level {id}",
+    completeLevelRequirement: "Schließe Level {id} ab",
+
+    // Settings specific
+    difficultyEasyPrefix: "🌟",
+    difficultyMediumPrefix: "⭐⭐",
+    difficultyHardPrefix: "⭐⭐⭐",
   },
   
   ru: {
@@ -669,5 +762,98 @@ export const translations: Record<string, Translation> = {
     // Settings specific
     germanLanguage: "Немецкий",
     russianLanguage: "Русский",
+
+    // Scenario Data (RealWorldMath)
+    realWorldScenarioData: [
+      {
+        title: "Покупки в магазине",
+        description: "Ева покупает подарки для друзей",
+        problem: "Ева хочет купить 4 упаковки наклеек. В каждой упаковке 6 наклеек. Сколько всего наклеек у неё будет?",
+      },
+      {
+        title: "Строительство с блоками",
+        description: "Ева строит замок из кубиков",
+        problem: "Ева строит замок. На каждом этаже 7 кубиков, а этажей 3. Сколько кубиков нужно для всего замка?",
+      },
+      {
+        title: "Путешествие на автобусе",
+        description: "Поездка в зоопарк",
+        problem: "В автобусе 8 рядов сидений. В каждом ряду помещается 4 человека. Сколько людей поместится в автобусе?",
+      },
+      {
+        title: "Пицца для вечеринки",
+        description: "Ева заказывает пиццу на день рождения",
+        problem: "Ева заказала 3 пиццы. Каждую пиццу разрезали на 8 кусочков. Сколько всего кусочков пиццы?",
+      },
+      {
+        title: "Настольная игра",
+        description: "Игра с Фокси и друзьями",
+        problem: "Ева играет в настольную игру. У каждого из 5 игроков по 6 карт. Сколько всего карт в игре?",
+      },
+      {
+        title: "Сад с цветами",
+        description: "Ева сажает цветы в саду",
+        problem: "Ева посадила цветы в 4 ряда. В каждом ряду 9 цветков. Сколько всего цветков посадила Ева?",
+      },
+    ],
+
+    // Scenario Data (FantasyMath)
+    fantasyScenarioData: [
+      {
+        title: "Драконьи сокровища",
+        description: "Ева помогает дружелюбному дракону",
+        problem: "Дракон Фира охраняет 3 пещеры с сокровищами. В каждой пещере 7 золотых монет. Сколько всего золотых монет у дракона?",
+      },
+      {
+        title: "Единорог в лесу",
+        description: "Ева встречает волшебного единорога",
+        problem: "Единорог Старлайт создал 4 радуги. На каждой радуге 6 разноцветных полос. Сколько всего цветных полос создал единорог?",
+      },
+      {
+        title: "Русалочий замок",
+        description: "Ева ныряет к русалке в подводное царство",
+        problem: "Русалка Марина украшает свой замок. Она разложила жемчужины в 5 рядов по 8 жемчужин в каждом. Сколько всего жемчужин?",
+      },
+      {
+        title: "Фея цветов",
+        description: "Ева помогает цветочной фее",
+        problem: "Фея Блум садит волшебные цветы. Она посадила 6 клумб, на каждой клумбе 9 цветков. Сколько всего волшебных цветков посадила фея?",
+      },
+      {
+        title: "Феникс и пламя",
+        description: "Ева наблюдает за огненной птицей",
+        problem: "Феникс Флэйм создаёт огненные перья. Он создал 7 групп перьев по 5 перьев в каждой группе. Сколько всего огненных перьев?",
+      },
+      {
+        title: "Волшебник Фокси",
+        description: "Фокси изучает магию вместе с Евой",
+        problem: "Волшебник Фокси варит зелья. У него есть 8 котлов, в каждом котле по 4 волшебных ингредиента. Сколько всего ингредиентов?",
+      },
+    ],
+
+    // MemoryGame specific
+    easyDetails: "6 пар • Таблицы 1-5",
+    mediumDetails: "8 пар • Таблицы 1-8",
+    hardDetails: "10 пар • Таблицы 1-10",
+    puzzleEmoji: "🧩",
+
+    // PracticeMode specific
+    tableButtonSuffix: "x",
+    mathSymbolsAlt: "Математические символы",
+
+    // Progress specific
+    tableProgressSuffix: "x",
+
+    // AdventureMode specific
+    timeSecondsSuffix: "с",
+    accuracyPercentSuffix: "%",
+    levelDefaultTitle: "Уровень {id}",
+    levelDefaultDesc: "Описание для уровня {id}",
+    completeLevelRequirement: "Пройди уровень {id}",
+
+    // Settings specific
+    difficultyEasyPrefix: "🌟",
+    difficultyMediumPrefix: "⭐⭐",
+    difficultyHardPrefix: "⭐⭐⭐",
   }
 };

@@ -139,7 +139,7 @@ export function Progress() {
                   }`}
                 >
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-800 mb-2">{table}x</div>
+                    <div className="text-2xl font-bold text-gray-800 mb-2">{table}{t.tableProgressSuffix}</div>
                     
                     {/* Progress Bar */}
                     <div className="bg-gray-200 rounded-full h-3 mb-2">

@@ -73,7 +73,7 @@ export function PracticeMode() {
             }}
             className="bg-gradient-to-br from-blue-400 to-blue-600 text-white text-2xl font-bold py-8 px-4 rounded-2xl shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95"
           >
-            {table}x
+            {table}{t.tableButtonSuffix}
           </button>
         ))}
       </div>
@@ -219,7 +219,7 @@ export function PracticeMode() {
 
       {/* Decorative Elements */}
       <div className="fixed top-16 right-16 animate-spin-slow">
-        <img src="/images/math-symbols.jpg" alt="Math" className="w-16 h-16 rounded-full opacity-20" />
+        <img src="/images/math-symbols.jpg" alt={t.mathSymbolsAlt} className="w-16 h-16 rounded-full opacity-20" />
       </div>
     </div>
   );

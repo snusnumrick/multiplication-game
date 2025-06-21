@@ -23,161 +23,72 @@ export function RealWorldMath() {
   const [userAnswer, setUserAnswer] = useState<string>('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
-  const getScenarios = (): Scenario[] => {
-    if (settings.language === 'ru') {
-      return [
-        {
-          id: 1,
-          title: "Покупки в магазине",
-          description: "Ева покупает подарки для друзей",
-          problem: "Ева хочет купить 4 упаковки наклеек. В каждой упаковке 6 наклеек. Сколько всего наклеек у неё будет?",
-          calculation: "4 × 6",
-          answer: 24,
-          icon: ShoppingCart,
-          category: 'shopping',
-          wrongOptions: ["4 + 6", "6 - 4", "4 ÷ 6"],
-          image: "/images/shopping-scenario.jpg"
-        },
-        {
-          id: 2,
-          title: "Строительство с блоками",
-          description: "Ева строит замок из кубиков",
-          problem: "Ева строит замок. На каждом этаже 7 кубиков, а этажей 3. Сколько кубиков нужно для всего замка?",
-          calculation: "3 × 7",
-          answer: 21,
-          icon: Building,
-          category: 'home',
-          wrongOptions: ["3 + 7", "7 - 3", "3 ÷ 7"],
-          image: "/images/building-scenario.jpg"
-        },
-        {
-          id: 3,
-          title: "Путешествие на автобусе",
-          description: "Поездка в зоопарк",
-          problem: "В автобусе 8 рядов сидений. В каждом ряду помещается 4 человека. Сколько людей поместится в автобусе?",
-          calculation: "8 × 4",
-          answer: 32,
-          icon: Car,
-          category: 'travel',
-          wrongOptions: ["8 + 4", "8 - 4", "8 ÷ 4"],
-          image: "/images/travel-scenario.jpg"
-        },
-        {
-          id: 4,
-          title: "Пицца для вечеринки",
-          description: "Ева заказывает пиццу на день рождения",
-          problem: "Ева заказала 3 пиццы. Каждую пиццу разрезали на 8 кусочков. Сколько всего кусочков пиццы?",
-          calculation: "3 × 8",
-          answer: 24,
-          icon: Utensils,
-          category: 'food',
-          wrongOptions: ["3 + 8", "8 - 3", "3 ÷ 8"],
-          image: "/images/food-scenario.jpg"
-        },
-        {
-          id: 5,
-          title: "Настольная игра",
-          description: "Игра с Фокси и друзьями",
-          problem: "Ева играет в настольную игру. У каждого из 5 игроков по 6 карт. Сколько всего карт в игре?",
-          calculation: "5 × 6",
-          answer: 30,
-          icon: Gamepad2,
-          category: 'games',
-          wrongOptions: ["5 + 6", "6 - 5", "5 ÷ 6"],
-          image: "/images/games-scenario.jpg"
-        },
-        {
-          id: 6,
-          title: "Сад с цветами",
-          description: "Ева сажает цветы в саду",
-          problem: "Ева посадила цветы в 4 ряда. В каждом ряду 9 цветков. Сколько всего цветков посадила Ева?",
-          calculation: "4 × 9",
-          answer: 36,
-          icon: TreePine,
-          category: 'nature',
-          wrongOptions: ["4 + 9", "9 - 4", "4 ÷ 9"],
-          image: "/images/nature-scenario.jpg"
-        }
-      ];
-    } else {
-      return [
-        {
-          id: 1,
-          title: "Einkaufen im Laden",
-          description: "Eva kauft Geschenke für Freunde",
-          problem: "Eva möchte 4 Packungen Aufkleber kaufen. Jede Packung hat 6 Aufkleber. Wie viele Aufkleber wird sie insgesamt haben?",
-          calculation: "4 × 6",
-          answer: 24,
-          icon: ShoppingCart,
-          category: 'shopping',
-          wrongOptions: ["4 + 6", "6 - 4", "4 ÷ 6"],
-          image: "/images/shopping-scenario.jpg"
-        },
-        {
-          id: 2,
-          title: "Bauen mit Blöcken",
-          description: "Eva baut ein Schloss aus Bauklötzen",
-          problem: "Eva baut ein Schloss. Jede Etage hat 7 Blöcke und es gibt 3 Etagen. Wie viele Blöcke braucht sie für das ganze Schloss?",
-          calculation: "3 × 7",
-          answer: 21,
-          icon: Building,
-          category: 'home',
-          wrongOptions: ["3 + 7", "7 - 3", "3 ÷ 7"],
-          image: "/images/building-scenario.jpg"
-        },
-        {
-          id: 3,
-          title: "Busfahrt zum Zoo",
-          description: "Ausflug in den Zoo",
-          problem: "Der Bus hat 8 Sitzreihen. In jeder Reihe können 4 Personen sitzen. Wie viele Menschen passen in den Bus?",
-          calculation: "8 × 4",
-          answer: 32,
-          icon: Car,
-          category: 'travel',
-          wrongOptions: ["8 + 4", "8 - 4", "8 ÷ 4"],
-          image: "/images/travel-scenario.jpg"
-        },
-        {
-          id: 4,
-          title: "Pizza für die Party",
-          description: "Eva bestellt Pizza für ihren Geburtstag",
-          problem: "Eva hat 3 Pizzen bestellt. Jede Pizza wurde in 8 Stücke geschnitten. Wie viele Pizzastücke gibt es insgesamt?",
-          calculation: "3 × 8",
-          answer: 24,
-          icon: Utensils,
-          category: 'food',
-          wrongOptions: ["3 + 8", "8 - 3", "3 ÷ 8"],
-          image: "/images/food-scenario.jpg"
-        },
-        {
-          id: 5,
-          title: "Brettspiel",
-          description: "Spiel mit Foxy und Freunden",
-          problem: "Eva spielt ein Brettspiel. Jeder der 5 Spieler hat 6 Karten. Wie viele Karten sind insgesamt im Spiel?",
-          calculation: "5 × 6",
-          answer: 30,
-          icon: Gamepad2,
-          category: 'games',
-          wrongOptions: ["5 + 6", "6 - 5", "5 ÷ 6"],
-          image: "/images/games-scenario.jpg"
-        },
-        {
-          id: 6,
-          title: "Blumengarten",
-          description: "Eva pflanzt Blumen im Garten",
-          problem: "Eva hat Blumen in 4 Reihen gepflanzt. In jeder Reihe sind 9 Blumen. Wie viele Blumen hat Eva insgesamt gepflanzt?",
-          calculation: "4 × 9",
-          answer: 36,
-          icon: TreePine,
-          category: 'nature',
-          wrongOptions: ["4 + 9", "9 - 4", "4 ÷ 9"],
-          image: "/images/nature-scenario.jpg"
-        }
-      ];
+  const baseScenarios: Omit<Scenario, 'title' | 'description' | 'problem'>[] = [
+    {
+      id: 1,
+      calculation: "4 × 6",
+      answer: 24,
+      icon: ShoppingCart,
+      category: 'shopping',
+      wrongOptions: ["4 + 6", "6 - 4", "4 ÷ 6"],
+      image: "/images/shopping-scenario.jpg"
+    },
+    {
+      id: 2,
+      calculation: "3 × 7",
+      answer: 21,
+      icon: Building,
+      category: 'home',
+      wrongOptions: ["3 + 7", "7 - 3", "3 ÷ 7"],
+      image: "/images/building-scenario.jpg"
+    },
+    {
+      id: 3,
+      calculation: "8 × 4",
+      answer: 32,
+      icon: Car,
+      category: 'travel',
+      wrongOptions: ["8 + 4", "8 - 4", "8 ÷ 4"],
+      image: "/images/travel-scenario.jpg"
+    },
+    {
+      id: 4,
+      calculation: "3 × 8",
+      answer: 24,
+      icon: Utensils,
+      category: 'food',
+      wrongOptions: ["3 + 8", "8 - 3", "3 ÷ 8"],
+      image: "/images/food-scenario.jpg"
+    },
+    {
+      id: 5,
+      calculation: "5 × 6",
+      answer: 30,
+      icon: Gamepad2,
+      category: 'games',
+      wrongOptions: ["5 + 6", "6 - 5", "5 ÷ 6"],
+      image: "/images/games-scenario.jpg"
+    },
+    {
+      id: 6,
+      calculation: "4 × 9",
+      answer: 36,
+      icon: TreePine,
+      category: 'nature',
+      wrongOptions: ["4 + 9", "9 - 4", "4 ÷ 9"],
+      image: "/images/nature-scenario.jpg"
     }
-  };
+  ];
 
-  const scenarios = getScenarios();
+  const scenarios: Scenario[] = baseScenarios.map((baseScenario, index) => {
+    const scenarioTexts = t.realWorldScenarioData[index];
+    return {
+      ...baseScenario,
+      title: scenarioTexts.title,
+      description: scenarioTexts.description,
+      problem: scenarioTexts.problem,
+    };
+  });
 
   const selectScenario = (scenario: Scenario) => {
     setSelectedScenario(scenario);
