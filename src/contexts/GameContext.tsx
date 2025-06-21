@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect, ReactNode, useCallback } from 'react';
 import { translations } from '../translations';
 import { GameContext } from './game-context-def';
 
@@ -36,6 +36,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<GameSettings>(defaultSettings);
   const [progress, setProgress] = useState<GameProgress>(defaultProgress);
   const [currentScreen, setCurrentScreen] = useState('menu');
+  const [foxyMessage, setFoxyMessage] = useState<string | null>(null);
+  const [isFoxyVisible, setIsFoxyVisible] = useState<boolean>(false);
 
   // Load saved data on mount
   useEffect(() => {
@@ -84,11 +86,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
   };
 
   // Simple sound effects using Web Audio API
-  const playSound = (type: 'correct' | 'incorrect' | 'success' | 'click') => {
+  const playSound = useCallback((type: 'correct' | 'incorrect' | 'success' | 'click') => {
     if (!settings.soundEnabled) return;
 
     try {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      if (!audioContext) {
+        console.log('Web Audio API not supported');
+        return;
+      }
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
@@ -123,9 +129,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
         }, index * 100);
       });
     } catch (error) {
-      console.log('Sound not available');
+      console.log('Error playing sound:', error);
     }
-  };
+  }, [settings.soundEnabled]);
 
   const t = translations[settings.language];
 
@@ -141,9 +147,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
       currentScreen,
       setCurrentScreen,
       playSound,
+      foxyMessage,
+      setFoxyMessage,
+      isFoxyVisible,
+      setIsFoxyVisible,
     }}>
       {children}
-    </GameContext.Provider>
   );
 }
 

@@ -249,6 +249,10 @@ export interface Translation {
   difficultyEasyPrefix: string;
   difficultyMediumPrefix: string;
   difficultyHardPrefix: string;
+
+  // Foxy specific
+  foxyMascotAltText: string;
+  foxyWelcomeMainMenu: string;
 }
 
 export interface ScenarioText {
@@ -573,6 +577,10 @@ export const translations: Record<string, Translation> = {
     difficultyEasyPrefix: "🌟",
     difficultyMediumPrefix: "⭐⭐",
     difficultyHardPrefix: "⭐⭐⭐",
+
+    // Foxy specific
+    foxyMascotAltText: "Foxy das Maskottchen",
+    foxyWelcomeMainMenu: "Hallo Eva! Ich bin Foxy! Lass uns zusammen das Einmaleins entdecken. Wähle ein Spiel, um zu starten!",
   },
   
   ru: {
@@ -890,5 +898,9 @@ export const translations: Record<string, Translation> = {
     difficultyEasyPrefix: "🌟",
     difficultyMediumPrefix: "⭐⭐",
     difficultyHardPrefix: "⭐⭐⭐",
+
+    // Foxy specific
+    foxyMascotAltText: "Талисман Фокси",
+    foxyWelcomeMainMenu: "Привет, Ева! Я Фокси! Давай вместе откроем мир таблицы умножения. Выбери игру, чтобы начать!",
   }
 };

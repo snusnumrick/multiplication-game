@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGame } from '../contexts/game-hooks';
 import { Star, Settings, Trophy, BookOpen, Puzzle, Gamepad2, Calculator, Sparkles } from 'lucide-react';
+import { AnimatedFoxy } from './AnimatedFoxy';
 
 export function MainMenu() {
-  const { t, setCurrentScreen, playSound, progress } = useGame();
+  const { t, setCurrentScreen, playSound, progress, foxyMessage, setFoxyMessage, isFoxyVisible, setIsFoxyVisible } = useGame();
+
+  useEffect(() => {
+    setFoxyMessage(t.foxyWelcomeMainMenu);
+    setIsFoxyVisible(true);
+
+    // Optional: Hide Foxy when navigating away from the main menu or after a delay
+    // return () => {
+    //   setIsFoxyVisible(false);
+    // };
+  }, [setFoxyMessage, setIsFoxyVisible, t.foxyWelcomeMainMenu]);
 
   const handleMenuClick = (screen: string) => {
     playSound('click');
@@ -153,6 +164,8 @@ export function MainMenu() {
       <div className="fixed bottom-32 right-12 animate-pulse delay-500">
         <Star className="w-7 h-7 text-purple-400 fill-current" />
       </div>
+
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible} />
     </div>
   );
 }
