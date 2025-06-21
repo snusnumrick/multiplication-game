@@ -80,7 +80,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   *Storage:* Animations and metadata to be stored in `src/assets/animations/foxy/`.
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
-    *   **[CURRENT STEP]** Ensure `AnimatedFoxy.tsx` displays a static image (`/images/foxy-mascot.jpg`) as a fallback, while retaining the `foxyAnimationState` logic for future use. The `imageUrl` prop will be used.
+    *   **[COMPLETED]** Ensure `AnimatedFoxy.tsx` displays a static image (`/images/foxy-mascot.jpg`) as a fallback, while retaining the `foxyAnimationState` logic for future use. The `imageUrl` prop is used. (Commit `66bde5c`)
     *   Future: Replace the static `<img>` tag with an animation component suitable for the chosen technology.
     *   The component already receives `foxyAnimationState` from context (Commit `c1bffa8`), which will be used to drive animations once implemented.
     *   Manage animation states (idle, talking, happy) based on props or context.
