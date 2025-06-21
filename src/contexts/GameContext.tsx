@@ -1,5 +1,5 @@
-import React, { useState, useEffect, ReactNode, useCallback } from 'react';
-import { translations } from '../translations';
+import React, {useState, useEffect, ReactNode, useCallback, useRef} from 'react';
+import {Translation, translations} from '../translations';
 import { GameContext } from './game-context-def';
 
 interface GameProgress {
