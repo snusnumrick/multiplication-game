@@ -88,12 +88,10 @@ export function MemoryGame() {
     if (!selectedDifficulty) { // Difficulty selection screen
       showFoxyMessage('foxyIntroMemoryGame');
     } else if (gameComplete) {
-      // Example: showFoxyMessage('foxyCongratsMemory', 5); // Show for 5 seconds
-      // For now, let's keep it visible until navigating away or restarting
-      // showFoxyMessage('foxyCongratsMemory'); // This would need a new translation key
+      showFoxyMessage('foxyMemoryGameComplete');
     }
     
-    // Hide Foxy when navigating away from this component entirely
+    // Hide Foxy when navigating away from this component entirely unless it's the game complete message
     return () => {
       setIsFoxyVisible(false);
     };
@@ -134,17 +132,23 @@ export function MemoryGame() {
               : card
           ));
           
-          setMatches(prev => prev + 1);
+          const currentMatches = matches + 1;
+          setMatches(currentMatches);
           addStars(2);
           playSound('correct');
+          showFoxyMessage('foxyMemoryMatchFound', 3);
           setFlippedCards([]);
           
           // Check if game is complete
           const totalPairs = cards.length / 2;
-          if (matches + 1 === totalPairs) {
+          if (currentMatches === totalPairs) {
             setGameComplete(true);
             addStars(10); // Bonus for completion
             playSound('success');
+            // Game complete message is handled by useEffect [gameComplete]
+          } else if (totalPairs > 2 && totalPairs - currentMatches === 2) {
+            // Show encouragement when 2 pairs are left (if more than 2 pairs total)
+            showFoxyMessage('foxyMemoryFewPairsLeft', 4);
           }
         }, 1000);
       } else {
@@ -157,6 +161,7 @@ export function MemoryGame() {
           ));
           setFlippedCards([]);
           playSound('incorrect');
+          showFoxyMessage('foxyMemoryNoMatch', 4);
         }, 1500);
       }
     }
@@ -323,7 +328,7 @@ export function MemoryGame() {
       <div className="max-w-6xl mx-auto">
         {!selectedDifficulty ? renderDifficultySelection() : renderGame()}
       </div>
-      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible && (!selectedDifficulty || gameComplete)} />
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible} />
     </div>
   );
 }

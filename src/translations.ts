@@ -291,6 +291,12 @@ export interface Translation {
   foxyAdventurePass3Stars: string;
   foxyAdventureFail: string;
 
+  // Memory Game specific Foxy messages
+  foxyMemoryMatchFound: string;
+  foxyMemoryNoMatch: string;
+  foxyMemoryFewPairsLeft: string;
+  foxyMemoryGameComplete: string;
+
   foxyEncouragementStreak3: string;
   foxyEncouragementStreak5: string;
   foxyEncouragementTryAgain: string;
@@ -665,6 +671,12 @@ export const translations: Record<string, Translation> = {
     foxyAdventurePass3Stars: "Wow! Fantastisch! 3 Sterne für dich in diesem Level!",
     foxyAdventureFail: "Schade, diesmal nicht bestanden. Gib nicht auf, versuch es nochmal!",
 
+    // Memory Game specific Foxy messages
+    foxyMemoryMatchFound: "Super Fund, Eva! Das ist ein Paar!",
+    foxyMemoryNoMatch: "Nicht ganz ein Paar. Such weiter, Foxy weiß, du findest sie!",
+    foxyMemoryFewPairsLeft: "Fast geschafft, Eva! Nur noch ein paar Paare!",
+    foxyMemoryGameComplete: "Juhu! Du hast alle Paare gefunden, Eva! Foxy ist mega stolz!",
+
     foxyEncouragementStreak3: "Wow, 3 in Folge! Du hast einen Lauf!",
     foxyEncouragementStreak5: "Wahnsinn, 5 richtig! Foxy ist super beeindruckt!",
     foxyEncouragementTryAgain: "Hoppla, nicht ganz! Foxy weiß, du schaffst die nächste!",
@@ -1031,6 +1043,12 @@ export const translations: Record<string, Translation> = {
     foxyAdventurePass2Stars: "Превосходно! Уровень освоен, и 2 звезды заработаны!",
     foxyAdventurePass3Stars: "Ух ты! Фантастика! 3 звезды для тебя на этом уровне!",
     foxyAdventureFail: "Жаль, в этот раз не получилось. Не сдавайся, попробуй еще раз!",
+
+    // Memory Game specific Foxy messages
+    foxyMemoryMatchFound: "Отличная находка, Ева! Это пара!",
+    foxyMemoryNoMatch: "Не совсем пара. Ищи дальше, Фокси знает, ты их найдешь!",
+    foxyMemoryFewPairsLeft: "Почти готово, Ева! Осталось всего несколько пар!",
+    foxyMemoryGameComplete: "Ура! Ты нашла все пары, Ева! Фокси очень гордится тобой!",
 
     foxyEncouragementStreak3: "Ого, 3 подряд! Ты на волне успеха!",
     foxyEncouragementStreak5: "Потрясающе, 5 правильных! Фокси очень впечатлена!",
