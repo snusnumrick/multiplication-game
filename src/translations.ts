@@ -276,9 +276,19 @@ export interface Translation {
   foxyCongrats3: string;
   foxyCongratsAdventureLevel: string; // Added
   foxyCongratsQuiz: string; // Added
+  foxyCongratsQuizHigh: string;
+  foxyCongratsQuizMid: string;
+  foxyCongratsQuizLow: string;
 
   foxyAdventureCorrectAnswer: string; // Added
   foxyQuizCorrectAnswer: string; // Added
+
+  foxyEncouragementStreak3: string;
+  foxyEncouragementStreak5: string;
+  foxyEncouragementTryAgain: string;
+  foxyEncouragementQuizKeepTrying: string;
+
+  foxyTimeRunningOutQuiz: string;
 
   foxyHintMessage: string;
 }
@@ -632,9 +642,19 @@ export const translations: Record<string, Translation> = {
     foxyCongrats3: "Juhu, geschafft! Foxy feiert mit dir diesen Erfolg!",
     foxyCongratsAdventureLevel: "Super, Eva! Level geschafft! Foxy ist stolz auf deine Abenteuerlust!",
     foxyCongratsQuiz: "Klasse Leistung im Quiz, Eva! Foxy wusste, dass du es rockst!",
+    foxyCongratsQuizHigh: "Unglaubliche Punktzahl, Eva! Foxy jubelt über deine Mathe-Künste!",
+    foxyCongratsQuizMid: "Tolle Arbeit, Eva! Foxy sieht einen Mathe-Star heranwachsen!",
+    foxyCongratsQuizLow: "Gut gemacht, Eva! Übe weiter, und Foxy weiß, du wirst noch besser!",
 
     foxyAdventureCorrectAnswer: "Richtig so, Abenteurerin Eva! Foxy feuert dich an!",
     foxyQuizCorrectAnswer: "Genau richtig, Quiz-Champion Eva! Foxy ist begeistert!",
+
+    foxyEncouragementStreak3: "Wow, 3 in Folge! Du hast einen Lauf!",
+    foxyEncouragementStreak5: "Wahnsinn, 5 richtig! Foxy ist super beeindruckt!",
+    foxyEncouragementTryAgain: "Hoppla, nicht ganz! Foxy weiß, du schaffst die nächste!",
+    foxyEncouragementQuizKeepTrying: "Guter Versuch, Eva! Foxy sagt: Nicht aufgeben, Übung macht den Meister!",
+
+    foxyTimeRunningOutQuiz: "Die Zeit wird knapp, Eva! Konzentrier dich und gib nochmal alles!",
 
     foxyHintMessage: "Hmm, brauchst du einen kleinen Tipp von Foxy?",
   },
@@ -981,9 +1001,19 @@ export const translations: Record<string, Translation> = {
     foxyCongrats3: "Ура, получилось! Фокси празднует этот успех вместе с тобой!",
     foxyCongratsAdventureLevel: "Супер, Ева! Уровень пройден! Фокси гордится твоей жаждой приключений!",
     foxyCongratsQuiz: "Отличный результат в викторине, Ева! Фокси знала, что ты справишься!",
+    foxyCongratsQuizHigh: "Невероятный результат, Ева! Фокси в восторге от твоих математических способностей!",
+    foxyCongratsQuizMid: "Отличная работа, Ева! Фокси видит, как растёт звезда математики!",
+    foxyCongratsQuizLow: "Молодец, Ева! Продолжай тренироваться, и Фокси знает, ты станешь ещё лучше!",
 
     foxyAdventureCorrectAnswer: "Правильно, искательница приключений Ева! Фокси болеет за тебя!",
     foxyQuizCorrectAnswer: "Точно в цель, чемпион викторины Ева! Фокси в восторге!",
+
+    foxyEncouragementStreak3: "Ого, 3 подряд! Ты на волне успеха!",
+    foxyEncouragementStreak5: "Потрясающе, 5 правильных! Фокси очень впечатлена!",
+    foxyEncouragementTryAgain: "Ой, не совсем! Фокси знает, что следующая задача тебе по силам!",
+    foxyEncouragementQuizKeepTrying: "Хорошая попытка, Ева! Фокси говорит: не сдавайся, практика ведёт к совершенству!",
+
+    foxyTimeRunningOutQuiz: "Время на исходе, Ева! Сконцентрируйся и покажи лучший результат!",
 
     foxyHintMessage: "Хмм, нужна небольшая подсказка от Фокси?",
   }
