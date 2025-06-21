@@ -258,6 +258,24 @@ export interface Translation {
   foxyHide: string;
   foxyVisibilityDescriptionShow: string;
   foxyVisibilityDescriptionHide: string;
+
+  // Foxy contextual messages
+  foxyIntroPracticeMode: string;
+  foxyIntroQuizMode: string;
+  foxyIntroAdventureMode: string;
+  foxyIntroMemoryGame: string;
+  foxyIntroRealWorldMath: string;
+  foxyIntroFantasyMath: string;
+
+  foxyEncouragement1: string;
+  foxyEncouragement2: string;
+  foxyEncouragement3: string;
+
+  foxyCongrats1: string;
+  foxyCongrats2: string;
+  foxyCongrats3: string;
+
+  foxyHintMessage: string;
 }
 
 export interface ScenarioText {
@@ -591,6 +609,24 @@ export const translations: Record<string, Translation> = {
     foxyHide: "Verstecken",
     foxyVisibilityDescriptionShow: "Foxy ist sichtbar und hilft dir.",
     foxyVisibilityDescriptionHide: "Foxy ist versteckt.",
+
+    // Foxy contextual messages
+    foxyIntroPracticeMode: "Hallo Eva! Im Übungsmodus kannst du ganz in Ruhe die Einmaleinsreihen trainieren. Foxy ist da, um dir zu helfen!",
+    foxyIntroQuizMode: "Zeit für ein Quiz, Eva! Zeig Foxy, was du gelernt hast. Viel Erfolg!",
+    foxyIntroAdventureMode: "Auf ins Abenteuer, Eva! Foxy begleitet dich auf dieser spannenden Reise durch die Welt der Zahlen.",
+    foxyIntroMemoryGame: "Finde die passenden Karten, Eva! Foxy drückt dir die Daumen für dieses knifflige Memory.",
+    foxyIntroRealWorldMath: "Schau mal, Eva! Hier zeigt dir Foxy, wo Mathe im Alltag überall steckt. Spannend, oder?",
+    foxyIntroFantasyMath: "Willkommen in der Zauberwelt, Eva! Foxy und magische Wesen warten darauf, mit dir Mathe zu entdecken.",
+
+    foxyEncouragement1: "Du machst das super, Eva! Foxy ist stolz auf dich. Weiter so!",
+    foxyEncouragement2: "Foxy weiß, dass du das schaffst! Gib nicht auf!",
+    foxyEncouragement3: "Genau so! Übung macht den Meister, Eva!",
+
+    foxyCongrats1: "Wow, Eva! Foxy ist total beeindruckt von dir!",
+    foxyCongrats2: "Spitze! Du bist ein richtiges Mathe-Genie, Eva!",
+    foxyCongrats3: "Juhu, geschafft! Foxy feiert mit dir diesen Erfolg!",
+
+    foxyHintMessage: "Hmm, brauchst du einen kleinen Tipp von Foxy?",
   },
   
   ru: {
@@ -917,5 +953,23 @@ export const translations: Record<string, Translation> = {
     foxyHide: "Скрыть",
     foxyVisibilityDescriptionShow: "Фокси видна и помогает тебе.",
     foxyVisibilityDescriptionHide: "Фокси скрыта.",
+
+    // Foxy contextual messages
+    foxyIntroPracticeMode: "Привет, Ева! В режиме практики ты можешь спокойно тренировать таблицы умножения. Фокси здесь, чтобы помочь!",
+    foxyIntroQuizMode: "Время для викторины, Ева! Покажи Фокси, что ты выучила. Удачи!",
+    foxyIntroAdventureMode: "Вперёд, в приключение, Ева! Фокси будет сопровождать тебя в этом увлекательном путешествии по миру чисел.",
+    foxyIntroMemoryGame: "Найди подходящие карточки, Ева! Фокси держит за тебя кулачки в этой хитрой игре мемори.",
+    foxyIntroRealWorldMath: "Смотри, Ева! Здесь Фокси покажет тебе, где математика встречается в повседневной жизни. Интересно, правда?",
+    foxyIntroFantasyMath: "Добро пожаловать в волшебный мир, Ева! Фокси и магические существа ждут, чтобы вместе с тобой открывать математику.",
+
+    foxyEncouragement1: "Ты отлично справляешься, Ева! Фокси гордится тобой. Продолжай в том же духе!",
+    foxyEncouragement2: "Фокси знает, что у тебя всё получится! Не сдавайся!",
+    foxyEncouragement3: "Именно так! Практика ведёт к мастерству, Ева!",
+
+    foxyCongrats1: "Ух ты, Ева! Фокси просто в восторге от тебя!",
+    foxyCongrats2: "Великолепно! Ты настоящий математический гений, Ева!",
+    foxyCongrats3: "Ура, получилось! Фокси празднует этот успех вместе с тобой!",
+
+    foxyHintMessage: "Хмм, нужна небольшая подсказка от Фокси?",
   }
 };
