@@ -5,15 +5,15 @@ import { cn } from '@/lib/utils';
 interface AnimatedFoxyProps {
   message?: string;
   isVisible: boolean;
-  imageUrl?: string; // Will be replaced by animation system
+  imageUrl?: string; 
 }
 
 export function AnimatedFoxy({ 
   message, 
   isVisible, 
-  // imageUrl = "/images/foxy-mascot.jpg" // Commented out: To be replaced by Lottie animation
+  imageUrl = "/images/foxy-mascot.jpg" // Default static image
 }: AnimatedFoxyProps) {
-  const { t, settings, foxyAnimationState } = useGame();
+  const { t, settings, foxyAnimationState } = useGame(); // foxyAnimationState is kept for future use
 
   if (!settings.foxyEnabled) {
     return null;
@@ -27,17 +27,12 @@ export function AnimatedFoxy({
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5 pointer-events-none"
       )}
     >
-      {/* Placeholder for Lottie Animation. Current state: {foxyAnimationState} */}
-      <div className="w-[70px] h-[70px] mr-4 rounded-full border-[3px] border-[#f0a04b] flex items-center justify-center bg-gray-200">
-        <span className="text-xs text-gray-600 p-1 text-center">Anim: {foxyAnimationState}</span>
-      </div>
-      {/* 
+      {/* Display static image for now. Animation system will replace this. */}
       <img 
         src={imageUrl} 
         alt={t.foxyMascotAltText} 
         className="w-[70px] h-[70px] mr-4 rounded-full border-[3px] border-[#f0a04b]"
-      /> 
-      */}
+      />
       {message && (
         <p className="m-0 text-sm text-gray-700 leading-snug">
           {message}

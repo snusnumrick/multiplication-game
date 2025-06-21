@@ -60,16 +60,10 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 **Tasks:**
 
-1.  **[RECONSIDERING / LEANING TOWARDS SPRITE SHEETS] Choose Animation Technology:**
-    *   **Sprite Sheets:** Frame-by-frame animation using a sequence of images.
-        *   *Pros:* Easier asset creation using common image editing tools. Good for simpler character animations.
-        *   *Cons:* Raster-based (less scalable than vector), potentially larger file sizes for many frames.
-        *   *Decision:* Strong candidate due to simpler asset creation workflow.
-    *   **Lottie:** Vector animations, lightweight, and scalable.
-        *   *Pros:* Smooth, scalable vector graphics.
-        *   *Cons:* Steeper learning curve for asset creation (requires Adobe After Effects or similar).
-    *   ~~Framer Motion / React Spring: For UI-based animations and transitions, might be suitable for simple Foxy movements or state changes.~~
-    *   *Decision Point: Evaluating ease of asset creation vs. animation quality/scalability. Sprite sheets seem more practical for now.*
+1.  **[ON HOLD] Choose Animation Technology:**
+    *   Decision on animation technology (Sprite Sheets, Lottie, etc.) is currently on hold.
+    *   The immediate plan is to ensure `AnimatedFoxy.tsx` can display a static image if animation assets are not available or not yet integrated.
+    *   Future integration will replace the static image with the chosen animation system.
 
 2.  **[PENDING] Create/Source Basic Animations:**
     *   **Idle:** Foxy breathing lightly, blinking. (e.g., `foxy-idle-spritesheet.png` + `foxy-idle-metadata.json`)
@@ -86,8 +80,9 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   *Storage:* Animations and metadata to be stored in `src/assets/animations/foxy/`.
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
-    *   Replace the `<img>` tag (or current placeholder) with an animation component suitable for the chosen technology (e.g., a custom sprite sheet animator or a library).
-        *   **[COMPLETED - ADAPTABLE]** Placeholder for animation component added; it receives animation state from context. (Commit `c1bffa8`) This can be adapted for a sprite sheet player.
+    *   **[CURRENT STEP]** Ensure `AnimatedFoxy.tsx` displays a static image (`/images/foxy-mascot.jpg`) as a fallback, while retaining the `foxyAnimationState` logic for future use. The `imageUrl` prop will be used.
+    *   Future: Replace the static `<img>` tag with an animation component suitable for the chosen technology.
+    *   The component already receives `foxyAnimationState` from context (Commit `c1bffa8`), which will be used to drive animations once implemented.
     *   Manage animation states (idle, talking, happy) based on props or context.
     *   New directory: `src/assets/animations/foxy/` (e.g., sprite sheet images and potentially JSON metadata for frame coordinates/timings).
 
