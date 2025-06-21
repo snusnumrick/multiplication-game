@@ -60,23 +60,28 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 **Tasks:**
 
-1.  **[DECIDED] Choose Animation Technology: Lottie**
-    *   **Lottie:** Chosen for its vector animations, lightweight nature, and scalability. Assumes animations will be created in Adobe After Effects with the LottieFiles plugin.
-    *   ~~Sprite Sheets: Traditional 2D animation technique. Can be implemented with CSS or a simple JS animation loop.~~
+1.  **[RECONSIDERING / LEANING TOWARDS SPRITE SHEETS] Choose Animation Technology:**
+    *   **Sprite Sheets:** Frame-by-frame animation using a sequence of images.
+        *   *Pros:* Easier asset creation using common image editing tools. Good for simpler character animations.
+        *   *Cons:* Raster-based (less scalable than vector), potentially larger file sizes for many frames.
+        *   *Decision:* Strong candidate due to simpler asset creation workflow.
+    *   **Lottie:** Vector animations, lightweight, and scalable.
+        *   *Pros:* Smooth, scalable vector graphics.
+        *   *Cons:* Steeper learning curve for asset creation (requires Adobe After Effects or similar).
     *   ~~Framer Motion / React Spring: For UI-based animations and transitions, might be suitable for simple Foxy movements or state changes.~~
-    *   *Decision: Lottie selected.*
+    *   *Decision Point: Evaluating ease of asset creation vs. animation quality/scalability. Sprite sheets seem more practical for now.*
 
 2.  **[PENDING] Create/Source Basic Animations:**
-    *   **Idle:** Foxy breathing lightly, blinking. (e.g., `idle.json`)
-    *   **Talking:** Simple mouth movement synced (loosely at first) with message display. (e.g., `talking.json`)
-    *   **Happy/Excited:** Foxy smiling, maybe a small jump or tail wag, for correct answers or achievements. (e.g., `happy.json`)
-    *   *Asset Creation: This is a significant step. Requires manual creation (e.g., using Adobe After Effects), sourcing suitable existing assets, or hiring an animator. Exploring potential AI-assisted tools for asset generation, though direct Lottie animation by LLMs is not yet mature. Animations to be stored in `src/assets/animations/foxy/`.*
+    *   **Idle:** Foxy breathing lightly, blinking. (e.g., `foxy-idle-spritesheet.png` + metadata)
+    *   **Talking:** Simple mouth movement. (e.g., `foxy-talking-spritesheet.png` + metadata)
+    *   **Happy/Excited:** Foxy smiling, small jump/wag. (e.g., `foxy-happy-spritesheet.png` + metadata)
+    *   *Asset Creation: This involves creating sequences of frames for each animation and combining them into sprite sheets. Can be done with tools like Aseprite, GIMP, Krita, Photoshop. Animations to be stored in `src/assets/animations/foxy/`.*
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
-    *   Replace the `<img>` tag with the chosen animation component (e.g., Lottie player).
-        *   **[COMPLETED]** Placeholder for Lottie component added; it receives animation state from context. (Commit `c1bffa8`)
+    *   Replace the `<img>` tag (or current placeholder) with an animation component suitable for the chosen technology (e.g., a custom sprite sheet animator or a library).
+        *   **[COMPLETED - ADAPTABLE]** Placeholder for animation component added; it receives animation state from context. (Commit `c1bffa8`) This can be adapted for a sprite sheet player.
     *   Manage animation states (idle, talking, happy) based on props or context.
-    *   New directory: `src/assets/animations/foxy/` (e.g., `idle.json`, `talking.json`).
+    *   New directory: `src/assets/animations/foxy/` (e.g., sprite sheet images and potentially JSON metadata for frame coordinates/timings).
 
 4.  **[IN PROGRESS] Control Animations from `GameContext.tsx` or Props:**
     *   Add state to `GameContext.tsx` to control Foxy's current animation.
