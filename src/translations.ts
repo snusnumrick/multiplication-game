@@ -304,6 +304,13 @@ export interface Translation {
   foxyRealWorldCorrect: string;
   foxyRealWorldIncorrect: string;
 
+  // FantasyMath specific Foxy messages
+  foxyFantasyProblem: string;
+  foxyFantasyExpression: string;
+  foxyFantasyAnswer: string;
+  foxyFantasyCorrect: string;
+  foxyFantasyIncorrect: string;
+
   foxyEncouragementStreak3: string;
   foxyEncouragementStreak5: string;
   foxyEncouragementTryAgain: string;
@@ -691,6 +698,13 @@ export const translations: Record<string, Translation> = {
     foxyRealWorldCorrect: "Genau! Das hast du wie ein Profi gelöst, Eva! Foxy ist super beeindruckt!",
     foxyRealWorldIncorrect: "Hmm, das stimmt nicht ganz. Schauen wir uns die Lösung gemeinsam an und lernen daraus, Eva!",
 
+    // FantasyMath specific Foxy messages
+    foxyFantasyProblem: "Eine magische Herausforderung erwartet dich, Eva! Welcher Zauber wird sie lösen?",
+    foxyFantasyExpression: "Wähle deine Zauberformel weise, Eva! Foxy glaubt an deine Kraft!",
+    foxyFantasyAnswer: "Der Zauber ist fast fertig! Was ist die letzte magische Zahl, Eva?",
+    foxyFantasyCorrect: "Abrakadabra! Du hast die Magie gemeistert, Eva! Foxy ist erstaunt über deine Fähigkeiten!",
+    foxyFantasyIncorrect: "Oh je, der Zauber ist etwas verpufft. Schauen wir uns die richtige Magie an und versuchen es nochmal, Eva!",
+
     foxyEncouragementStreak3: "Wow, 3 in Folge! Du hast einen Lauf!",
     foxyEncouragementStreak5: "Wahnsinn, 5 richtig! Foxy ist super beeindruckt!",
     foxyEncouragementTryAgain: "Hoppla, nicht ganz! Foxy weiß, du schaffst die nächste!",
@@ -1070,6 +1084,13 @@ export const translations: Record<string, Translation> = {
     foxyRealWorldAnswer: "Отлично! А какой ответ? Фокси знает, ты сможешь это вычислить!",
     foxyRealWorldCorrect: "Точно! Ты решила это как профи, Ева! Фокси очень впечатлена!",
     foxyRealWorldIncorrect: "Хм, это не совсем так. Давай вместе посмотрим на решение и поучимся, Ева!",
+
+    // FantasyMath specific Foxy messages
+    foxyFantasyProblem: "Тебя ждёт волшебное испытание, Ева! Какое заклинание его решит?",
+    foxyFantasyExpression: "Выбирай свою волшебную формулу с умом, Ева! Фокси верит в твою силу!",
+    foxyFantasyAnswer: "Заклинание почти готово! Какое последнее волшебное число, Ева?",
+    foxyFantasyCorrect: "Абракадабра! Ты овладела магией, Ева! Фокси поражена твоими способностями!",
+    foxyFantasyIncorrect: "Ох, заклинание немного не сработало. Давай посмотрим на правильную магию и попробуем снова, Ева!",
 
     foxyEncouragementStreak3: "Ого, 3 подряд! Ты на волне успеха!",
     foxyEncouragementStreak5: "Потрясающе, 5 правильных! Фокси очень впечатлена!",
