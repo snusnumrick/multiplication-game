@@ -14,6 +14,7 @@ interface GameSettings {
   language: 'de' | 'ru';
   difficulty: 'easy' | 'medium' | 'hard';
   soundEnabled: boolean;
+  foxyEnabled: boolean; // Added for Foxy visibility
 }
 
 export interface GameContextType {
@@ -34,6 +35,12 @@ export interface GameContextType {
   
   // Sound Effects
   playSound: (type: 'correct' | 'incorrect' | 'success' | 'click') => void;
+
+  // Foxy specific
+  foxyMessage: string | null;
+  setFoxyMessage: (message: string | null) => void;
+  isFoxyVisible: boolean;
+  setIsFoxyVisible: (visible: boolean) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
