@@ -274,6 +274,11 @@ export interface Translation {
   foxyCongrats1: string;
   foxyCongrats2: string;
   foxyCongrats3: string;
+  foxyCongratsAdventureLevel: string; // Added
+  foxyCongratsQuiz: string; // Added
+
+  foxyAdventureCorrectAnswer: string; // Added
+  foxyQuizCorrectAnswer: string; // Added
 
   foxyHintMessage: string;
 }
@@ -625,6 +630,11 @@ export const translations: Record<string, Translation> = {
     foxyCongrats1: "Wow, Eva! Foxy ist total beeindruckt von dir!",
     foxyCongrats2: "Spitze! Du bist ein richtiges Mathe-Genie, Eva!",
     foxyCongrats3: "Juhu, geschafft! Foxy feiert mit dir diesen Erfolg!",
+    foxyCongratsAdventureLevel: "Super, Eva! Level geschafft! Foxy ist stolz auf deine Abenteuerlust!",
+    foxyCongratsQuiz: "Klasse Leistung im Quiz, Eva! Foxy wusste, dass du es rockst!",
+
+    foxyAdventureCorrectAnswer: "Richtig so, Abenteurerin Eva! Foxy feuert dich an!",
+    foxyQuizCorrectAnswer: "Genau richtig, Quiz-Champion Eva! Foxy ist begeistert!",
 
     foxyHintMessage: "Hmm, brauchst du einen kleinen Tipp von Foxy?",
   },
@@ -969,6 +979,11 @@ export const translations: Record<string, Translation> = {
     foxyCongrats1: "Ух ты, Ева! Фокси просто в восторге от тебя!",
     foxyCongrats2: "Великолепно! Ты настоящий математический гений, Ева!",
     foxyCongrats3: "Ура, получилось! Фокси празднует этот успех вместе с тобой!",
+    foxyCongratsAdventureLevel: "Супер, Ева! Уровень пройден! Фокси гордится твоей жаждой приключений!",
+    foxyCongratsQuiz: "Отличный результат в викторине, Ева! Фокси знала, что ты справишься!",
+
+    foxyAdventureCorrectAnswer: "Правильно, искательница приключений Ева! Фокси болеет за тебя!",
+    foxyQuizCorrectAnswer: "Точно в цель, чемпион викторины Ева! Фокси в восторге!",
 
     foxyHintMessage: "Хмм, нужна небольшая подсказка от Фокси?",
   }
