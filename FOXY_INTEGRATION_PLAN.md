@@ -34,13 +34,13 @@ Enhance Foxy's presence from a static image with text to an animated character w
 2.  **[PARTIALLY COMPLETED] Integrate Contextual Messages in Game Modes:** (Intro messages done - Commit `01c32af`; Event-based messages for Practice/Quiz modes - Commit `b6ebe1d` and prior related changes)
     *   Modify each game mode component (`PracticeMode.tsx`, `QuizMode.tsx`, etc.):
         *   Use `useEffect` and `useGame` hook (`showFoxyMessage`, `setIsFoxyVisible`) to display relevant Foxy messages upon entering the mode.
-        *   **[IN PROGRESS]** Implement logic to show/hide Foxy or change her message based on game events within the mode.
+        *   **[COMPLETED]** Implement logic to show/hide Foxy or change her message based on game events within the mode.
             *   `PracticeMode.tsx`: [COMPLETED] Added messages for correct answer streaks (3 and 5) and encouragement on incorrect answers.
             *   `QuizMode.tsx`: [COMPLETED] Added messages for correct answer streaks, encouragement on incorrect, time running low warning, and contextual congratulatory messages based on final score.
-            *   **[PENDING]** `AdventureMode.tsx`: Define and implement event-driven messages.
-            *   **[PENDING]** `MemoryGame.tsx`: Define and implement event-driven messages.
-            *   **[PENDING]** `RealWorldMath.tsx`: Define and implement event-driven messages.
-            *   **[PENDING]** `FantasyMath.tsx`: Define and implement event-driven messages.
+            *   `AdventureMode.tsx`: [COMPLETED] Implemented event-driven messages (incorrect answer, time low, level completion).
+            *   `MemoryGame.tsx`: [COMPLETED] Implemented event-driven messages (match found, no match, few pairs left, game complete).
+            *   `RealWorldMath.tsx`: [COMPLETED] Implemented event-driven messages (problem, expression, answer steps, correct/incorrect result).
+            *   `FantasyMath.tsx`: [COMPLETED] Implemented event-driven messages (problem, expression, answer steps, correct/incorrect result).
     *   In `GameContext.tsx`:
         *   **[COMPLETED]** Added a generic function `showFoxyMessage(messageKey: keyof Translation, duration?: number)` to simplify showing messages and potentially auto-hiding them. (Commit `ab828cf`)
 
@@ -168,12 +168,12 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 ## Timeline & Milestones
 
-*   **Milestone 1 (Phase 1 - In Progress):**
-    *   Foxy provides contextual text messages in all game modes (Intro messages done - Commit `01c32af`).
+*   **Milestone 1 (Phase 1 - Near Completion):**
+    *   Foxy provides contextual text messages in all game modes (Intro messages done - Commit `01c32af`; Event-based messages in all modes now complete).
     *   User can toggle Foxy's visibility (Done - Commit `25dced1`).
     *   Generic `showFoxyMessage` helper function implemented and used (Done - Commit `ab828cf`).
-    *   Appearance refinement in `AnimatedFoxy.tsx` (Done - Commit `b6ebe1d` and prior related changes).
-    *   *Finalizing: In-game event messages for PracticeMode and QuizMode are complete. Work is now focused on implementing these messages for `AdventureMode`, `MemoryGame`, `RealWorldMath`, and `FantasyMath`.*
+    *   Appearance refinement in `AnimatedFoxy.tsx` (Marked as Done - Commit `b6ebe1d` and prior related changes, but plan's mention of Tailwind CSS conversion is not reflected in current `AnimatedFoxy.tsx` code).
+    *   *Status: All event-based messages are implemented. The main outstanding question for Phase 1 completion is the Tailwind CSS conversion for `AnimatedFoxy.tsx` as per Task 4's description in the plan.*
 *   **Milestone 2 (Phase 2 - Pending):** Foxy is animated with basic idle, talking, and happy states.
 *   **Milestone 3 (Phase 3 - Pending):** Foxy speaks pre-recorded voice lines in one language, synchronized with talking animation.
 *   **Milestone 4 (Phase 4 - Pending):** Advanced interactions, polish, and multilingual voice support implemented.
