@@ -464,7 +464,7 @@ export function AdventureMode() {
           )}
           
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            {passed ? 'Level geschafft!' : 'Noch nicht geschafft'}
+            {passed ? t.levelCompleted : t.levelNotCompleted}
           </h2>
           
           {/* Stars */}
@@ -485,22 +485,22 @@ export function AdventureMode() {
           {/* Results */}
           <div className="bg-gray-50 rounded-2xl p-6 mb-6 space-y-3">
             <div className="flex justify-between">
-              <span>Richtige Antworten:</span>
+              <span>{t.correctAnswersLabel}</span>
               <span className="font-bold">{correctAnswers}/{questions.length}</span>
             </div>
             <div className="flex justify-between">
-              <span>Genauigkeit:</span>
+              <span>{t.accuracyLabel}</span>
               <span className={`font-bold ${accuracy >= selectedLevel.requiredAccuracy ? 'text-green-600' : 'text-red-600'}`}>
                 {Math.round(accuracy)}%
               </span>
             </div>
             <div className="flex justify-between">
-              <span>Benötigt:</span>
+              <span>{t.required}</span>
               <span className="font-bold">{selectedLevel.requiredAccuracy}%</span>
             </div>
             {passed && (
               <div className="flex justify-between border-t pt-2">
-                <span>Sterne erhalten:</span>
+                <span>{t.starsEarnedLabel}</span>
                 <span className="font-bold text-yellow-600">+{starsEarned * 5}</span>
               </div>
             )}
@@ -512,13 +512,13 @@ export function AdventureMode() {
               onClick={() => startLevel(selectedLevel)}
               className="bg-blue-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-blue-600 transition-colors"
             >
-              Wiederholen
+              {t.repeatLevel}
             </button>
             <button
               onClick={() => setGameState('levelSelect')}
               className="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-green-600 transition-colors"
             >
-              Level wählen
+              {t.selectLevel}
             </button>
           </div>
         </div>
@@ -546,7 +546,7 @@ export function AdventureMode() {
             onClick={() => setGameState('levelSelect')}
             className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg hover:bg-white transition-colors font-medium"
           >
-            Level wählen
+            {t.selectLevel}
           </button>
         )}
       </div>

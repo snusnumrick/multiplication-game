@@ -202,7 +202,7 @@ export function Progress() {
                     
                     {achievement.unlocked ? (
                       <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        ✓ Erreicht!
+                        ✓ {t.achievedStatus}
                       </div>
                     ) : (
                       <div className="bg-gray-300 text-gray-600 px-3 py-1 rounded-full text-sm">

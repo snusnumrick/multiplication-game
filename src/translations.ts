@@ -163,6 +163,63 @@ export interface Translation {
   tableMasterDesc: string;
   hardWorkerDesc: string;
   mathChampionDesc: string;
+
+  // AdventureMode specific
+  levelCompleted: string;
+  levelNotCompleted: string;
+  correctAnswersLabel: string;
+  accuracyLabel: string;
+  starsEarnedLabel: string;
+  repeatLevel: string;
+  selectLevel: string;
+
+  // FantasyMath specific
+  magicProblemTitle: string;
+  startMagicButton: string;
+  magicExpressionQuestion: string;
+  magicAnswerQuestion: string;
+  checkMagicButton: string;
+  magicCorrectResult: string;
+  magicIncorrectResult: string;
+  correctSpellLabel: string;
+  magicStarMessage: string;
+  moreMagicButton: string;
+  otherAdventuresButtonFantasy: string;
+  magicCalculationLabel: string;
+
+  // MemoryGame specific
+  resetButtonLabel: string;
+  newDifficultyButton: string;
+  changeDifficultyButton: string;
+
+  // PracticeMode specific
+  tableSeriesLabel: string; // e.g., "{tableNumber}er Reihe"
+  correctAnswersSuffix: string;
+  percentageCorrectSuffix: string;
+  thinkHintPrefix: string;
+  oneStarEarned: string;
+  correctAnswerIs: string;
+  newProblemButton: string;
+  selectOtherTableButton: string;
+
+  // Progress specific
+  achievedStatus: string;
+
+  // RealWorldMath specific
+  problemLabel: string;
+  startSolutionButton: string;
+  expressionQuestion: string;
+  answerQuestion: string;
+  evaFantasticResult: string;
+  tryAgainEva: string;
+  correctSolutionLabel: string;
+  foxyProudMessage: string;
+  otherProblemsButton: string;
+  calculationLabel: string;
+
+  // Settings specific
+  germanLanguage: string;
+  russianLanguage: string;
 }
 
 export const translations: Record<string, Translation> = {
@@ -331,6 +388,63 @@ export const translations: Record<string, Translation> = {
     tableMasterDesc: "Lerne alle 10 Einmaleins-Reihen",
     hardWorkerDesc: "Sammle 100 Sterne",
     mathChampionDesc: "Sammle 200 Sterne",
+
+    // AdventureMode specific
+    levelCompleted: "Level geschafft!",
+    levelNotCompleted: "Noch nicht geschafft",
+    correctAnswersLabel: "Richtige Antworten:",
+    accuracyLabel: "Genauigkeit:",
+    starsEarnedLabel: "Sterne erhalten:",
+    repeatLevel: "Wiederholen",
+    selectLevel: "Level wählen",
+
+    // FantasyMath specific
+    magicProblemTitle: "Magische Aufgabe:",
+    startMagicButton: "Magie beginnen",
+    magicExpressionQuestion: "Welcher Zauber löst diese Aufgabe?",
+    magicAnswerQuestion: "Welches magische Ergebnis?",
+    checkMagicButton: "Magie prüfen",
+    magicCorrectResult: "Fantastisch, Eva! Die Magie hat geklappt!",
+    magicIncorrectResult: "Versuche deine Magie nochmal!",
+    correctSpellLabel: "Richtiger Zauber:",
+    magicStarMessage: "Foxy bewundert deine Magie!",
+    moreMagicButton: "Mehr Magie",
+    otherAdventuresButtonFantasy: "Andere Abenteuer",
+    magicCalculationLabel: "Magische Rechnung:",
+
+    // MemoryGame specific
+    resetButtonLabel: "Neu",
+    newDifficultyButton: "Neue Schwierigkeit",
+    changeDifficultyButton: "Schwierigkeit ändern",
+
+    // PracticeMode specific
+    tableSeriesLabel: "{tableNumber}er Reihe",
+    correctAnswersSuffix: "richtig",
+    percentageCorrectSuffix: "% richtig",
+    thinkHintPrefix: "Denke an:",
+    oneStarEarned: "+1 Stern erhalten!",
+    correctAnswerIs: "Die richtige Antwort ist",
+    newProblemButton: "Neue Aufgabe",
+    selectOtherTableButton: "Andere Reihe wählen",
+
+    // Progress specific
+    achievedStatus: "Erreicht!",
+
+    // RealWorldMath specific
+    problemLabel: "Aufgabe:",
+    startSolutionButton: "Lösung beginnen",
+    expressionQuestion: "Welcher Ausdruck löst diese Aufgabe?",
+    answerQuestion: "Wie lautet die Antwort?",
+    evaFantasticResult: "Fantastisch, Eva!",
+    tryAgainEva: "Versuche es nochmal!",
+    correctSolutionLabel: "Richtige Lösung:",
+    foxyProudMessage: "Foxy ist stolz auf dich!",
+    otherProblemsButton: "Andere Aufgaben",
+    calculationLabel: "Rechnung:",
+
+    // Settings specific
+    germanLanguage: "Deutsch",
+    russianLanguage: "Русский",
   },
   
   ru: {
@@ -498,5 +612,62 @@ export const translations: Record<string, Translation> = {
     tableMasterDesc: "Выучи все 10 таблиц умножения",
     hardWorkerDesc: "Собери 100 звёзд",
     mathChampionDesc: "Собери 200 звёзд",
+
+    // AdventureMode specific
+    levelCompleted: "Уровень пройден!",
+    levelNotCompleted: "Ещё не пройдено",
+    correctAnswersLabel: "Правильные ответы:",
+    accuracyLabel: "Точность:",
+    starsEarnedLabel: "Получено звёзд:",
+    repeatLevel: "Повторить",
+    selectLevel: "Выбрать уровень",
+
+    // FantasyMath specific
+    magicProblemTitle: "Волшебная задача:",
+    startMagicButton: "Начать магию",
+    magicExpressionQuestion: "Какое заклинание решает эту задачу?",
+    magicAnswerQuestion: "Какой магический результат?",
+    checkMagicButton: "Проверить магию",
+    magicCorrectResult: "Потрясающе, Ева! Магия удалась!",
+    magicIncorrectResult: "Попробуй свою магию ещё раз!",
+    correctSpellLabel: "Правильное заклинание:",
+    magicStarMessage: "Фокси восхищается твоей магией!",
+    moreMagicButton: "Ещё магии",
+    otherAdventuresButtonFantasy: "Другие приключения",
+    magicCalculationLabel: "Магическое умножение:",
+
+    // MemoryGame specific
+    resetButtonLabel: "Заново",
+    newDifficultyButton: "Новая сложность",
+    changeDifficultyButton: "Изменить сложность",
+
+    // PracticeMode specific
+    tableSeriesLabel: "Таблица на {tableNumber}",
+    correctAnswersSuffix: "правильно",
+    percentageCorrectSuffix: "% правильно",
+    thinkHintPrefix: "Подумай:",
+    oneStarEarned: "+1 звезда получена!",
+    correctAnswerIs: "Правильный ответ",
+    newProblemButton: "Новое задание",
+    selectOtherTableButton: "Выбрать другую таблицу",
+
+    // Progress specific
+    achievedStatus: "Достигнуто!",
+
+    // RealWorldMath specific
+    problemLabel: "Задача:",
+    startSolutionButton: "Начать решение",
+    expressionQuestion: "Какое выражение решает эту задачу?",
+    answerQuestion: "Какой ответ?",
+    evaFantasticResult: "Отлично, Ева!",
+    tryAgainEva: "Попробуй ещё раз!",
+    correctSolutionLabel: "Правильное решение:",
+    foxyProudMessage: "Фокси гордится тобой!",
+    otherProblemsButton: "Другие задачи",
+    calculationLabel: "Умножение:",
+
+    // Settings specific
+    germanLanguage: "Немецкий",
+    russianLanguage: "Русский",
   }
 };

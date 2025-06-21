@@ -208,7 +208,7 @@ export function MemoryGame() {
               className="bg-blue-500 text-white px-4 py-2 rounded-xl font-medium hover:bg-blue-600 transition-colors flex items-center"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
-              Neu
+              {t.resetButtonLabel}
             </button>
           </div>
         </div>
@@ -271,7 +271,7 @@ export function MemoryGame() {
                   onClick={() => setSelectedDifficulty(null)}
                   className="flex-1 bg-blue-500 text-white py-3 rounded-2xl font-bold hover:bg-blue-600 transition-colors"
                 >
-                  Neue Schwierigkeit
+                  {t.newDifficultyButton}
                 </button>
               </div>
             </div>
@@ -301,7 +301,7 @@ export function MemoryGame() {
             onClick={() => setSelectedDifficulty(null)}
             className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg hover:bg-white transition-colors font-medium"
           >
-            Schwierigkeit ändern
+            {t.changeDifficultyButton}
           </button>
         )}
       </div>

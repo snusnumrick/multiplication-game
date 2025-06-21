@@ -89,18 +89,18 @@ export function PracticeMode() {
       <div className="text-center max-w-2xl mx-auto">
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
           <h2 className="text-2xl font-bold text-gray-700 mb-6">
-            {selectedTable}er Reihe - {t.practiceTitle}
+            {t.tableSeriesLabel.replace('{tableNumber}', selectedTable!.toString())} - {t.practiceTitle}
           </h2>
           
           {/* Progress */}
           <div className="flex justify-between items-center mb-6 text-gray-600">
             <div className="flex items-center">
               <Star className="w-5 h-5 text-yellow-500 mr-2 fill-current" />
-              <span>{correctAnswers} richtig</span>
+              <span>{correctAnswers} {t.correctAnswersSuffix}</span>
             </div>
             <div>
               {totalAnswers > 0 && (
-                <span>{Math.round((correctAnswers / totalAnswers) * 100)}% richtig</span>
+                <span>{Math.round((correctAnswers / totalAnswers) * 100)}{t.percentageCorrectSuffix}</span>
               )}
             </div>
           </div>
@@ -128,7 +128,7 @@ export function PracticeMode() {
             <div className="bg-yellow-100 rounded-2xl p-4 mb-6 text-lg">
               <Lightbulb className="w-6 h-6 text-yellow-600 inline mr-2" />
               <span className="text-yellow-800">
-                Denke an: {Array.from({ length: currentProblem.b }, (_, i) => currentProblem.a).join(' + ')} = {correctAnswer}
+                {t.thinkHintPrefix} {Array.from({ length: currentProblem.b }, (_, i) => currentProblem.a).join(' + ')} = {correctAnswer}
               </span>
             </div>
           )}
@@ -138,13 +138,13 @@ export function PracticeMode() {
             <div className="bg-green-100 rounded-2xl p-4 mb-6 text-xl font-bold text-green-800 animate-pulse">
               <Check className="w-8 h-8 inline mr-2" />
               {t.excellent}! {currentProblem.a} × {currentProblem.b} = {correctAnswer}
-              <div className="text-sm mt-2">+1 Stern erhalten!</div>
+              <div className="text-sm mt-2">{t.oneStarEarned}</div>
             </div>
           )}
 
           {isCorrect === false && (
             <div className="bg-red-100 rounded-2xl p-4 mb-6 text-xl font-bold text-red-800">
-              {t.tryAgain} Die richtige Antwort ist {correctAnswer}
+              {t.tryAgain} {t.correctAnswerIs} {correctAnswer}
             </div>
           )}
 
@@ -175,7 +175,7 @@ export function PracticeMode() {
               className="bg-blue-500 text-white px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-blue-600 transform transition-all duration-200 hover:scale-105 active:scale-95"
             >
               <RotateCcw className="w-5 h-5 inline mr-2" />
-              Neue Aufgabe
+              {t.newProblemButton}
             </button>
           </div>
         </div>
@@ -207,7 +207,7 @@ export function PracticeMode() {
             }}
             className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg hover:bg-white transition-colors font-medium"
           >
-            Andere Reihe wählen
+            {t.selectOtherTableButton}
           </button>
         )}
       </div>

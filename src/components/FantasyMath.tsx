@@ -279,7 +279,7 @@ export function FantasyMath() {
             {gameStep === 'problem' && (
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  ✨ {settings.language === 'ru' ? 'Волшебная задача:' : 'Magische Aufgabe:'} ✨
+                  ✨ {t.magicProblemTitle} ✨
                 </h2>
                 <p className="text-xl text-gray-700 mb-8 leading-relaxed">
                   {selectedScenario.problem}
@@ -288,7 +288,7 @@ export function FantasyMath() {
                   onClick={() => setGameStep('expression')}
                   className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-2xl text-xl font-bold hover:from-purple-600 hover:to-pink-700 transition-all duration-200 transform hover:scale-105"
                 >
-                  🪄 {settings.language === 'ru' ? 'Начать магию' : 'Magie beginnen'} ✨
+                  🪄 {t.startMagicButton} ✨
                 </button>
               </div>
             )}
@@ -296,7 +296,7 @@ export function FantasyMath() {
             {gameStep === 'expression' && (
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  🔮 {settings.language === 'ru' ? 'Какое заклинание решает эту задачу?' : 'Welcher Zauber löst diese Aufgabe?'} 🔮
+                  🔮 {t.magicExpressionQuestion} 🔮
                 </h2>
                 <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
                   {[selectedScenario.calculation, ...selectedScenario.wrongOptions].sort(() => Math.random() - 0.5).map((option, index) => (
@@ -315,7 +315,7 @@ export function FantasyMath() {
             {gameStep === 'answer' && (
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  ⭐ {settings.language === 'ru' ? 'Какой магический результат?' : 'Welches magische Ergebnis?'} ⭐
+                  ⭐ {t.magicAnswerQuestion} ⭐
                 </h2>
                 <div className="mb-6">
                   <div className="text-4xl font-bold text-gray-800 mb-4">
@@ -338,7 +338,7 @@ export function FantasyMath() {
                   disabled={!userAnswer}
                   className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-2xl text-xl font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  🪄 {settings.language === 'ru' ? 'Проверить магию' : 'Magie prüfen'} ✨
+                  🪄 {t.checkMagicButton} ✨
                 </button>
               </div>
             )}
@@ -346,15 +346,12 @@ export function FantasyMath() {
             {gameStep === 'result' && (
               <div className="text-center">
                 <div className={`text-4xl font-bold mb-6 ${isCorrect ? 'text-green-600' : 'text-purple-600'}`}>
-                  {isCorrect ? 
-                    (settings.language === 'ru' ? '🎉✨ Потрясающе, Ева! Магия удалась!' : '🎉✨ Fantastisch, Eva! Die Magie hat geklappt!') :
-                    (settings.language === 'ru' ? '🪄😊 Попробуй свою магию ещё раз!' : '🪄😊 Versuche deine Magie nochmal!')
-                  }
+                  {isCorrect ? t.magicCorrectResult : t.magicIncorrectResult}
                 </div>
                 
                 <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-6 mb-6 border-2 border-gold">
                   <h3 className="text-xl font-bold text-gray-800 mb-4">
-                    ✨ {settings.language === 'ru' ? 'Правильное заклинание:' : 'Richtiger Zauber:'} ✨
+                    ✨ {t.correctSpellLabel} ✨
                   </h3>
                   <div className="text-4xl font-bold text-gray-800">
                     🪄 {selectedScenario.calculation} = {selectedScenario.answer} ⭐
@@ -364,7 +361,7 @@ export function FantasyMath() {
                 {isCorrect && (
                   <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-4 mb-6 border-2 border-purple-300">
                     <div className="text-lg font-bold text-gray-800">
-                      +3 ⭐ {settings.language === 'ru' ? 'Фокси восхищается твоей магией!' : 'Foxy bewundert deine Magie!'}
+                      +3 ⭐ {t.magicStarMessage}
                     </div>
                   </div>
                 )}
@@ -374,13 +371,13 @@ export function FantasyMath() {
                     onClick={resetScenario}
                     className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-2xl text-lg font-bold hover:from-blue-600 hover:to-indigo-700 transition-all duration-200"
                   >
-                    🪄 {settings.language === 'ru' ? 'Ещё магии' : 'Mehr Magie'}
+                    🪄 {t.moreMagicButton}
                   </button>
                   <button
                     onClick={() => setSelectedScenario(null)}
                     className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-2xl text-lg font-bold hover:from-purple-600 hover:to-pink-700 transition-all duration-200"
                   >
-                    ✨ {settings.language === 'ru' ? 'Другие приключения' : 'Andere Abenteuer'}
+                    ✨ {t.otherAdventuresButtonFantasy}
                   </button>
                 </div>
               </div>
@@ -443,7 +440,7 @@ export function FantasyMath() {
                 <p className="text-sm opacity-90 mb-4 relative z-10">{scenario.description}</p>
                 <div className="bg-white/20 rounded-xl p-3 relative z-10">
                   <div className="text-sm font-medium opacity-90">
-                    {settings.language === 'ru' ? 'Магическое умножение:' : 'Magische Rechnung:'}
+                    {t.magicCalculationLabel}
                   </div>
                   <div className="text-lg font-bold">✨ {scenario.calculation} ✨</div>
                 </div>

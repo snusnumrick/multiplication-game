@@ -279,7 +279,7 @@ export function RealWorldMath() {
             {gameStep === 'problem' && (
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  {settings.language === 'ru' ? 'Задача:' : 'Aufgabe:'}
+                  {t.problemLabel}
                 </h2>
                 <p className="text-xl text-gray-700 mb-8 leading-relaxed">
                   {selectedScenario.problem}
@@ -288,7 +288,7 @@ export function RealWorldMath() {
                   onClick={() => setGameStep('expression')}
                   className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-2xl text-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
                 >
-                  {settings.language === 'ru' ? 'Начать решение' : 'Lösung beginnen'}
+                  {t.startSolutionButton}
                 </button>
               </div>
             )}
@@ -296,7 +296,7 @@ export function RealWorldMath() {
             {gameStep === 'expression' && (
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  {settings.language === 'ru' ? 'Какое выражение решает эту задачу?' : 'Welcher Ausdruck löst diese Aufgabe?'}
+                  {t.expressionQuestion}
                 </h2>
                 <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
                   {[selectedScenario.calculation, ...selectedScenario.wrongOptions].sort(() => Math.random() - 0.5).map((option, index) => (
@@ -315,7 +315,7 @@ export function RealWorldMath() {
             {gameStep === 'answer' && (
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  {settings.language === 'ru' ? 'Какой ответ?' : 'Wie lautet die Antwort?'}
+                  {t.answerQuestion}
                 </h2>
                 <div className="mb-6">
                   <div className="text-4xl font-bold text-gray-800 mb-4">
@@ -338,7 +338,7 @@ export function RealWorldMath() {
                   disabled={!userAnswer}
                   className="bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-4 rounded-2xl text-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {settings.language === 'ru' ? 'Проверить' : 'Prüfen'}
+                  {t.check}
                 </button>
               </div>
             )}
@@ -346,15 +346,12 @@ export function RealWorldMath() {
             {gameStep === 'result' && (
               <div className="text-center">
                 <div className={`text-4xl font-bold mb-6 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
-                  {isCorrect ? 
-                    (settings.language === 'ru' ? '🎉 Отлично, Ева!' : '🎉 Fantastisch, Eva!') :
-                    (settings.language === 'ru' ? '😊 Попробуй ещё раз!' : '😊 Versuche es nochmal!')
-                  }
+                  {isCorrect ? `🎉 ${t.evaFantasticResult}` : `😊 ${t.tryAgainEva}`}
                 </div>
                 
                 <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-6 mb-6">
                   <h3 className="text-xl font-bold text-gray-800 mb-4">
-                    {settings.language === 'ru' ? 'Правильное решение:' : 'Richtige Lösung:'}
+                    {t.correctSolutionLabel}
                   </h3>
                   <div className="text-4xl font-bold text-gray-800">
                     {selectedScenario.calculation} = {selectedScenario.answer}
@@ -364,7 +361,7 @@ export function RealWorldMath() {
                 {isCorrect && (
                   <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-4 mb-6">
                     <div className="text-lg font-bold text-gray-800">
-                      +3 ⭐ {settings.language === 'ru' ? 'Фокси гордится тобой!' : 'Foxy ist stolz auf dich!'}
+                      +3 ⭐ {t.foxyProudMessage}
                     </div>
                   </div>
                 )}
@@ -374,13 +371,13 @@ export function RealWorldMath() {
                     onClick={resetScenario}
                     className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-2xl text-lg font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
                   >
-                    {settings.language === 'ru' ? 'Ещё раз' : 'Nochmal'}
+                    {t.playAgain}
                   </button>
                   <button
                     onClick={() => setSelectedScenario(null)}
                     className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-3 rounded-2xl text-lg font-bold hover:from-purple-600 hover:to-purple-700 transition-all duration-200"
                   >
-                    {settings.language === 'ru' ? 'Другие задачи' : 'Andere Aufgaben'}
+                    {t.otherProblemsButton}
                   </button>
                 </div>
               </div>
@@ -429,7 +426,7 @@ export function RealWorldMath() {
                 <p className="text-sm opacity-90 mb-4">{scenario.description}</p>
                 <div className="bg-white/20 rounded-xl p-3">
                   <div className="text-sm font-medium opacity-90">
-                    {settings.language === 'ru' ? 'Умножение:' : 'Rechnung:'}
+                    {t.calculationLabel}
                   </div>
                   <div className="text-lg font-bold">{scenario.calculation}</div>
                 </div>

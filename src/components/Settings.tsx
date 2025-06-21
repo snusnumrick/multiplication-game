@@ -60,7 +60,7 @@ export function Settings() {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                🇩🇪 Deutsch
+                🇩🇪 {t.germanLanguage}
               </button>
               
               <button
@@ -71,7 +71,7 @@ export function Settings() {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                🇷🇺 Русский
+                🇷🇺 {t.russianLanguage}
               </button>
             </div>
           </div>
