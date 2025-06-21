@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Lightbulb, Check, RotateCcw, Star } from 'lucide-react';
+import { AnimatedFoxy } from './AnimatedFoxy';
 
 export function PracticeMode() {
-  const { t, setCurrentScreen, playSound, addStars} = useGame();
+  const { t, setCurrentScreen, playSound, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [currentProblem, setCurrentProblem] = useState<{ a: number; b: number } | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
@@ -59,6 +60,14 @@ export function PracticeMode() {
       generateProblem(selectedTable);
     }
   }, [selectedTable]);
+
+  useEffect(() => {
+    setFoxyMessage(t.foxyIntroPracticeMode);
+    setIsFoxyVisible(true);
+    return () => {
+      setIsFoxyVisible(false);
+    };
+  }, [setFoxyMessage, setIsFoxyVisible, t.foxyIntroPracticeMode]);
 
   const renderTableSelection = () => (
     <div className="text-center">
@@ -221,6 +230,7 @@ export function PracticeMode() {
       <div className="fixed top-16 right-16 animate-spin-slow">
         <img src="/images/math-symbols.jpg" alt={t.mathSymbolsAlt} className="w-16 h-16 rounded-full opacity-20" />
       </div>
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible} />
     </div>
   );
 }

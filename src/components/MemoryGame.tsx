@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, RotateCcw, Star, Trophy } from 'lucide-react';
+import { AnimatedFoxy } from './AnimatedFoxy';
 
 interface Card {
   id: number;
@@ -12,7 +13,7 @@ interface Card {
 }
 
 export function MemoryGame() {
-  const { t, setCurrentScreen, playSound, addStars } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -82,6 +83,29 @@ export function MemoryGame() {
     setGameComplete(false);
     playSound('click');
   };
+
+  useEffect(() => {
+    if (!selectedDifficulty) { // Difficulty selection screen
+      setFoxyMessage(t.foxyIntroMemoryGame);
+      setIsFoxyVisible(true);
+    } else if (gameComplete) {
+      // setFoxyMessage(t.foxyCongratsMemory);
+      // setIsFoxyVisible(true);
+    }
+    // Cleanup
+    return () => {
+      if (!selectedDifficulty || gameComplete) {
+        // setIsFoxyVisible(false);
+      }
+    };
+  }, [selectedDifficulty, gameComplete, setFoxyMessage, setIsFoxyVisible, t.foxyIntroMemoryGame]);
+
+  // Hide Foxy when navigating away
+  useEffect(() => {
+    return () => {
+      setIsFoxyVisible(false);
+    };
+  }, [setIsFoxyVisible]);
 
   const resetGame = () => {
     if (selectedDifficulty) {
@@ -307,6 +331,7 @@ export function MemoryGame() {
       <div className="max-w-6xl mx-auto">
         {!selectedDifficulty ? renderDifficultySelection() : renderGame()}
       </div>
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible && (!selectedDifficulty || gameComplete)} />
     </div>
   );
 }

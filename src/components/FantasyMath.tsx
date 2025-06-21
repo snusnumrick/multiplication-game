@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Sparkles, Crown, Heart, Zap, Shield, Star } from 'lucide-react';
+import { AnimatedFoxy } from './AnimatedFoxy';
 
 interface FantasyScenario {
   id: number;
@@ -16,7 +17,7 @@ interface FantasyScenario {
 }
 
 export function FantasyMath() {
-  const { t, setCurrentScreen, playSound, settings, addStars } = useGame();
+  const { t, setCurrentScreen, playSound, settings, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [selectedScenario, setSelectedScenario] = useState<FantasyScenario | null>(null);
   const [gameStep, setGameStep] = useState<'problem' | 'expression' | 'answer' | 'result'>('problem');
   const [selectedExpression, setSelectedExpression] = useState<string>('');
@@ -98,6 +99,29 @@ export function FantasyMath() {
     setIsCorrect(false);
     playSound('click');
   };
+
+  useEffect(() => {
+    if (!selectedScenario) { // Scenario selection screen
+      setFoxyMessage(t.foxyIntroFantasyMath);
+      setIsFoxyVisible(true);
+    } else if (gameStep === 'result') {
+      // setFoxyMessage(isCorrect ? t.foxyCongratsFantasy : t.foxyEncouragementFantasy);
+      // setIsFoxyVisible(true);
+    }
+    // Cleanup
+    return () => {
+      if (!selectedScenario || gameStep === 'result') {
+        // setIsFoxyVisible(false);
+      }
+    };
+  }, [selectedScenario, gameStep, isCorrect, setFoxyMessage, setIsFoxyVisible, t.foxyIntroFantasyMath]);
+
+  // Hide Foxy when navigating away
+  useEffect(() => {
+    return () => {
+      setIsFoxyVisible(false);
+    };
+  }, [setIsFoxyVisible]);
 
   const selectExpression = (expression: string) => {
     setSelectedExpression(expression);
@@ -357,6 +381,7 @@ export function FantasyMath() {
           })}
         </div>
       </div>
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible && (!selectedScenario || gameStep === 'result')} />
     </div>
   );
 }

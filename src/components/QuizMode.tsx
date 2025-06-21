@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, Clock, Star, Trophy, RotateCcw } from 'lucide-react';
+import { AnimatedFoxy } from './AnimatedFoxy';
 
 interface QuizQuestion {
   a: number;
@@ -10,7 +11,7 @@ interface QuizQuestion {
 }
 
 export function QuizMode() {
-  const { t, setCurrentScreen, playSound, addStars, settings } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, settings, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -131,6 +132,31 @@ export function QuizMode() {
       }
     };
   }, [gameState, timeLeft, finishQuiz]);
+
+  useEffect(() => {
+    if (gameState === 'setup') {
+      setFoxyMessage(t.foxyIntroQuizMode);
+      setIsFoxyVisible(true);
+    } else if (gameState === 'finished') {
+      // Potentially a different message for quiz completion
+      // setFoxyMessage(t.foxyCongratsQuiz); 
+      // setIsFoxyVisible(true);
+    }
+    // Cleanup when component unmounts or gameState changes away from setup/finished
+    return () => {
+      if (gameState === 'setup' || gameState === 'finished') {
+         // setIsFoxyVisible(false); // Hide Foxy if navigating away or restarting
+      }
+    };
+  }, [gameState, setFoxyMessage, setIsFoxyVisible, t.foxyIntroQuizMode]);
+  
+  // Hide Foxy when navigating away
+  useEffect(() => {
+    return () => {
+      setIsFoxyVisible(false);
+    };
+  }, [setIsFoxyVisible]);
+
 
   const resetQuiz = () => {
     setGameState('setup');
@@ -350,6 +376,7 @@ export function QuizMode() {
         {gameState === 'playing' && renderGame()}
         {gameState === 'finished' && renderResults()}
       </div>
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible && (gameState === 'setup' || gameState === 'finished')} />
     </div>
   );
 }

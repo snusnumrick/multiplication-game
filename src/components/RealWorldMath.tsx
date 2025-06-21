@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGame } from '../contexts/game-hooks';
 import { ArrowLeft, ShoppingCart, Building, Car, Utensils, Gamepad2, TreePine } from 'lucide-react';
+import { AnimatedFoxy } from './AnimatedFoxy';
 
 interface Scenario {
   id: number;
@@ -16,7 +17,7 @@ interface Scenario {
 }
 
 export function RealWorldMath() {
-  const { t, setCurrentScreen, playSound, settings, addStars } = useGame();
+  const { t, setCurrentScreen, playSound, settings, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
   const [gameStep, setGameStep] = useState<'problem' | 'expression' | 'answer' | 'result'>('problem');
   const [selectedExpression, setSelectedExpression] = useState<string>('');
@@ -98,6 +99,29 @@ export function RealWorldMath() {
     setIsCorrect(false);
     playSound('click');
   };
+
+  useEffect(() => {
+    if (!selectedScenario) { // Scenario selection screen
+      setFoxyMessage(t.foxyIntroRealWorldMath);
+      setIsFoxyVisible(true);
+    } else if (gameStep === 'result') {
+      // setFoxyMessage(isCorrect ? t.foxyCongratsRealWorld : t.foxyEncouragementRealWorld);
+      // setIsFoxyVisible(true);
+    }
+    // Cleanup
+    return () => {
+      if (!selectedScenario || gameStep === 'result') {
+        // setIsFoxyVisible(false);
+      }
+    };
+  }, [selectedScenario, gameStep, isCorrect, setFoxyMessage, setIsFoxyVisible, t.foxyIntroRealWorldMath]);
+
+  // Hide Foxy when navigating away
+  useEffect(() => {
+    return () => {
+      setIsFoxyVisible(false);
+    };
+  }, [setIsFoxyVisible]);
 
   const selectExpression = (expression: string) => {
     setSelectedExpression(expression);
@@ -346,6 +370,7 @@ export function RealWorldMath() {
           })}
         </div>
       </div>
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible && (!selectedScenario || gameStep === 'result')} />
     </div>
   );
 }
