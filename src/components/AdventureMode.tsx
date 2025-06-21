@@ -241,8 +241,10 @@ export function AdventureMode() {
       setCorrectAnswers(prev => prev + 1);
       setScore(prev => prev + 10);
       playSound('correct');
+      // Potentially show a "correct answer" Foxy message here if desired in the future
     } else {
       playSound('incorrect');
+      showFoxyMessage('foxyAdventureIncorrect', 5); // Show incorrect answer message for 5 seconds
     }
 
     setShowResult(true);
@@ -268,12 +270,23 @@ export function AdventureMode() {
     let earnedStars = 0;
     if (accuracy >= selectedLevel.requiredAccuracy) {
       earnedStars = 1;
-      if (accuracy >= 85) earnedStars = 2;
-      if (accuracy >= 95 && timeLeft > 30) earnedStars = 3;
+      if (accuracy >= 85) earnedStars = 2; // Assuming 85% for 2 stars
+      if (accuracy >= 95 && timeLeft > 30) earnedStars = 3; // Assuming 95% and time bonus for 3 stars
     }
     
     setStarsEarned(earnedStars);
     setGameState('completed');
+
+    // Show Foxy message based on level completion result
+    if (earnedStars === 3) {
+      showFoxyMessage('foxyAdventurePass3Stars');
+    } else if (earnedStars === 2) {
+      showFoxyMessage('foxyAdventurePass2Stars');
+    } else if (earnedStars === 1) {
+      showFoxyMessage('foxyAdventurePass1Star');
+    } else {
+      showFoxyMessage('foxyAdventureFail');
+    }
     
     if (earnedStars > 0) {
       // Update progress
@@ -297,20 +310,21 @@ export function AdventureMode() {
       const timer = setTimeout(() => {
         setTimeLeft(prev => prev - 1);
       }, 1000);
+      if (timeLeft === 11) { // Show warning when 10 seconds are about to be displayed
+        showFoxyMessage('foxyAdventureTimeLow', 5);
+      }
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && gameState === 'playing') {
       completeLevel();
     }
-  }, [gameState, timeLeft, completeLevel]);
+  }, [gameState, timeLeft, completeLevel, showFoxyMessage]);
 
   useEffect(() => {
     if (gameState === 'levelSelect') {
       showFoxyMessage('foxyIntroAdventureMode');
-    } else if (gameState === 'completed') {
-      // Example: showFoxyMessage('foxyCongratsAdventureLevel', 5); // Show for 5 seconds
-      // For now, let's keep it visible until navigating away or restarting
-      // showFoxyMessage('foxyCongratsAdventureLevel'); // This would need a new translation key
     }
+    // Messages for 'completed' state are now handled in completeLevel
+    // Messages for 'playing' state (incorrect, time low) are handled in checkAnswer and timer effect
     
     // Hide Foxy when navigating away from this component entirely
     return () => {
@@ -581,7 +595,7 @@ export function AdventureMode() {
         {gameState === 'playing' && renderGame()}
         {gameState === 'completed' && renderCompleted()}
       </div>
-      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible && (gameState === 'levelSelect' || gameState === 'completed')} />
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible} />
     </div>
   );
 }

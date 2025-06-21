@@ -283,6 +283,14 @@ export interface Translation {
   foxyAdventureCorrectAnswer: string; // Added
   foxyQuizCorrectAnswer: string; // Added
 
+  // Adventure Mode specific Foxy messages
+  foxyAdventureIncorrect: string;
+  foxyAdventureTimeLow: string;
+  foxyAdventurePass1Star: string;
+  foxyAdventurePass2Stars: string;
+  foxyAdventurePass3Stars: string;
+  foxyAdventureFail: string;
+
   foxyEncouragementStreak3: string;
   foxyEncouragementStreak5: string;
   foxyEncouragementTryAgain: string;
@@ -649,6 +657,14 @@ export const translations: Record<string, Translation> = {
     foxyAdventureCorrectAnswer: "Richtig so, Abenteurerin Eva! Foxy feuert dich an!",
     foxyQuizCorrectAnswer: "Genau richtig, Quiz-Champion Eva! Foxy ist begeistert!",
 
+    // Adventure Mode specific Foxy messages
+    foxyAdventureIncorrect: "Das war nicht ganz richtig. Schau genau hin und versuch es nochmal!",
+    foxyAdventureTimeLow: "Vorsicht, die Zeit wird knapp!",
+    foxyAdventurePass1Star: "Super, Level geschafft und 1 Stern für dich!",
+    foxyAdventurePass2Stars: "Ausgezeichnet! Level gemeistert und 2 Sterne verdient!",
+    foxyAdventurePass3Stars: "Wow! Fantastisch! 3 Sterne für dich in diesem Level!",
+    foxyAdventureFail: "Schade, diesmal nicht bestanden. Gib nicht auf, versuch es nochmal!",
+
     foxyEncouragementStreak3: "Wow, 3 in Folge! Du hast einen Lauf!",
     foxyEncouragementStreak5: "Wahnsinn, 5 richtig! Foxy ist super beeindruckt!",
     foxyEncouragementTryAgain: "Hoppla, nicht ganz! Foxy weiß, du schaffst die nächste!",
@@ -1007,6 +1023,14 @@ export const translations: Record<string, Translation> = {
 
     foxyAdventureCorrectAnswer: "Правильно, искательница приключений Ева! Фокси болеет за тебя!",
     foxyQuizCorrectAnswer: "Точно в цель, чемпион викторины Ева! Фокси в восторге!",
+
+    // Adventure Mode specific Foxy messages
+    foxyAdventureIncorrect: "Это не совсем правильно. Посмотри внимательно и попробуй еще раз!",
+    foxyAdventureTimeLow: "Осторожно, время на исходе!",
+    foxyAdventurePass1Star: "Отлично, уровень пройден, и 1 звезда для тебя!",
+    foxyAdventurePass2Stars: "Превосходно! Уровень освоен, и 2 звезды заработаны!",
+    foxyAdventurePass3Stars: "Ух ты! Фантастика! 3 звезды для тебя на этом уровне!",
+    foxyAdventureFail: "Жаль, в этот раз не получилось. Не сдавайся, попробуй еще раз!",
 
     foxyEncouragementStreak3: "Ого, 3 подряд! Ты на волне успеха!",
     foxyEncouragementStreak5: "Потрясающе, 5 правильных! Фокси очень впечатлена!",
