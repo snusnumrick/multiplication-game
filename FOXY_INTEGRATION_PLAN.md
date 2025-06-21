@@ -49,7 +49,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   Store this preference in `GameSettings` within `GameContext.tsx`.
     *   `AnimatedFoxy.tsx` should respect this global visibility setting in addition to `isFoxyVisible` prop.
 
-4.  **[COMPLETED] Refine Foxy's Appearance:** (Commit `b6ebe1d` and prior related changes)
+4.  **[COMPLETED] Refine Foxy's Appearance:** (Commit `b6ebe1d` and prior related changes, Tailwind CSS conversion completed in commit [current_commit_hash_placeholder])
     *   Converted inline styles in `AnimatedFoxy.tsx` to Tailwind CSS for consistency and maintainability.
     *   Improved visual styling, including box shadow, border radius, and spacing.
     *   Ensured smooth transitions for visibility and responsiveness.
@@ -168,12 +168,12 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 ## Timeline & Milestones
 
-*   **Milestone 1 (Phase 1 - Near Completion):**
-    *   Foxy provides contextual text messages in all game modes (Intro messages done - Commit `01c32af`; Event-based messages in all modes now complete).
+*   **Milestone 1 (Phase 1 - COMPLETED):**
+    *   Foxy provides contextual text messages in all game modes (Intro messages done - Commit `01c32af`; Event-based messages in all modes completed - Commit `0ab3cfa`).
     *   User can toggle Foxy's visibility (Done - Commit `25dced1`).
     *   Generic `showFoxyMessage` helper function implemented and used (Done - Commit `ab828cf`).
-    *   Appearance refinement in `AnimatedFoxy.tsx` (Marked as Done - Commit `b6ebe1d` and prior related changes, but plan's mention of Tailwind CSS conversion is not reflected in current `AnimatedFoxy.tsx` code).
-    *   *Status: All event-based messages are implemented. The main outstanding question for Phase 1 completion is the Tailwind CSS conversion for `AnimatedFoxy.tsx` as per Task 4's description in the plan.*
+    *   Appearance refinement in `AnimatedFoxy.tsx`, including conversion to Tailwind CSS (Done - Commit `b6ebe1d` and prior related changes, Tailwind conversion in commit [current_commit_hash_placeholder]).
+    *   *Status: Phase 1 is fully complete.*
 *   **Milestone 2 (Phase 2 - Pending):** Foxy is animated with basic idle, talking, and happy states.
 *   **Milestone 3 (Phase 3 - Pending):** Foxy speaks pre-recorded voice lines in one language, synchronized with talking animation.
 *   **Milestone 4 (Phase 4 - Pending):** Advanced interactions, polish, and multilingual voice support implemented.

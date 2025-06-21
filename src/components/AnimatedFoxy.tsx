@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGame } from '../contexts/game-hooks';
+import { cn } from '@/lib/utils';
 
 interface AnimatedFoxyProps {
   message?: string;
@@ -14,45 +15,25 @@ export function AnimatedFoxy({
 }: AnimatedFoxyProps) {
   const { t, settings } = useGame();
 
-  if (!isVisible || !settings.foxyEnabled) {
+  if (!settings.foxyEnabled) { // Visibility is handled by classes now, only check global enable
     return null;
   }
 
   return (
-    <div style={{
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      padding: '15px',
-      background: 'rgba(255, 255, 255, 0.95)',
-      borderRadius: '15px',
-      boxShadow: '0 6px 12px rgba(0,0,0,0.2)',
-      display: 'flex',
-      alignItems: 'center',
-      maxWidth: '320px',
-      zIndex: 1000, // Ensure it's on top
-      transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
-      opacity: isVisible ? 1 : 0,
-      transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-    }}>
+    <div 
+      className={cn(
+        "fixed bottom-5 right-5 p-4 bg-white/95 rounded-2xl shadow-lg flex items-center max-w-xs z-[1000]",
+        "transition-all duration-300 ease-in-out",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5 pointer-events-none"
+      )}
+    >
       <img 
         src={imageUrl} 
         alt={t.foxyMascotAltText} 
-        style={{ 
-          width: '70px', 
-          height: '70px', 
-          marginRight: '15px', 
-          borderRadius: '50%',
-          border: '3px solid #f0a04b' // A warm orange border
-        }} 
+        className="w-[70px] h-[70px] mr-4 rounded-full border-[3px] border-[#f0a04b]"
       />
       {message && (
-        <p style={{ 
-          margin: 0, 
-          fontSize: '14px', 
-          color: '#4A4A4A', // Darker grey for better readability
-          lineHeight: '1.4' 
-        }}>
+        <p className="m-0 text-sm text-gray-700 leading-snug">
           {message}
         </p>
       )}
