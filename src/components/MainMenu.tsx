@@ -109,11 +109,13 @@ export function MainMenu() {
             <button
               key={item.id}
               onClick={() => handleMenuClick(item.id)}
-              className={`${item.color} ${item.textColor} p-6 rounded-2xl shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95 h-40 flex flex-col items-center justify-center text-center`}
+              className={`${item.color} ${item.textColor} p-6 m-8 rounded-2xl shadow-lg 
+              transform transition-all duration-200 hover:scale-105 active:scale-95 h-40 
+              flex flex-col items-center justify-center text-center`}
             >
               <Icon className="w-10 h-10 mb-2" />
-              <h3 className="text-sm font-bold mb-1 leading-tight">{item.title}</h3>
-              <p className="text-xs opacity-90 leading-tight">{item.description}</p>
+              <h3 className="text-xl font-bold mb-1 leading-tight">{item.title}</h3>
+              <p className="opacity-90 leading-tight">{item.description}</p>
             </button>
           );
         })}
