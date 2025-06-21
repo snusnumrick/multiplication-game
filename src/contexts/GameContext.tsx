@@ -40,6 +40,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [currentScreen, setCurrentScreen] = useState('menu');
   const [foxyMessage, setFoxyMessage] = useState<string | null>(null);
   const [isFoxyVisible, setIsFoxyVisible] = useState<boolean>(false);
+  const foxyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load saved data on mount
   useEffect(() => {
@@ -137,6 +138,40 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const t = translations[settings.language];
 
+  const showFoxyMessage = useCallback((messageKey: keyof Translation, duration?: number) => {
+    if (foxyTimeoutRef.current) {
+      clearTimeout(foxyTimeoutRef.current);
+      foxyTimeoutRef.current = null;
+    }
+
+    const messageText = t[messageKey] as string; // Type assertion
+    if (messageText) {
+      setFoxyMessage(messageText);
+      setIsFoxyVisible(true);
+
+      if (duration) {
+        foxyTimeoutRef.current = setTimeout(() => {
+          setIsFoxyVisible(false);
+          setFoxyMessage(null);
+          foxyTimeoutRef.current = null;
+        }, duration * 1000); // duration in seconds
+      }
+    } else {
+      console.warn(`Foxy message key "${String(messageKey)}" not found in translations.`);
+      setIsFoxyVisible(false);
+      setFoxyMessage(null);
+    }
+  }, [t, setIsFoxyVisible, setFoxyMessage]);
+
+  // Clear timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (foxyTimeoutRef.current) {
+        clearTimeout(foxyTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <GameContext.Provider value={{
       settings,
@@ -150,9 +185,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setCurrentScreen,
       playSound,
       foxyMessage,
-      setFoxyMessage,
+      setFoxyMessage, // Keep for direct control if needed
       isFoxyVisible,
-      setIsFoxyVisible,
+      setIsFoxyVisible, // Keep for direct control if needed
+      showFoxyMessage,
     }}>
       {children}
     </GameContext.Provider>

@@ -23,7 +23,7 @@ interface Question {
 }
 
 export function AdventureMode() {
-  const { t, setCurrentScreen, playSound, addStars, progress, updateProgress, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, progress, updateProgress, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   
   // Get localized level title and description
   const getLevelTitle = (levelId: number): string => {
@@ -305,27 +305,18 @@ export function AdventureMode() {
 
   useEffect(() => {
     if (gameState === 'levelSelect') {
-      setFoxyMessage(t.foxyIntroAdventureMode);
-      setIsFoxyVisible(true);
+      showFoxyMessage('foxyIntroAdventureMode');
     } else if (gameState === 'completed') {
-      // Potentially a different message for level completion
-      // setFoxyMessage(t.foxyCongratsAdventureLevel);
-      // setIsFoxyVisible(true);
+      // Example: showFoxyMessage('foxyCongratsAdventureLevel', 5); // Show for 5 seconds
+      // For now, let's keep it visible until navigating away or restarting
+      // showFoxyMessage('foxyCongratsAdventureLevel'); // This would need a new translation key
     }
-    // Cleanup when component unmounts or gameState changes away from these states
-    return () => {
-      if (gameState === 'levelSelect' || gameState === 'completed') {
-        // setIsFoxyVisible(false); // Hide Foxy if navigating away or starting a level
-      }
-    };
-  }, [gameState, setFoxyMessage, setIsFoxyVisible, t.foxyIntroAdventureMode]);
-
-  // Hide Foxy when navigating away
-  useEffect(() => {
+    
+    // Hide Foxy when navigating away from this component entirely
     return () => {
       setIsFoxyVisible(false);
     };
-  }, [setIsFoxyVisible]);
+  }, [gameState, showFoxyMessage, setIsFoxyVisible]);
 
   const renderLevelSelect = () => (
     <div className="text-center">

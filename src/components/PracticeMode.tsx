@@ -4,7 +4,7 @@ import { ArrowLeft, Lightbulb, Check, RotateCcw, Star } from 'lucide-react';
 import { AnimatedFoxy } from './AnimatedFoxy';
 
 export function PracticeMode() {
-  const { t, setCurrentScreen, playSound, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [currentProblem, setCurrentProblem] = useState<{ a: number; b: number } | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
@@ -62,12 +62,11 @@ export function PracticeMode() {
   }, [selectedTable]);
 
   useEffect(() => {
-    setFoxyMessage(t.foxyIntroPracticeMode);
-    setIsFoxyVisible(true);
+    showFoxyMessage('foxyIntroPracticeMode');
     return () => {
-      setIsFoxyVisible(false);
+      setIsFoxyVisible(false); // Hide Foxy when leaving the mode
     };
-  }, [setFoxyMessage, setIsFoxyVisible, t.foxyIntroPracticeMode]);
+  }, [showFoxyMessage, setIsFoxyVisible]);
 
   const renderTableSelection = () => (
     <div className="text-center">

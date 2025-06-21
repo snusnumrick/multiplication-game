@@ -11,7 +11,7 @@ interface QuizQuestion {
 }
 
 export function QuizMode() {
-  const { t, setCurrentScreen, playSound, addStars, settings, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, settings, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -135,27 +135,18 @@ export function QuizMode() {
 
   useEffect(() => {
     if (gameState === 'setup') {
-      setFoxyMessage(t.foxyIntroQuizMode);
-      setIsFoxyVisible(true);
+      showFoxyMessage('foxyIntroQuizMode');
     } else if (gameState === 'finished') {
-      // Potentially a different message for quiz completion
-      // setFoxyMessage(t.foxyCongratsQuiz); 
-      // setIsFoxyVisible(true);
+      // Example: showFoxyMessage('foxyCongratsQuiz', 5); // Show for 5 seconds
+      // For now, let's keep it visible until navigating away or restarting
+      // showFoxyMessage('foxyCongratsQuiz'); // This would need a new translation key
     }
-    // Cleanup when component unmounts or gameState changes away from setup/finished
-    return () => {
-      if (gameState === 'setup' || gameState === 'finished') {
-         // setIsFoxyVisible(false); // Hide Foxy if navigating away or restarting
-      }
-    };
-  }, [gameState, setFoxyMessage, setIsFoxyVisible, t.foxyIntroQuizMode]);
-  
-  // Hide Foxy when navigating away
-  useEffect(() => {
+    
+    // Hide Foxy when navigating away from this component entirely
     return () => {
       setIsFoxyVisible(false);
     };
-  }, [setIsFoxyVisible]);
+  }, [gameState, showFoxyMessage, setIsFoxyVisible]);
 
 
   const resetQuiz = () => {

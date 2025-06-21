@@ -4,17 +4,17 @@ import { Star, Settings, Trophy, BookOpen, Puzzle, Gamepad2, Calculator, Sparkle
 import { AnimatedFoxy } from './AnimatedFoxy';
 
 export function MainMenu() {
-  const { t, setCurrentScreen, playSound, progress, foxyMessage, setFoxyMessage, isFoxyVisible, setIsFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, progress, foxyMessage, showFoxyMessage, isFoxyVisible, setIsFoxyVisible } = useGame();
 
   useEffect(() => {
-    setFoxyMessage(t.foxyWelcomeMainMenu);
-    setIsFoxyVisible(true);
+    showFoxyMessage('foxyWelcomeMainMenu'); // Default behavior: stays visible until explicitly hidden or changed
+    // To hide after a delay, e.g., 10 seconds: showFoxyMessage('foxyWelcomeMainMenu', 10);
 
-    // Optional: Hide Foxy when navigating away from the main menu or after a delay
-    // return () => {
-    //   setIsFoxyVisible(false);
-    // };
-  }, [setFoxyMessage, setIsFoxyVisible, t.foxyWelcomeMainMenu]);
+    // Hide Foxy when navigating away from the main menu
+    return () => {
+      setIsFoxyVisible(false); 
+    };
+  }, [showFoxyMessage, setIsFoxyVisible]);
 
   const handleMenuClick = (screen: string) => {
     playSound('click');

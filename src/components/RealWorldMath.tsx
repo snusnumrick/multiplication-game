@@ -17,7 +17,7 @@ interface Scenario {
 }
 
 export function RealWorldMath() {
-  const { t, setCurrentScreen, playSound, settings, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, settings, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
   const [gameStep, setGameStep] = useState<'problem' | 'expression' | 'answer' | 'result'>('problem');
   const [selectedExpression, setSelectedExpression] = useState<string>('');
@@ -102,26 +102,18 @@ export function RealWorldMath() {
 
   useEffect(() => {
     if (!selectedScenario) { // Scenario selection screen
-      setFoxyMessage(t.foxyIntroRealWorldMath);
-      setIsFoxyVisible(true);
+      showFoxyMessage('foxyIntroRealWorldMath');
     } else if (gameStep === 'result') {
-      // setFoxyMessage(isCorrect ? t.foxyCongratsRealWorld : t.foxyEncouragementRealWorld);
-      // setIsFoxyVisible(true);
+      // Example: showFoxyMessage(isCorrect ? 'foxyCongratsRealWorld' : 'foxyEncouragementRealWorld', 5);
+      // For now, let's keep it visible until navigating away or restarting
+      // showFoxyMessage(isCorrect ? 'foxyCongratsRealWorld' : 'foxyEncouragementRealWorld'); // Needs new keys
     }
-    // Cleanup
-    return () => {
-      if (!selectedScenario || gameStep === 'result') {
-        // setIsFoxyVisible(false);
-      }
-    };
-  }, [selectedScenario, gameStep, isCorrect, setFoxyMessage, setIsFoxyVisible, t.foxyIntroRealWorldMath]);
-
-  // Hide Foxy when navigating away
-  useEffect(() => {
+    
+    // Hide Foxy when navigating away from this component entirely
     return () => {
       setIsFoxyVisible(false);
     };
-  }, [setIsFoxyVisible]);
+  }, [selectedScenario, gameStep, isCorrect, showFoxyMessage, setIsFoxyVisible]);
 
   const selectExpression = (expression: string) => {
     setSelectedExpression(expression);

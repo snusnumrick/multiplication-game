@@ -13,7 +13,7 @@ interface Card {
 }
 
 export function MemoryGame() {
-  const { t, setCurrentScreen, playSound, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -86,26 +86,18 @@ export function MemoryGame() {
 
   useEffect(() => {
     if (!selectedDifficulty) { // Difficulty selection screen
-      setFoxyMessage(t.foxyIntroMemoryGame);
-      setIsFoxyVisible(true);
+      showFoxyMessage('foxyIntroMemoryGame');
     } else if (gameComplete) {
-      // setFoxyMessage(t.foxyCongratsMemory);
-      // setIsFoxyVisible(true);
+      // Example: showFoxyMessage('foxyCongratsMemory', 5); // Show for 5 seconds
+      // For now, let's keep it visible until navigating away or restarting
+      // showFoxyMessage('foxyCongratsMemory'); // This would need a new translation key
     }
-    // Cleanup
-    return () => {
-      if (!selectedDifficulty || gameComplete) {
-        // setIsFoxyVisible(false);
-      }
-    };
-  }, [selectedDifficulty, gameComplete, setFoxyMessage, setIsFoxyVisible, t.foxyIntroMemoryGame]);
-
-  // Hide Foxy when navigating away
-  useEffect(() => {
+    
+    // Hide Foxy when navigating away from this component entirely
     return () => {
       setIsFoxyVisible(false);
     };
-  }, [setIsFoxyVisible]);
+  }, [selectedDifficulty, gameComplete, showFoxyMessage, setIsFoxyVisible]);
 
   const resetGame = () => {
     if (selectedDifficulty) {

@@ -38,9 +38,10 @@ export interface GameContextType {
 
   // Foxy specific
   foxyMessage: string | null;
-  setFoxyMessage: (message: string | null) => void;
+  setFoxyMessage: (message: string | null) => void; // Retain for direct control if needed
   isFoxyVisible: boolean;
-  setIsFoxyVisible: (visible: boolean) => void;
+  setIsFoxyVisible: (visible: boolean) => void; // Retain for direct control if needed
+  showFoxyMessage: (messageKey: keyof Translation, duration?: number) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);

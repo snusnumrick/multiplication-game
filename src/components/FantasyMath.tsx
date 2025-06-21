@@ -17,7 +17,7 @@ interface FantasyScenario {
 }
 
 export function FantasyMath() {
-  const { t, setCurrentScreen, playSound, settings, addStars, setFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, settings, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
   const [selectedScenario, setSelectedScenario] = useState<FantasyScenario | null>(null);
   const [gameStep, setGameStep] = useState<'problem' | 'expression' | 'answer' | 'result'>('problem');
   const [selectedExpression, setSelectedExpression] = useState<string>('');
@@ -102,26 +102,18 @@ export function FantasyMath() {
 
   useEffect(() => {
     if (!selectedScenario) { // Scenario selection screen
-      setFoxyMessage(t.foxyIntroFantasyMath);
-      setIsFoxyVisible(true);
+      showFoxyMessage('foxyIntroFantasyMath');
     } else if (gameStep === 'result') {
-      // setFoxyMessage(isCorrect ? t.foxyCongratsFantasy : t.foxyEncouragementFantasy);
-      // setIsFoxyVisible(true);
+      // Example: showFoxyMessage(isCorrect ? 'foxyCongratsFantasy' : 'foxyEncouragementFantasy', 5);
+      // For now, let's keep it visible until navigating away or restarting
+      // showFoxyMessage(isCorrect ? 'foxyCongratsFantasy' : 'foxyEncouragementFantasy'); // Needs new keys
     }
-    // Cleanup
-    return () => {
-      if (!selectedScenario || gameStep === 'result') {
-        // setIsFoxyVisible(false);
-      }
-    };
-  }, [selectedScenario, gameStep, isCorrect, setFoxyMessage, setIsFoxyVisible, t.foxyIntroFantasyMath]);
-
-  // Hide Foxy when navigating away
-  useEffect(() => {
+    
+    // Hide Foxy when navigating away from this component entirely
     return () => {
       setIsFoxyVisible(false);
     };
-  }, [setIsFoxyVisible]);
+  }, [selectedScenario, gameStep, isCorrect, showFoxyMessage, setIsFoxyVisible]);
 
   const selectExpression = (expression: string) => {
     setSelectedExpression(expression);
