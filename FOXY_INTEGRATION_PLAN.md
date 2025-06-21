@@ -74,14 +74,14 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
     *   Replace the `<img>` tag with the chosen animation component (e.g., Lottie player).
-        *   **[COMPLETED]** Placeholder for Lottie component added; it receives animation state from context.
+        *   **[COMPLETED]** Placeholder for Lottie component added; it receives animation state from context. (Commit `c1bffa8`)
     *   Manage animation states (idle, talking, happy) based on props or context.
     *   New directory: `src/assets/animations/foxy/` (e.g., `idle.json`, `talking.json`).
 
 4.  **[IN PROGRESS] Control Animations from `GameContext.tsx` or Props:**
     *   Add state to `GameContext.tsx` to control Foxy's current animation.
-        *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and `setFoxyAnimationState` added to context.
-        *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook.
+        *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and `setFoxyAnimationState` added to context. (Commit `c1bffa8`)
+        *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook. (Commit `c1bffa8`)
     *   Update `setFoxyMessage` or create a new function to also set `foxyAnimationState` to 'talking' when a message appears, and back to 'idle' after. (Handled by `useEffect`)
     *   Trigger 'happy' animation on specific positive events (will use `setFoxyAnimationState`).
 
