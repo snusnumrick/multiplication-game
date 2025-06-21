@@ -42,7 +42,11 @@ export interface GameContextType {
   isFoxyVisible: boolean;
   setIsFoxyVisible: (visible: boolean) => void; // Retain for direct control if needed
   showFoxyMessage: (messageKey: keyof Translation, duration?: number) => void;
+  foxyAnimationState: FoxyAnimationState;
+  setFoxyAnimationState: (state: FoxyAnimationState) => void;
 }
+
+export type FoxyAnimationState = 'idle' | 'talking' | 'happy';
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
 

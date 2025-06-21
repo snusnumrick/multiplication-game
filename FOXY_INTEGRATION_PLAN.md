@@ -60,27 +60,30 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 **Tasks:**
 
-1.  **[PENDING] Choose Animation Technology:**
-    *   **Lottie:** Good for vector animations, lightweight, and scalable. Requires creating animations in Adobe After Effects with the LottieFiles plugin.
-    *   **Sprite Sheets:** Traditional 2D animation technique. Can be implemented with CSS or a simple JS animation loop.
-    *   **Framer Motion / React Spring:** For UI-based animations and transitions, might be suitable for simple Foxy movements or state changes.
-    *   *Decision Point: Evaluate ease of asset creation and integration.* Lottie is often a good choice for character animation in web apps.
+1.  **[DECIDED] Choose Animation Technology: Lottie**
+    *   **Lottie:** Chosen for its vector animations, lightweight nature, and scalability. Assumes animations will be created in Adobe After Effects with the LottieFiles plugin.
+    *   ~~Sprite Sheets: Traditional 2D animation technique. Can be implemented with CSS or a simple JS animation loop.~~
+    *   ~~Framer Motion / React Spring: For UI-based animations and transitions, might be suitable for simple Foxy movements or state changes.~~
+    *   *Decision: Lottie selected.*
 
 2.  **[PENDING] Create/Source Basic Animations:**
-    *   **Idle:** Foxy breathing lightly, blinking.
-    *   **Talking:** Simple mouth movement synced (loosely at first) with message display.
-    *   **Happy/Excited:** Foxy smiling, maybe a small jump or tail wag, for correct answers or achievements.
-    *   *Asset Creation: This is a significant step. May require an animator or sourcing suitable existing assets.*
+    *   **Idle:** Foxy breathing lightly, blinking. (e.g., `idle.json`)
+    *   **Talking:** Simple mouth movement synced (loosely at first) with message display. (e.g., `talking.json`)
+    *   **Happy/Excited:** Foxy smiling, maybe a small jump or tail wag, for correct answers or achievements. (e.g., `happy.json`)
+    *   *Asset Creation: This is a significant step. May require an animator or sourcing suitable existing assets. To be stored in `src/assets/animations/foxy/`.*
 
-3.  **[PENDING] Integrate Animation into `AnimatedFoxy.tsx`:**
+3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
     *   Replace the `<img>` tag with the chosen animation component (e.g., Lottie player).
+        *   **[COMPLETED]** Placeholder for Lottie component added; it receives animation state from context.
     *   Manage animation states (idle, talking, happy) based on props or context.
     *   New directory: `src/assets/animations/foxy/` (e.g., `idle.json`, `talking.json`).
 
-4.  **[PENDING] Control Animations from `GameContext.tsx` or Props:**
-    *   Add state to `GameContext.tsx` to control Foxy's current animation (e.g., `foxyAnimationState: 'idle' | 'talking' | 'happy'`).
-    *   Update `setFoxyMessage` or create a new function to also set `foxyAnimationState` to 'talking' when a message appears, and back to 'idle' after.
-    *   Trigger 'happy' animation on specific positive events.
+4.  **[IN PROGRESS] Control Animations from `GameContext.tsx` or Props:**
+    *   Add state to `GameContext.tsx` to control Foxy's current animation.
+        *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and `setFoxyAnimationState` added to context.
+        *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook.
+    *   Update `setFoxyMessage` or create a new function to also set `foxyAnimationState` to 'talking' when a message appears, and back to 'idle' after. (Handled by `useEffect`)
+    *   Trigger 'happy' animation on specific positive events (will use `setFoxyAnimationState`).
 
 **Files to Modify:**
 *   `src/components/AnimatedFoxy.tsx`

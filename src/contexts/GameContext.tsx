@@ -1,6 +1,6 @@
 import React, {useState, useEffect, ReactNode, useCallback, useRef} from 'react';
 import {Translation, translations} from '../translations';
-import { GameContext } from './game-context-def';
+import { GameContext, FoxyAnimationState } from './game-context-def';
 
 interface GameProgress {
   tablesLearned: number[];
@@ -40,6 +40,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [currentScreen, setCurrentScreen] = useState('menu');
   const [foxyMessage, setFoxyMessage] = useState<string | null>(null);
   const [isFoxyVisible, setIsFoxyVisible] = useState<boolean>(false);
+  const [foxyAnimationState, setFoxyAnimationState] = useState<FoxyAnimationState>('idle');
   const foxyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load saved data on mount
@@ -172,6 +173,25 @@ export function GameProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (isFoxyVisible && foxyMessage) {
+      // If Foxy is visible and has a message, she should be 'talking'
+      // unless she's in a specific non-idle state like 'happy'.
+      // This logic will ensure that if Foxy becomes visible with a message,
+      // or a message is set while she's visible, she transitions to 'talking'
+      // from 'idle'.
+      if (foxyAnimationState === 'idle') {
+        setFoxyAnimationState('talking');
+      }
+    } else {
+      // If not visible or no message, she should be 'idle'.
+      // This handles cases where Foxy is hidden or message cleared.
+      if (foxyAnimationState !== 'idle') {
+        setFoxyAnimationState('idle');
+      }
+    }
+  }, [isFoxyVisible, foxyMessage, foxyAnimationState, setFoxyAnimationState]);
+
   return (
     <GameContext.Provider value={{
       settings,
@@ -189,6 +209,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       isFoxyVisible,
       setIsFoxyVisible, // Keep for direct control if needed
       showFoxyMessage,
+      foxyAnimationState,
+      setFoxyAnimationState,
     }}>
       {children}
     </GameContext.Provider>
