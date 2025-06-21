@@ -220,6 +220,41 @@ export interface Translation {
   // Settings specific
   germanLanguage: string;
   russianLanguage: string;
+
+  // Scenario Data (RealWorldMath & FantasyMath)
+  realWorldScenarioData: ScenarioText[];
+  fantasyScenarioData: ScenarioText[];
+
+  // MemoryGame specific
+  easyDetails: string; // e.g., "6 Paare • 1-5 Reihen"
+  mediumDetails: string; // e.g., "8 Paare • 1-8 Reihen"
+  hardDetails: string; // e.g., "10 Paare • 1-10 Reihen"
+  puzzleEmoji: string;
+
+  // PracticeMode specific
+  tableButtonSuffix: string; // e.g., "x"
+  mathSymbolsAlt: string;
+
+  // Progress specific
+  tableProgressSuffix: string; // e.g., "x"
+
+  // AdventureMode specific
+  timeSecondsSuffix: string; // e.g., "s"
+  accuracyPercentSuffix: string; // e.g., "%"
+  levelDefaultTitle: string; // e.g., "Level {id}"
+  levelDefaultDesc: string; // e.g., "Description for level {id}"
+  completeLevelRequirement: string; // e.g., "Complete Level {id}"
+
+  // Settings specific
+  difficultyEasyPrefix: string;
+  difficultyMediumPrefix: string;
+  difficultyHardPrefix: string;
+}
+
+export interface ScenarioText {
+  title: string;
+  description: string;
+  problem: string;
 }
 
 export const translations: Record<string, Translation> = {
