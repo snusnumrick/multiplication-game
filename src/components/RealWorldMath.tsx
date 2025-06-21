@@ -103,15 +103,32 @@ export function RealWorldMath() {
   useEffect(() => {
     if (!selectedScenario) { // Scenario selection screen
       showFoxyMessage('foxyIntroRealWorldMath');
-    } else if (gameStep === 'result') {
-      // Example: showFoxyMessage(isCorrect ? 'foxyCongratsRealWorld' : 'foxyEncouragementRealWorld', 5);
-      // For now, let's keep it visible until navigating away or restarting
-      // showFoxyMessage(isCorrect ? 'foxyCongratsRealWorld' : 'foxyEncouragementRealWorld'); // Needs new keys
+    } else {
+      switch (gameStep) {
+        case 'problem':
+          showFoxyMessage('foxyRealWorldProblem', 5);
+          break;
+        case 'expression':
+          showFoxyMessage('foxyRealWorldExpression', 5);
+          break;
+        case 'answer':
+          showFoxyMessage('foxyRealWorldAnswer', 5);
+          break;
+        case 'result':
+          if (isCorrect) {
+            showFoxyMessage('foxyRealWorldCorrect');
+          } else {
+            showFoxyMessage('foxyRealWorldIncorrect');
+          }
+          break;
+      }
     }
     
-    // Hide Foxy when navigating away from this component entirely
+    // Hide Foxy when navigating away from this component entirely unless it's a persistent result message
     return () => {
-      setIsFoxyVisible(false);
+      if (gameStep !== 'result') { // Keep message if on result screen
+        setIsFoxyVisible(false);
+      }
     };
   }, [selectedScenario, gameStep, isCorrect, showFoxyMessage, setIsFoxyVisible]);
 
@@ -362,7 +379,7 @@ export function RealWorldMath() {
           })}
         </div>
       </div>
-      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible && (!selectedScenario || gameStep === 'result')} />
+      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible} />
     </div>
   );
 }

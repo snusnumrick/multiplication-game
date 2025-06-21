@@ -297,6 +297,13 @@ export interface Translation {
   foxyMemoryFewPairsLeft: string;
   foxyMemoryGameComplete: string;
 
+  // RealWorldMath specific Foxy messages
+  foxyRealWorldProblem: string;
+  foxyRealWorldExpression: string;
+  foxyRealWorldAnswer: string;
+  foxyRealWorldCorrect: string;
+  foxyRealWorldIncorrect: string;
+
   foxyEncouragementStreak3: string;
   foxyEncouragementStreak5: string;
   foxyEncouragementTryAgain: string;
@@ -677,6 +684,13 @@ export const translations: Record<string, Translation> = {
     foxyMemoryFewPairsLeft: "Fast geschafft, Eva! Nur noch ein paar Paare!",
     foxyMemoryGameComplete: "Juhu! Du hast alle Paare gefunden, Eva! Foxy ist mega stolz!",
 
+    // RealWorldMath specific Foxy messages
+    foxyRealWorldProblem: "Hier ist eine Alltagsaufgabe, Eva! Überlege, wie Multiplizieren helfen kann.",
+    foxyRealWorldExpression: "Welche Rechnung passt zur Geschichte, Eva? Foxy ist gespannt!",
+    foxyRealWorldAnswer: "Super! Und was ist die Lösung? Foxy weiß, du kannst das ausrechnen!",
+    foxyRealWorldCorrect: "Genau! Das hast du wie ein Profi gelöst, Eva! Foxy ist super beeindruckt!",
+    foxyRealWorldIncorrect: "Hmm, das stimmt nicht ganz. Schauen wir uns die Lösung gemeinsam an und lernen daraus, Eva!",
+
     foxyEncouragementStreak3: "Wow, 3 in Folge! Du hast einen Lauf!",
     foxyEncouragementStreak5: "Wahnsinn, 5 richtig! Foxy ist super beeindruckt!",
     foxyEncouragementTryAgain: "Hoppla, nicht ganz! Foxy weiß, du schaffst die nächste!",
@@ -1049,6 +1063,13 @@ export const translations: Record<string, Translation> = {
     foxyMemoryNoMatch: "Не совсем пара. Ищи дальше, Фокси знает, ты их найдешь!",
     foxyMemoryFewPairsLeft: "Почти готово, Ева! Осталось всего несколько пар!",
     foxyMemoryGameComplete: "Ура! Ты нашла все пары, Ева! Фокси очень гордится тобой!",
+
+    // RealWorldMath specific Foxy messages
+    foxyRealWorldProblem: "Вот задачка из реальной жизни, Ева! Подумай, как умножение поможет её решить.",
+    foxyRealWorldExpression: "Какое вычисление подходит к этой истории, Ева? Фокси очень интересно!",
+    foxyRealWorldAnswer: "Отлично! А какой ответ? Фокси знает, ты сможешь это вычислить!",
+    foxyRealWorldCorrect: "Точно! Ты решила это как профи, Ева! Фокси очень впечатлена!",
+    foxyRealWorldIncorrect: "Хм, это не совсем так. Давай вместе посмотрим на решение и поучимся, Ева!",
 
     foxyEncouragementStreak3: "Ого, 3 подряд! Ты на волне успеха!",
     foxyEncouragementStreak5: "Потрясающе, 5 правильных! Фокси очень впечатлена!",
