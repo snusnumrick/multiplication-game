@@ -62,81 +62,81 @@ export function MainMenu() {
   ];
 
   return (
-    <div className="h-screen bg-gradient-to-br from-yellow-200 via-pink-200 to-purple-300 p-4 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-pink-200 to-purple-300 p-4 sm:p-6 md:p-8 overflow-y-auto">
       {/* Welcome Message */}
       <div className="max-w-2xl mx-auto mb-3 pt-2">
         <div className="bg-gradient-to-r from-orange-100 to-yellow-100 border border-orange-200 rounded-xl p-3 text-center">
-          <p className="text-base font-medium text-orange-800">{t.welcomeMessage}</p>
+          <p className="text-sm sm:text-base font-medium text-orange-800">{t.welcomeMessage}</p>
         </div>
       </div>
 
       {/* Header */}
-      <div className="text-center mb-4">
-        <div className="flex justify-center items-center mb-3">
-          <img 
-            src="/images/foxy-mascot.jpg" 
-            alt="Foxy the Fox" 
-            className="w-16 h-16 rounded-full border-2 border-white shadow-lg mr-4"
+      <div className="text-center mb-4 md:mb-6">
+        <div className="flex flex-col sm:flex-row justify-center items-center mb-3">
+          <img
+            src="/images/foxy-mascot.jpg"
+            alt="Foxy the Fox"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-white shadow-lg mb-2 sm:mb-0 sm:mr-4"
           />
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-1">
+          <div className="mb-2 sm:mb-0">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1">
               {t.title}
             </h1>
-            <p className="text-lg text-gray-600 font-medium">
+            <p className="text-base sm:text-lg text-gray-600 font-medium">
               {t.subtitle}
             </p>
           </div>
-          
+
           {/* Progress Overview - Inline */}
-          <div className="flex items-center space-x-6 text-gray-700 ml-8">
+          <div className="flex items-center space-x-4 sm:space-x-6 text-gray-700 mt-2 sm:mt-0 sm:ml-8">
             <div className="flex items-center">
-              <Star className="w-5 h-5 text-yellow-500 mr-2 fill-current" />
-              <span className="font-bold text-base">{progress.totalStars}</span>
+              <Star className="w-5 h-5 text-yellow-500 mr-1 sm:mr-2 fill-current" />
+              <span className="font-bold text-sm sm:text-base">{progress.totalStars}</span>
             </div>
             <div className="flex items-center">
-              <Trophy className="w-5 h-5 text-orange-500 mr-2" />
-              <span className="font-bold text-base">{progress.tablesLearned.length}/10</span>
+              <Trophy className="w-5 h-5 text-orange-500 mr-1 sm:mr-2" />
+              <span className="font-bold text-sm sm:text-base">{progress.tablesLearned.length}/10</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Menu Items */}
-      <div className="max-w-6xl mx-auto grid grid-cols-3 gap-4 mb-4">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4">
         {menuItems.map((item) => {
           const Icon = item.icon;
           return (
             <button
               key={item.id}
               onClick={() => handleMenuClick(item.id)}
-              className={`${item.color} ${item.textColor} p-6 m-8 rounded-2xl shadow-lg 
-              transform transition-all duration-200 hover:scale-105 active:scale-95 h-40 
-              flex flex-col items-center justify-center text-center`}
+              className={`${item.color} ${item.textColor} p-4 sm:p-5 md:p-6 rounded-2xl shadow-lg 
+              transform transition-all duration-200 hover:scale-105 active:scale-95 min-h-[120px] sm:min-h-[140px] md:h-40
+              flex flex-col items-center justify-center text-center m-1 sm:m-2`}
             >
-              <Icon className="w-10 h-10 mb-2" />
-              <h3 className="text-xl font-bold mb-1 leading-tight">{item.title}</h3>
-              <p className="opacity-90 leading-tight">{item.description}</p>
+              <Icon className="w-8 h-8 sm:w-10 sm:h-10 mb-1 sm:mb-2" />
+              <h3 className="text-base sm:text-lg md:text-xl font-bold mb-0.5 sm:mb-1 leading-tight">{item.title}</h3>
+              <p className="text-xs sm:text-sm opacity-90 leading-tight">{item.description}</p>
             </button>
           );
         })}
       </div>
 
       {/* Bottom Navigation */}
-      <div className="flex justify-center space-x-4">
+      <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
         <button
           onClick={() => handleMenuClick('progress')}
-          className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-xl shadow-md flex items-center space-x-2 hover:bg-white transition-colors"
+          className="bg-white/90 backdrop-blur-sm text-gray-700 px-4 py-2 sm:px-6 sm:py-3 rounded-xl shadow-md flex items-center justify-center space-x-2 hover:bg-white transition-colors"
         >
           <Trophy className="w-5 h-5" />
-          <span className="font-medium text-base">{t.progress}</span>
+          <span className="font-medium text-sm sm:text-base">{t.progress}</span>
         </button>
-        
+
         <button
           onClick={() => handleMenuClick('settings')}
-          className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-xl shadow-md flex items-center space-x-2 hover:bg-white transition-colors"
+          className="bg-white/90 backdrop-blur-sm text-gray-700 px-4 py-2 sm:px-6 sm:py-3 rounded-xl shadow-md flex items-center justify-center space-x-2 hover:bg-white transition-colors"
         >
           <Settings className="w-5 h-5" />
-          <span className="font-medium text-base">{t.settings}</span>
+          <span className="font-medium text-sm sm:text-base">{t.settings}</span>
         </button>
       </div>
 
