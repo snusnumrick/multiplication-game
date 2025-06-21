@@ -155,6 +155,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setIsFoxyVisible,
     }}>
       {children}
+    </GameContext.Provider>
   );
 }
 
