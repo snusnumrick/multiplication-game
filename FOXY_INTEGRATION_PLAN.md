@@ -72,10 +72,18 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   *Decision Point: Evaluating ease of asset creation vs. animation quality/scalability. Sprite sheets seem more practical for now.*
 
 2.  **[PENDING] Create/Source Basic Animations:**
-    *   **Idle:** Foxy breathing lightly, blinking. (e.g., `foxy-idle-spritesheet.png` + metadata)
-    *   **Talking:** Simple mouth movement. (e.g., `foxy-talking-spritesheet.png` + metadata)
-    *   **Happy/Excited:** Foxy smiling, small jump/wag. (e.g., `foxy-happy-spritesheet.png` + metadata)
-    *   *Asset Creation: This involves creating sequences of frames for each animation and combining them into sprite sheets. Can be done with tools like Aseprite, GIMP, Krita, Photoshop. Animations to be stored in `src/assets/animations/foxy/`.*
+    *   **Idle:** Foxy breathing lightly, blinking. (e.g., `foxy-idle-spritesheet.png` + `foxy-idle-metadata.json`)
+    *   **Talking:** Simple mouth movement. (e.g., `foxy-talking-spritesheet.png` + `foxy-talking-metadata.json`)
+    *   **Happy/Excited:** Foxy smiling, small jump/wag. (e.g., `foxy-happy-spritesheet.png` + `foxy-happy-metadata.json`)
+    *   *Asset Creation Workflow (Sprite Sheets):*
+        *   1. *Design & Sketch:* Plan keyframes for each animation (idle, talking, happy).
+        *   2. *Create Individual Frames:* Draw each frame using image editing software (e.g., Aseprite, Piskel for pixel art; GIMP, Krita, Photoshop for raster; Illustrator, Figma for vector exported to raster). Ensure consistent frame dimensions and character positioning.
+        *   3. *Combine into Sprite Sheet:* Arrange frames into a single image grid. Tools like Aseprite, TexturePacker, or online generators can automate this.
+        *   4. *Define Animation Metadata (Recommended):* Create a JSON file per animation or one master JSON. This file describes frame coordinates (x, y, width, height), animation sequences (which frames belong to "idle", "talking", etc.), and frame durations.
+    *   *Automation & AI:*
+        *   *Full AI Animation Generation:* Directly generating complete, consistent sprite animations from text prompts is currently not mature. AI can assist with concept art or individual poses, but significant manual work is needed for animation sequences.
+        *   *Pipeline Automation:* Tools can automate combining frames into sprite sheets and generating metadata if individual frames are provided.
+    *   *Storage:* Animations and metadata to be stored in `src/assets/animations/foxy/`.
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
     *   Replace the `<img>` tag (or current placeholder) with an animation component suitable for the chosen technology (e.g., a custom sprite sheet animator or a library).
