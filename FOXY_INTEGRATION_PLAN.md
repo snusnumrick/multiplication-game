@@ -70,7 +70,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   **Idle:** Foxy breathing lightly, blinking. (e.g., `idle.json`)
     *   **Talking:** Simple mouth movement synced (loosely at first) with message display. (e.g., `talking.json`)
     *   **Happy/Excited:** Foxy smiling, maybe a small jump or tail wag, for correct answers or achievements. (e.g., `happy.json`)
-    *   *Asset Creation: This is a significant step. May require an animator or sourcing suitable existing assets. To be stored in `src/assets/animations/foxy/`.*
+    *   *Asset Creation: This is a significant step. Requires manual creation (e.g., using Adobe After Effects), sourcing suitable existing assets, or hiring an animator. Exploring potential AI-assisted tools for asset generation, though direct Lottie animation by LLMs is not yet mature. Animations to be stored in `src/assets/animations/foxy/`.*
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
     *   Replace the `<img>` tag with the chosen animation component (e.g., Lottie player).
