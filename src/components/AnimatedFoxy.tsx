@@ -12,9 +12,9 @@ export function AnimatedFoxy({
   isVisible, 
   imageUrl = "/images/foxy-mascot.jpg" 
 }: AnimatedFoxyProps) {
-  const { t } = useGame();
+  const { t, settings } = useGame();
 
-  if (!isVisible) {
+  if (!isVisible || !settings.foxyEnabled) {
     return null;
   }
 

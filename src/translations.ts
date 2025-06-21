@@ -253,6 +253,11 @@ export interface Translation {
   // Foxy specific
   foxyMascotAltText: string;
   foxyWelcomeMainMenu: string;
+  foxyVisibilityTitle: string;
+  foxyShow: string;
+  foxyHide: string;
+  foxyVisibilityDescriptionShow: string;
+  foxyVisibilityDescriptionHide: string;
 }
 
 export interface ScenarioText {
@@ -581,6 +586,11 @@ export const translations: Record<string, Translation> = {
     // Foxy specific
     foxyMascotAltText: "Foxy das Maskottchen",
     foxyWelcomeMainMenu: "Hallo Eva! Ich bin Foxy! Lass uns zusammen das Einmaleins entdecken. Wähle ein Spiel, um zu starten!",
+    foxyVisibilityTitle: "Foxy Sichtbarkeit",
+    foxyShow: "Anzeigen",
+    foxyHide: "Verstecken",
+    foxyVisibilityDescriptionShow: "Foxy ist sichtbar und hilft dir.",
+    foxyVisibilityDescriptionHide: "Foxy ist versteckt.",
   },
   
   ru: {
@@ -902,5 +912,10 @@ export const translations: Record<string, Translation> = {
     // Foxy specific
     foxyMascotAltText: "Талисман Фокси",
     foxyWelcomeMainMenu: "Привет, Ева! Я Фокси! Давай вместе откроем мир таблицы умножения. Выбери игру, чтобы начать!",
+    foxyVisibilityTitle: "Видимость Фокси",
+    foxyShow: "Показывать",
+    foxyHide: "Скрыть",
+    foxyVisibilityDescriptionShow: "Фокси видна и помогает тебе.",
+    foxyVisibilityDescriptionHide: "Фокси скрыта.",
   }
 };

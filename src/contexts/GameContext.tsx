@@ -15,6 +15,7 @@ interface GameSettings {
   language: 'de' | 'ru';
   difficulty: 'easy' | 'medium' | 'hard';
   soundEnabled: boolean;
+  foxyEnabled: boolean; // Added for Foxy visibility
 }
 
 const defaultProgress: GameProgress = {
@@ -30,6 +31,7 @@ const defaultSettings: GameSettings = {
   language: 'de',
   difficulty: 'medium',
   soundEnabled: true,
+  foxyEnabled: true, // Default Foxy to be enabled
 };
 
 export function GameProvider({ children }: { children: ReactNode }) {
