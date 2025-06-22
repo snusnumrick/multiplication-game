@@ -85,7 +85,7 @@ export function MainMenu() {
       <div className="text-center mb-4 md:mb-6">
         <div className="flex flex-col sm:flex-row justify-center items-center mb-3">
           <img
-            src="/images/foxy-mascot.jpg"
+            src="/images/foxy-mascot.webp"
             alt="Foxy the Fox"
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-white shadow-lg mb-2 sm:mb-0 sm:mr-4"
           />

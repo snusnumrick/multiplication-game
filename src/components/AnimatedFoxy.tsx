@@ -11,7 +11,7 @@ interface AnimatedFoxyProps {
 export function AnimatedFoxy({ 
   message, 
   isVisible, 
-  imageUrl = "/images/foxy-mascot.jpg" // Default static image
+  imageUrl = "/images/foxy-mascot.webp" // Default static image
 }: AnimatedFoxyProps) {
   const { t, settings, foxyAnimationState } = useGame(); // foxyAnimationState is kept for future use
 
