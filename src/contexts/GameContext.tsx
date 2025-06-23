@@ -185,8 +185,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [t, setIsFoxyVisible, setFoxyMessage]);
 
   const playFoxyAudio = useCallback((messageKey: keyof Translation) => {
-    if (!settings.soundEnabled || !foxyAudioRef.current) {
-      // console.log(`Sound disabled or audio element not ready, not playing audio for: ${String(messageKey)}`);
+    if (!settings.soundEnabled || !settings.foxyEnabled || !foxyAudioRef.current) {
+      // console.log(`Sound or Foxy disabled, or audio element not ready, not playing audio for: ${String(messageKey)}`);
       return;
     }
 
