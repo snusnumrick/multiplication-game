@@ -93,6 +93,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const savedSettings = localStorage.getItem('multiplicationGame_settings');
     const savedProgress = localStorage.getItem('multiplicationGame_progress');
+    const savedFoxyGreetingPlayed = localStorage.getItem('multiplicationGame_foxyGreetingPlayed');
     
     if (savedSettings) {
       setSettings({ ...defaultSettings, ...JSON.parse(savedSettings) });
@@ -100,6 +101,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
     
     if (savedProgress) {
       setProgress({ ...defaultProgress, ...JSON.parse(savedProgress) });
+    }
+
+    if (savedFoxyGreetingPlayed) {
+      setFoxyInitialGreetingPlayed(JSON.parse(savedFoxyGreetingPlayed));
     }
   }, []);
 
@@ -112,6 +117,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem('multiplicationGame_progress', JSON.stringify(progress));
   }, [progress]);
+
+  // Save foxyInitialGreetingPlayed when it changes
+  useEffect(() => {
+    localStorage.setItem('multiplicationGame_foxyGreetingPlayed', JSON.stringify(foxyInitialGreetingPlayed));
+  }, [foxyInitialGreetingPlayed]);
 
   const updateSettings = (newSettings: Partial<GameSettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }));
@@ -366,12 +376,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setIsFoxyVisible(false);
       setFoxyMessage(null);
       setCurrentFoxyMessageKey(null);
-      // Reset the initial greeting flag so it plays again next time Foxy greets on the menu
-      setFoxyInitialGreetingPlayed(false);
+      // With persistence, we no longer reset this flag automatically on menu return.
+      // It will remain true across sessions once set.
+      // setFoxyInitialGreetingPlayed(false); 
       // The useEffect above (dependent on isFoxyVisible/foxyMessage)
       // will handle stopping audio and setting animation to idle.
     }
-  }, [currentScreen, setIsFoxyVisible, setFoxyMessage, setCurrentFoxyMessageKey, setFoxyInitialGreetingPlayed]);
+  }, [currentScreen, setIsFoxyVisible, setFoxyMessage, setCurrentFoxyMessageKey]);
 
 
   return (
