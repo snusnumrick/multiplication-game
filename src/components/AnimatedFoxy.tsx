@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import foxyIdleSheet from '../assets/animations/foxy/idle.png';
 import foxyTalkingSheet from '../assets/animations/foxy/talking.png';
 import foxyHappySheet from '../assets/animations/foxy/happy.png'; // Updated import
-import foxyStaticImage from '../../public/images/foxy-mascot.png'; // Fallback static image
+// Fallback static image will be referenced by its public URL directly
 
 const FOXY_FRAME_WIDTH = 70;
 const FOXY_FRAME_HEIGHT = 70;
@@ -49,7 +49,7 @@ const animationsConfig: Record<string, AnimationConfigType> = {
     isSpriteSheet: true,
   },
   static_default: {
-    imageUrl: foxyStaticImage,
+    imageUrl: '/images/foxy-mascot.png', // Use the direct public URL
     frames: 1,
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
