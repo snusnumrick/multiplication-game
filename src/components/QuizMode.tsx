@@ -11,7 +11,7 @@ interface QuizQuestion {
 }
 
 export function QuizMode() {
-  const { t, setCurrentScreen, playSound, addStars, settings, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, settings, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -82,6 +82,7 @@ export function QuizMode() {
       setScore(prev => prev + 10);
       playSound('correct');
       addStars(1);
+      setFoxyAnimationState('happy');
     } else {
       playSound('incorrect');
     }
@@ -112,7 +113,7 @@ export function QuizMode() {
     if (bonusStars > 0) {
       addStars(bonusStars);
     }
-    
+    // Determine if happy animation should play based on score/stars in renderResults
     playSound('success');
   }, [score, addStars, playSound]);
 
@@ -302,6 +303,12 @@ export function QuizMode() {
       message = t.tryAgain;
       starRating = 0;
     }
+
+    useEffect(() => {
+      if (gameState === 'finished' && starRating >= 2) {
+        setFoxyAnimationState('happy');
+      }
+    }, [gameState, starRating, setFoxyAnimationState]);
 
     return (
       <div className="text-center max-w-2xl mx-auto">

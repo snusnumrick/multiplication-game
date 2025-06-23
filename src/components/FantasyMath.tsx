@@ -17,7 +17,7 @@ interface FantasyScenario {
 }
 
 export function FantasyMath() {
-  const { t, setCurrentScreen, playSound, settings, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, settings, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
   const [selectedScenario, setSelectedScenario] = useState<FantasyScenario | null>(null);
   const [gameStep, setGameStep] = useState<'problem' | 'expression' | 'answer' | 'result'>('problem');
   const [selectedExpression, setSelectedExpression] = useState<string>('');
@@ -149,6 +149,7 @@ export function FantasyMath() {
     if (bothCorrect) {
       playSound('correct');
       addStars(3); // Award 3 stars for getting both parts right
+      setFoxyAnimationState('happy');
     } else {
       playSound('incorrect');
     }

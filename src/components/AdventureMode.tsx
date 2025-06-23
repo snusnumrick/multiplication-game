@@ -23,7 +23,7 @@ interface Question {
 }
 
 export function AdventureMode() {
-  const { t, setCurrentScreen, playSound, addStars, progress, updateProgress, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, progress, updateProgress, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
   
   // Get localized level title and description
   const getLevelTitle = (levelId: number): string => {
@@ -241,6 +241,7 @@ export function AdventureMode() {
       setCorrectAnswers(prev => prev + 1);
       setScore(prev => prev + 10);
       playSound('correct');
+      setFoxyAnimationState('happy');
       // Potentially show a "correct answer" Foxy message here if desired in the future
     } else {
       playSound('incorrect');
@@ -288,6 +289,10 @@ export function AdventureMode() {
       showFoxyMessage('foxyAdventureFail');
     }
     
+    if (earnedStars >= 2) { // Trigger happy animation for 2 or 3 stars
+      setFoxyAnimationState('happy');
+    }
+
     if (earnedStars > 0) {
       // Update progress
       const newAdventureLevels = {

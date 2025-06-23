@@ -4,7 +4,7 @@ import { ArrowLeft, Lightbulb, Check, RotateCcw, Star } from 'lucide-react';
 import { AnimatedFoxy } from './AnimatedFoxy';
 
 export function PracticeMode() {
-  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [currentProblem, setCurrentProblem] = useState<{ a: number; b: number } | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
@@ -34,6 +34,7 @@ export function PracticeMode() {
       setCorrectAnswers(prev => prev + 1);
       playSound('correct');
       addStars(1);
+      setFoxyAnimationState('happy');
       
       // Generate new problem after short delay
       setTimeout(() => {

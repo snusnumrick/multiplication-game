@@ -13,7 +13,7 @@ interface Card {
 }
 
 export function MemoryGame() {
-  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -136,6 +136,7 @@ export function MemoryGame() {
           setMatches(currentMatches);
           addStars(2);
           playSound('correct');
+          setFoxyAnimationState('happy');
           showFoxyMessage('foxyMemoryMatchFound', 3);
           setFlippedCards([]);
           
@@ -145,6 +146,7 @@ export function MemoryGame() {
             setGameComplete(true);
             addStars(10); // Bonus for completion
             playSound('success');
+            setFoxyAnimationState('happy'); // Happy animation on game completion
             // Game complete message is handled by useEffect [gameComplete]
           } else if (totalPairs > 2 && totalPairs - currentMatches === 2) {
             // Show encouragement when 2 pairs are left (if more than 2 pairs total)
