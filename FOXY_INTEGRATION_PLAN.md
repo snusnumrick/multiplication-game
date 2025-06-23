@@ -155,15 +155,66 @@ Enhance Foxy's presence from a static image with text to an animated character w
 **Tasks:**
 
 1.  **[IN PROGRESS] Script Voice Lines:**
-    *   Transcribe all Foxy messages defined in `translations.ts` into a script.
+    *   Transcribe all Foxy-specific spoken messages defined in `translations.ts` (see list under Task 2) into a script for each target language.
     *   Ensure scripts are natural-sounding and appropriate for the target audience (Eva).
     *   *Status: This is primarily a content generation task.*
 
 2.  **[PENDING] Record Voice Lines:**
-    *   Perform voice acting and recording for one language initially (e.g., German).
-    *   Ensure good audio quality and consistent delivery.
-    *   Organize audio files clearly.
-    *   New directory: `src/assets/audio/foxy/{lang}/` (e.g., `de/welcome.mp3`, `de/practice_intro.mp3`).
+    *   Perform voice acting and recording for one language initially (e.g., German, then Russian).
+    *   Ensure good audio quality (clear, no background noise, consistent volume) and consistent, engaging delivery.
+    *   **Directory Structure:** Audio files should be placed in `public/audio/foxy/{lang_code}/`.
+        *   Example for German: `public/audio/foxy/de/`
+        *   Example for Russian: `public/audio/foxy/ru/`
+    *   **File Naming Convention:** Use the exact `messageKey` from `translations.ts` as the filename, with an `.mp3` extension.
+        *   Example: `public/audio/foxy/de/foxyWelcomeMainMenu.mp3`
+    *   **List of Foxy Message Keys Requiring Audio Files (filename will be `{key}.mp3`):**
+        *   `foxyWelcomeMainMenu`
+        *   `foxyIntroPracticeMode`
+        *   `foxyIntroQuizMode`
+        *   `foxyIntroAdventureMode`
+        *   `foxyIntroMemoryGame`
+        *   `foxyIntroRealWorldMath`
+        *   `foxyIntroFantasyMath`
+        *   `foxyEncouragement1`
+        *   `foxyEncouragement2`
+        *   `foxyEncouragement3`
+        *   `foxyCongrats1`
+        *   `foxyCongrats2`
+        *   `foxyCongrats3`
+        *   `foxyCongratsAdventureLevel`
+        *   `foxyCongratsQuiz`
+        *   `foxyCongratsQuizHigh`
+        *   `foxyCongratsQuizMid`
+        *   `foxyCongratsQuizLow`
+        *   `foxyAdventureCorrectAnswer`
+        *   `foxyQuizCorrectAnswer`
+        *   `foxyAdventureIncorrect`
+        *   `foxyAdventureTimeLow`
+        *   `foxyAdventurePass1Star`
+        *   `foxyAdventurePass2Stars`
+        *   `foxyAdventurePass3Stars`
+        *   `foxyAdventureFail`
+        *   `foxyMemoryMatchFound`
+        *   `foxyMemoryNoMatch`
+        *   `foxyMemoryFewPairsLeft`
+        *   `foxyMemoryGameComplete`
+        *   `foxyRealWorldProblem`
+        *   `foxyRealWorldExpression`
+        *   `foxyRealWorldAnswer`
+        *   `foxyRealWorldCorrect`
+        *   `foxyRealWorldIncorrect`
+        *   `foxyFantasyProblem`
+        *   `foxyFantasyExpression`
+        *   `foxyFantasyAnswer`
+        *   `foxyFantasyCorrect`
+        *   `foxyFantasyIncorrect`
+        *   `foxyEncouragementStreak3`
+        *   `foxyEncouragementStreak5`
+        *   `foxyEncouragementTryAgain`
+        *   `foxyEncouragementQuizKeepTrying`
+        *   `foxyTimeRunningOutQuiz`
+        *   `foxyHintMessage`
+    *   *Note: UI-only text keys like `foxyVisibilityTitle` do not need audio.*
 
 3.  **[PENDING] Integrate Audio Playback:**
     *   Use HTML5 `<audio>` API or a lightweight audio library.
@@ -189,7 +240,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
 *   `src/contexts/GameContext.tsx`
 *   `src/components/AnimatedFoxy.tsx` (potentially to help manage audio events if tightly coupled with animation)
 **New Files/Directories:**
-*   `src/assets/audio/foxy/de/` (and other languages later)
+*   `public/audio/foxy/de/` (and other languages later, e.g., `public/audio/foxy/ru/`)
 
 ### Phase 4: Advanced Interactions, Polish & Expansion
 
