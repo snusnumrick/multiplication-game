@@ -184,6 +184,26 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   }, [t, setIsFoxyVisible, setFoxyMessage]);
 
+  // This function is exposed via context as `setFoxyAnimationState`
+  const setFoxyAnimationStateWithHappyLogic = useCallback((newState: FoxyAnimationState) => {
+    if (happyAnimationTimeoutRef.current) {
+      clearTimeout(happyAnimationTimeoutRef.current);
+      happyAnimationTimeoutRef.current = null;
+    }
+
+    _setInternalFoxyAnimationState(newState); // Use the internal setter
+
+    if (newState === 'happy') {
+      happyAnimationTimeoutRef.current = setTimeout(() => {
+        // After happy animation, revert to 'idle'.
+        // If a message is still meant to be active, and audio should play,
+        // it's assumed the audio system (or calling component) will set 'talking' again if needed.
+        _setInternalFoxyAnimationState('idle');
+        happyAnimationTimeoutRef.current = null;
+      }, 2500); // Duration for happy animation
+    }
+  }, [_setInternalFoxyAnimationState]); // Dependency is the internal setter
+
   const playFoxyAudio = useCallback((messageKey: keyof Translation) => {
     if (!settings.soundEnabled || !settings.foxyEnabled || !foxyAudioRef.current) {
       // console.log(`Sound or Foxy disabled, or audio element not ready, not playing audio for: ${String(messageKey)}`);
@@ -270,26 +290,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
       }
     };
   }, []);
-
-  // This function is exposed via context as `setFoxyAnimationState`
-  const setFoxyAnimationStateWithHappyLogic = useCallback((newState: FoxyAnimationState) => {
-    if (happyAnimationTimeoutRef.current) {
-      clearTimeout(happyAnimationTimeoutRef.current);
-      happyAnimationTimeoutRef.current = null;
-    }
-
-    _setInternalFoxyAnimationState(newState); // Use the internal setter
-
-    if (newState === 'happy') {
-      happyAnimationTimeoutRef.current = setTimeout(() => {
-        // After happy animation, revert to 'idle'.
-        // If a message is still meant to be active, and audio should play,
-        // it's assumed the audio system (or calling component) will set 'talking' again if needed.
-        _setInternalFoxyAnimationState('idle');
-        happyAnimationTimeoutRef.current = null;
-      }, 2500); // Duration for happy animation
-    }
-  }, [_setInternalFoxyAnimationState]); // Dependency is the internal setter
 
   // useEffect to handle cleanup when Foxy is hidden or message is cleared
   useEffect(() => {
