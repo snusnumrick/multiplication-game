@@ -40,7 +40,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [currentScreen, setCurrentScreen] = useState('menu');
   const [foxyMessage, setFoxyMessage] = useState<string | null>(null);
   const [isFoxyVisible, setIsFoxyVisible] = useState<boolean>(false);
-  const [foxyAnimationState, setFoxyAnimationState] = useState<FoxyAnimationState>('idle');
+  const [foxyAnimationState, _setInternalFoxyAnimationState] = useState<FoxyAnimationState>('idle'); // Renamed raw setter
   const foxyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const happyAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const foxyMessageRef = useRef<string | null>(null);
@@ -192,28 +192,43 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     const audio = foxyAudioRef.current;
 
-    // Stop any currently playing audio from this element and clear previous listeners
+    // Stop any currently playing audio from this element
     if (!audio.paused) {
       audio.pause();
-      audio.currentTime = 0; // Reset time to start
+      audio.currentTime = 0;
     }
-    audio.onended = null; // Clear previous onended listener
-    audio.onerror = null; // Clear previous onerror listener
+
+    // Clear previous listeners to avoid multiple triggers if playFoxyAudio is called rapidly
+    audio.onplaying = null;
+    audio.onended = null;
+    audio.onerror = null;
 
     const audioFile = `/audio/foxy/${settings.language}/${String(messageKey)}.mp3`;
     audio.src = audioFile;
+
+    audio.onplaying = () => {
+      // When audio starts playing, set Foxy to 'talking'.
+      // This uses the context's setFoxyAnimationState, which handles 'happy' state interruption.
+      setFoxyAnimationStateWithHappyLogic('talking');
+    };
+
+    audio.onended = () => {
+      // When audio finishes, set Foxy to 'idle'.
+      setFoxyAnimationStateWithHappyLogic('idle');
+    };
+
+    audio.onerror = (e) => {
+      console.error(`[GameContext] Error event for Foxy audio "${String(messageKey)}" (${audioFile}):`, e);
+      setFoxyAnimationStateWithHappyLogic('idle');
+    };
     
     audio.play().catch(error => {
-      console.error(`[GameContext] Error playing Foxy audio for "${String(messageKey)}" (${audioFile}):`, error);
-      // Note: Errors like 404 for the audio file might trigger the <audio> element's error event,
-      // rather than rejecting the play() promise. We can add an onerror handler if needed.
+      console.error(`[GameContext] Error calling play() for Foxy audio "${String(messageKey)}" (${audioFile}):`, error);
+      // If play() itself fails, ensure Foxy is idle.
+      setFoxyAnimationStateWithHappyLogic('idle');
     });
 
-    // Placeholder for future logic (Task 4 - Animation Sync):
-    // - On audio start: setFoxyAnimationState('talking');
-    // - On audio end: if (!foxyMessageRef.current) setFoxyAnimationState('idle');
-    //   (This will involve adding audio.onplay and audio.onended event handlers here)
-  }, [settings.soundEnabled, settings.language]);
+  }, [settings.soundEnabled, settings.language, setFoxyAnimationStateWithHappyLogic]);
 
   // Update showFoxyMessage to also trigger audio playback
   const showFoxyMessageAndUpdate = useCallback((messageKey: keyof Translation, duration?: number) => {
@@ -256,47 +271,42 @@ export function GameProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // This function is exposed via context as `setFoxyAnimationState`
   const setFoxyAnimationStateWithHappyLogic = useCallback((newState: FoxyAnimationState) => {
-    // Clear any existing happy animation timeout before setting a new state or a new timeout
     if (happyAnimationTimeoutRef.current) {
       clearTimeout(happyAnimationTimeoutRef.current);
       happyAnimationTimeoutRef.current = null;
     }
 
-    setFoxyAnimationState(newState);
+    _setInternalFoxyAnimationState(newState); // Use the internal setter
 
     if (newState === 'happy') {
       happyAnimationTimeoutRef.current = setTimeout(() => {
-        // After happy animation, revert based on message presence (using the ref for current message)
-        if (foxyMessageRef.current) {
-          setFoxyAnimationState('talking');
-        } else {
-          setFoxyAnimationState('idle');
-        }
+        // After happy animation, revert to 'idle'.
+        // If a message is still meant to be active, and audio should play,
+        // it's assumed the audio system (or calling component) will set 'talking' again if needed.
+        _setInternalFoxyAnimationState('idle');
         happyAnimationTimeoutRef.current = null;
-      }, 2500); // Duration for happy animation (e.g., 2.5 seconds)
+      }, 2500); // Duration for happy animation
     }
-  }, [setFoxyAnimationState]); // setFoxyAnimationState from useState is stable
+  }, [_setInternalFoxyAnimationState]); // Dependency is the internal setter
 
+  // useEffect to handle cleanup when Foxy is hidden or message is cleared
   useEffect(() => {
-    // Do not interfere if Foxy is in a temporary state like 'happy'
-    if (foxyAnimationState === 'happy') {
-      return;
+    if (!isFoxyVisible || !foxyMessage) {
+      // Foxy is hidden or message is cleared, ensure she is idle and audio is stopped.
+      if (foxyAudioRef.current && !foxyAudioRef.current.paused) {
+        foxyAudioRef.current.pause();
+        foxyAudioRef.current.currentTime = 0;
+      }
+      // Use the public setter to ensure 'happy' timeout is also cleared.
+      setFoxyAnimationStateWithHappyLogic('idle');
     }
+    // Note: Transitions like 'talking' -> 'idle' (on audio end) or 'idle' -> 'talking' (on audio start)
+    // are now handled by audio event listeners in playFoxyAudio.
+    // The 'happy' state is managed by setFoxyAnimationStateWithHappyLogic.
+  }, [isFoxyVisible, foxyMessage, setFoxyAnimationStateWithHappyLogic]);
 
-    if (isFoxyVisible && foxyMessage) {
-      // If Foxy is visible and has a message, she should be 'talking'
-      // unless she's in a specific non-idle state like 'happy'.
-      if (foxyAnimationState === 'idle') {
-        setFoxyAnimationState('talking');
-      }
-    } else {
-      // If not visible or no message, she should be 'idle'.
-      if (foxyAnimationState !== 'idle') {
-        setFoxyAnimationState('idle');
-      }
-    }
-  }, [isFoxyVisible, foxyMessage, foxyAnimationState, setFoxyAnimationState]);
 
   return (
     <GameContext.Provider value={{

@@ -249,25 +249,23 @@ Enhance Foxy's presence from a static image with text to an animated character w
                 ```
         *   The script uses `import.meta.url` for ESM-friendly path resolution and is configured to be run with `node --loader ts-node/esm` as defined in `package.json`'s `generate-audio` script. (Commits `cf36748`, `f32734f`, `5547ca9`)
 
-3.  **[PENDING] Integrate Audio Playback:**
-    *   Use HTML5 `<audio>` API or a lightweight audio library.
+3.  **[IN PROGRESS] Integrate Audio Playback:**
+    *   Use HTML5 `<audio>` API. (Implemented as of commit `add433f`)
     *   Modify `GameContext.tsx` to manage audio playback:
-        *   Function to play a specific Foxy voice line based on a key (mapping to the audio file).
-        *   Ensure sound settings (`soundEnabled`) are respected.
-        *   Handle potential issues like audio loading, playback errors.
-    *   **Initial structure:** Add a `playFoxyAudio(messageKey)` function to `GameContext.tsx`.
-        *   This function will be called by `showFoxyMessage`.
-        *   Initially, it will log to the console that audio would play.
-        *   It will respect `settings.soundEnabled`.
-        *   Animation state ('talking'/'idle') will initially continue to be managed by existing `useEffect` based on message visibility. Direct animation control from `playFoxyAudio` will be added later.
+        *   Function `playFoxyAudio(messageKey)` implemented to play audio. (Commit `add433f`)
+        *   Sound settings (`soundEnabled`) are respected. (Commit `add433f`)
+        *   Basic audio loading/playback error handling in place. (Commit `add433f`)
+    *   `playFoxyAudio` is called by `showFoxyMessage`. (Commit `add433f`)
+    *   Animation state ('talking'/'idle') is now directly controlled by audio events (`onplaying`, `onended`, `onerror`) originating from `playFoxyAudio`. (Current changes)
 
-4.  **[PENDING] Synchronize Voice and Animation:**
+4.  **[IN PROGRESS] Synchronize Voice and Animation:**
     *   When a Foxy message is displayed:
-        *   Play the corresponding audio file (via `playFoxyAudio`).
-        *   `playFoxyAudio` (or a related mechanism) will set Foxy's animation state to 'talking'.
+        *   The corresponding audio file is played via `playFoxyAudio` (called by `showFoxyMessageAndUpdate`).
+        *   `playFoxyAudio` now sets Foxy's animation state to 'talking' when audio begins (`onplaying` event).
     *   When the audio finishes:
-        *   Set Foxy's animation state back to 'idle' (if no new message immediately follows).
-    *   This will involve listening to audio `onended` events and refining the animation control logic.
+        *   `playFoxyAudio` sets Foxy's animation state back to 'idle' (`onended` event).
+    *   Audio `onerror` events also revert Foxy to 'idle'.
+    *   This core synchronization is now implemented. Further refinements might be needed based on testing.
 
 **Files to Modify:**
 *   `src/contexts/GameContext.tsx`
