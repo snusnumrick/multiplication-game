@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import fetch from 'node-fetch'; // Use 'node-fetch' for making HTTP requests
-import { translations } from '../src/translations'; // Adjust path as necessary
+import { translations } from '../src/translations.js'; // Adjust path as necessary, added .js extension
 
 // Load environment variables (optional, for local development)
 import dotenv from 'dotenv';
