@@ -44,6 +44,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const foxyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const happyAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const foxyMessageRef = useRef<string | null>(null);
+  // TODO: Later, this will hold an AudioContext or HTMLAudioElement instance for Foxy's voice
+  // const foxyAudioRef = useRef<any>(null); 
 
   // Keep foxyMessageRef updated
   useEffect(() => {
@@ -171,6 +173,52 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   }, [t, setIsFoxyVisible, setFoxyMessage]);
 
+  const playFoxyAudio = useCallback((messageKey: keyof Translation) => {
+    if (!settings.soundEnabled) {
+      // console.log(`Sound disabled, not playing audio for: ${String(messageKey)}`);
+      return;
+    }
+    // TODO: Implement actual audio playback
+    // For now, just log that we would play the audio.
+    // The messageKey will be used to determine the audio file path later.
+    // e.g., const audioFile = `/audio/foxy/${settings.language}/${String(messageKey)}.mp3`;
+    console.log(`[GameContext] Would play audio for messageKey: ${String(messageKey)}`);
+
+    // Placeholder for future logic:
+    // - Load and play audio file associated with messageKey
+    // - On audio start: setFoxyAnimationState('talking'); (if not already handled by message visibility)
+    // - On audio end: if (!foxyMessageRef.current) setFoxyAnimationState('idle');
+  }, [settings.soundEnabled, settings.language]);
+
+  // Update showFoxyMessage to also trigger audio playback
+  const showFoxyMessageAndUpdate = useCallback((messageKey: keyof Translation, duration?: number) => {
+    if (foxyTimeoutRef.current) {
+      clearTimeout(foxyTimeoutRef.current);
+      foxyTimeoutRef.current = null;
+    }
+
+    const messageText = t[messageKey] as string;
+    if (messageText) {
+      setFoxyMessage(messageText);
+      setIsFoxyVisible(true);
+      playFoxyAudio(messageKey); // Call to play audio
+
+      if (duration) {
+        foxyTimeoutRef.current = setTimeout(() => {
+          setIsFoxyVisible(false);
+          setFoxyMessage(null);
+          foxyTimeoutRef.current = null;
+          // Note: Animation state will be handled by the useEffect below based on isFoxyVisible/foxyMessage
+        }, duration * 1000);
+      }
+    } else {
+      console.warn(`Foxy message key "${String(messageKey)}" not found in translations.`);
+      setIsFoxyVisible(false);
+      setFoxyMessage(null);
+    }
+  }, [t, setIsFoxyVisible, setFoxyMessage, playFoxyAudio]);
+
+
   // Clear timeouts on unmount
   useEffect(() => {
     return () => {
@@ -241,9 +289,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setFoxyMessage, // Keep for direct control if needed
       isFoxyVisible,
       setIsFoxyVisible, // Keep for direct control if needed
-      showFoxyMessage,
+      showFoxyMessage: showFoxyMessageAndUpdate, // Use the updated function
       foxyAnimationState,
       setFoxyAnimationState: setFoxyAnimationStateWithHappyLogic,
+      // playFoxyAudio, // Expose if direct audio control is needed elsewhere, for now it's internal to showFoxyMessage
     }}>
       {children}
     </GameContext.Provider>
