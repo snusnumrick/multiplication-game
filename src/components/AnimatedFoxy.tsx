@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 // This is expected as per the plan (Create/Source Basic Animations is PENDING).
 import foxyIdleSheet from '../assets/animations/foxy/idle.png';
 import foxyTalkingSheet from '../assets/animations/foxy/talking.png';
-import foxyHappySheet from '../assets/animations/foxy/idle.png';
+import foxyHappySheet from '../assets/animations/foxy/happy.png';
 import foxyStaticImage from '../../public/images/foxy-mascot.png'; // Fallback static image
 
 const FOXY_FRAME_WIDTH = 70;
@@ -26,7 +26,7 @@ type AnimationConfigType = {
 const animationsConfig: Record<string, AnimationConfigType> = {
   idle: {
     imageUrl: foxyIdleSheet, // .src for Next.js Image component-like imports
-    frames: 4, // Example: 4 frames in the idle sheet
+    frames: 121,
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 200, // Slower animation for idle
@@ -34,7 +34,7 @@ const animationsConfig: Record<string, AnimationConfigType> = {
   },
   talking: {
     imageUrl: foxyTalkingSheet,
-    frames: 59, // Example: 4 frames for talking
+    frames: 121,
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 150, // Faster animation for talking
@@ -42,7 +42,7 @@ const animationsConfig: Record<string, AnimationConfigType> = {
   },
   happy: {
     imageUrl: foxyHappySheet, // Currently points to idle.png (4 frames)
-    frames: 4, // Adjusted to 4 to match idle.png as placeholder
+    frames: 121,
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 120, // Energetic animation
