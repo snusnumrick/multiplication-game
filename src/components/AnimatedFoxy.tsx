@@ -42,7 +42,7 @@ const animationsConfig: Record<string, AnimationConfigType> = {
   },
   happy: {
     imageUrl: foxyHappySheet,
-    frames: 5, // Assuming happy.png has 5 frames as per the dev plan
+    frames: 121, // Frame count matches the happy.png sprite sheet
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 120, // Energetic animation
