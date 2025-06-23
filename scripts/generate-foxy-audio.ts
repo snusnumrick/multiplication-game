@@ -1,19 +1,24 @@
 import * as fs from 'fs';
-import path from 'path';
+import * as path from 'path';
 import { fileURLToPath } from 'url'; // Import for ESM path resolution
 // Removed: import fetch from 'node-fetch'; // Node.js built-in fetch will be used
 import { translations } from '../src/translations'; // Adjust path as necessary, removed .js extension
 
 // Load environment variables (optional, for local development)
-import dotenv from 'dotenv';
-const dotenvResult = dotenv.config();
+import * as dotenv from 'dotenv';
 
-if (dotenvResult.error) {
-  console.error('Error loading .env file. Details:', dotenvResult.error);
-  // Throw a standard error to provide a clearer stack trace if this is the source.
-  // Accessing .message might fail if dotenvResult.error is truly a null-prototype object without a message property.
-  const errorMessage = dotenvResult.error.message || JSON.stringify(dotenvResult.error);
-  throw new Error(`Failed to initialize dotenv: ${errorMessage}`);
+try {
+  const dotenvResult = dotenv.config();
+
+  if (dotenvResult.error) {
+    console.warn('Warning: Could not load .env file:', dotenvResult.error.message || 'Unknown error');
+    console.warn('Continuing without .env file. Make sure ELEVENLABS_API_KEY is set in your environment.');
+  } else {
+    console.log('Successfully loaded .env file');
+  }
+} catch (error) {
+  console.warn('Warning: Error loading dotenv:', error);
+  console.warn('Continuing without .env file. Make sure ELEVENLABS_API_KEY is set in your environment.');
 }
 
 // --- Configuration ---
