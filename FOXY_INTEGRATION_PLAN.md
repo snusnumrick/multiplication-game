@@ -106,9 +106,9 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   `AnimatedFoxy.tsx` now utilizes a sprite sheet and static image display system driven by `foxyAnimationState`.
     *   The static `<img>` tag has been replaced by a `<div>` styled for dynamic background image display (sprite animation).
     *   Animation states are configured in `animationsConfig`:
-        *   **'idle':** Uses `idle.png` (4 frames).
-        *   **'talking':** Uses `talking.png` (configured for 59 frames).
-        *   **'happy':** Uses `idle.png` (4 frames) as a temporary placeholder asset. The configuration expects a dedicated 5-frame `foxy-happy-spritesheet.png` once created.
+        *   **'idle':** Uses `idle.png` (configured for 121 frames).
+        *   **'talking':** Uses `talking.png` (configured for 121 frames).
+        *   **'happy':** Uses `foxy-happy-spritesheet.png` (configured for 121 frames).
         *   **'static_default':** Displays the main static Foxy image (`public/images/foxy-mascot.png`) using `background-size: contain`.
     *   The component receives `foxyAnimationState` from context (Commit `c1bffa8`) to select the appropriate animation or static image.
     *   Sprite sheet images are imported from `src/assets/animations/foxy/`.
