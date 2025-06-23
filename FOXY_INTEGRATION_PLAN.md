@@ -69,6 +69,29 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   **Talking:** `src/assets/animations/foxy/talking.png` (configured for 59 frames) - **Implemented**. (Assumes this sprite sheet exists or will be created with 59 frames).
     *   **Happy/Excited:** `foxy-happy-spritesheet.png` (intended with 5 frames) - **PENDING**.
         *   Currently, `src/assets/animations/foxy/idle.png` (4 frames) is used as a placeholder for the 'happy' animation asset in `AnimatedFoxy.tsx`. The configuration reflects this placeholder.
+    *   **Asset Details (Target Specifications):**
+        *   All sprite sheets should be horizontal strips. Frame dimensions are 70x70 pixels.
+        *   **Idle Animation (`idle.png`):**
+            *   **File Name:** `idle.png` (already exists as `src/assets/animations/foxy/idle.png`)
+            *   **Purpose:** Foxy breathing lightly, blinking.
+            *   **Number of Frames:** 4
+            *   **Frame Width:** 70 pixels
+            *   **Frame Height:** 70 pixels
+            *   **Total Image Dimensions:** 280px width (4 frames * 70px) x 70px height.
+        *   **Talking Animation (`talking.png`):**
+            *   **File Name:** `talking.png` (already exists as `src/assets/animations/foxy/talking.png`)
+            *   **Purpose:** Simple mouth movement for when Foxy is "speaking".
+            *   **Number of Frames:** 59 (as configured in `AnimatedFoxy.tsx`)
+            *   **Frame Width:** 70 pixels
+            *   **Frame Height:** 70 pixels
+            *   **Total Image Dimensions:** 4130px width (59 frames * 70px) x 70px height.
+        *   **Happy/Excited Animation (`foxy-happy-spritesheet.png`):**
+            *   **File Name:** `foxy-happy-spritesheet.png` (to be created)
+            *   **Purpose:** Foxy smiling, small jump/wag, or other happy gestures.
+            *   **Number of Frames:** 5 (intended)
+            *   **Frame Width:** 70 pixels
+            *   **Frame Height:** 70 pixels
+            *   **Total Image Dimensions:** 350px width (5 frames * 70px) x 70px height.
     *   *Asset Creation Workflow (Sprite Sheets):*
         *   1. *Design & Sketch:* Plan keyframes for each animation (idle, talking, happy).
         *   2. *Create Individual Frames:* Draw each frame using image editing software (e.g., Aseprite, Piskel for pixel art; GIMP, Krita, Photoshop for raster; Illustrator, Figma for vector exported to raster). Ensure consistent frame dimensions and character positioning.
