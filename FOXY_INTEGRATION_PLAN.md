@@ -60,31 +60,36 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 **Tasks:**
 
-1.  **[ON HOLD] Choose Animation Technology:**
-    *   Decision on animation technology (Sprite Sheets, Lottie, etc.) is currently on hold.
-    *   The immediate plan is to ensure `AnimatedFoxy.tsx` can display a static image if animation assets are not available or not yet integrated.
-    *   Future integration will replace the static image with the chosen animation system.
+1.  **[COMPLETED] Choose Animation Technology:**
+    *   **Sprite Sheets** selected as the animation technology.
+    *   `AnimatedFoxy.tsx` has been updated to use sprite sheets for animations and static images for fallback/specific states. (Reflects changes up to commit `c6e9ab5` and current modifications).
 
-2.  **[PENDING] Create/Source Basic Animations:**
-    *   **Idle:** Foxy breathing lightly, blinking. (e.g., `foxy-idle-spritesheet.png` + `foxy-idle-metadata.json`)
-    *   **Talking:** Simple mouth movement. (e.g., `foxy-talking-spritesheet.png` + `foxy-talking-metadata.json`)
-    *   **Happy/Excited:** Foxy smiling, small jump/wag. (e.g., `foxy-happy-spritesheet.png` + `foxy-happy-metadata.json`)
+2.  **[IN PROGRESS] Create/Source Basic Animations:**
+    *   **Idle:** `src/assets/animations/foxy/idle.png` (4 frames) - **Implemented**.
+    *   **Talking:** `src/assets/animations/foxy/talking.png` (configured for 59 frames) - **Implemented**. (Assumes this sprite sheet exists or will be created with 59 frames).
+    *   **Happy/Excited:** `foxy-happy-spritesheet.png` (intended with 5 frames) - **PENDING**.
+        *   Currently, `src/assets/animations/foxy/idle.png` (4 frames) is used as a placeholder for the 'happy' animation asset in `AnimatedFoxy.tsx`. The configuration reflects this placeholder.
     *   *Asset Creation Workflow (Sprite Sheets):*
         *   1. *Design & Sketch:* Plan keyframes for each animation (idle, talking, happy).
         *   2. *Create Individual Frames:* Draw each frame using image editing software (e.g., Aseprite, Piskel for pixel art; GIMP, Krita, Photoshop for raster; Illustrator, Figma for vector exported to raster). Ensure consistent frame dimensions and character positioning.
         *   3. *Combine into Sprite Sheet:* Arrange frames into a single image grid. Tools like Aseprite, TexturePacker, or online generators can automate this.
         *   4. *Define Animation Metadata (Recommended):* Create a JSON file per animation or one master JSON. This file describes frame coordinates (x, y, width, height), animation sequences (which frames belong to "idle", "talking", etc.), and frame durations.
     *   *Automation & AI:*
-        *   *AI Image/Video Generation for Sprites:* Directly generating complete, consistent sprite animations from text prompts using AI image generators (e.g., DALL-E, Midjourney) or AI video generators (e.g., Google Veo, Sora) is currently not mature for game-ready assets. While these tools can generate concepts or individual poses/clips, achieving consistent character appearance, style, transparent backgrounds, and precise animation loops suitable for sprite sheets typically requires significant manual cleanup, editing, and assembly. The effort to adapt such outputs often outweighs the benefits for simple, controlled animations.
-        *   *Pipeline Automation:* Tools can automate combining manually created frames into sprite sheets and generating metadata.
-    *   *Storage:* Animations and metadata to be stored in `src/assets/animations/foxy/`.
+        *   *AI Image/Video Generation for Sprites:* (Details as previously listed)
+        *   *Pipeline Automation:* (Details as previously listed)
+    *   *Storage:* Animations and metadata are stored in `src/assets/animations/foxy/`.
 
 3.  **[IN PROGRESS] Integrate Animation into `AnimatedFoxy.tsx`:**
-    *   **[COMPLETED]** Ensure `AnimatedFoxy.tsx` displays a static image (`/images/foxy-mascot.jpg`) as a fallback, while retaining the `foxyAnimationState` logic for future use. The `imageUrl` prop is used. (Commit `66bde5c`)
-    *   Future: Replace the static `<img>` tag with an animation component suitable for the chosen technology.
-    *   The component already receives `foxyAnimationState` from context (Commit `c1bffa8`), which will be used to drive animations once implemented.
-    *   Manage animation states (idle, talking, happy) based on props or context.
-    *   New directory: `src/assets/animations/foxy/` (e.g., sprite sheet images and potentially JSON metadata for frame coordinates/timings).
+    *   `AnimatedFoxy.tsx` now utilizes a sprite sheet and static image display system driven by `foxyAnimationState`.
+    *   The static `<img>` tag has been replaced by a `<div>` styled for dynamic background image display (sprite animation).
+    *   Animation states are configured in `animationsConfig`:
+        *   **'idle':** Uses `idle.png` (4 frames).
+        *   **'talking':** Uses `talking.png` (configured for 59 frames).
+        *   **'happy':** Uses `idle.png` (4 frames) as a temporary placeholder asset. The configuration expects a dedicated 5-frame `foxy-happy-spritesheet.png` once created.
+        *   **'static_default':** Displays the main static Foxy image (`public/images/foxy-mascot.png`) using `background-size: contain`.
+    *   The component receives `foxyAnimationState` from context (Commit `c1bffa8`) to select the appropriate animation or static image.
+    *   Sprite sheet images are imported from `src/assets/animations/foxy/`.
+    *   Foxy animation container is prevented from shrinking due to adjacent text (Commit `c6e9ab5`).
 
 4.  **[IN PROGRESS] Control Animations from `GameContext.tsx` or Props:**
     *   Add state to `GameContext.tsx` to control Foxy's current animation.

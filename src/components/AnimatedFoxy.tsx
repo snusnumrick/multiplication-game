@@ -41,8 +41,8 @@ const animationsConfig: Record<string, AnimationConfigType> = {
     isSpriteSheet: true,
   },
   happy: {
-    imageUrl: foxyHappySheet,
-    frames: 5, // Example: 5 frames for happy
+    imageUrl: foxyHappySheet, // Currently points to idle.png (4 frames)
+    frames: 4, // Adjusted to 4 to match idle.png as placeholder
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 120, // Energetic animation
@@ -126,7 +126,7 @@ export function AnimatedFoxy({
               backgroundRepeat: 'no-repeat',
               backgroundPositionX: anim.isSpriteSheet ? `-${currentFrame * anim.frameWidth}px` : '0px',
               backgroundPositionY: '0px', // Assuming all sprite sheets are horizontal strips
-              backgroundSize: anim.isSpriteSheet ? 'auto' : 'cover', // 'cover' for static, 'auto' for sprite
+              backgroundSize: anim.isSpriteSheet ? 'auto' : 'contain', // 'contain' for static, 'auto' for sprite
             }}
         />
         {message && (
