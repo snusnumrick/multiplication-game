@@ -154,10 +154,10 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 **Tasks:**
 
-1.  **[IN PROGRESS] Script Voice Lines:**
+1.  **[COMPLETED] Script Voice Lines:**
     *   Transcribe all Foxy-specific spoken messages defined in `translations.ts` (see list under Task 2) into a script for each target language.
     *   Ensure scripts are natural-sounding and appropriate for the target audience (Eva).
-    *   *Status: This is primarily a content generation task.*
+    *   *Status: Completed.*
 
 2.  **[COMPLETED] Record Voice Lines:**
     *   Perform voice acting and recording for one language initially (e.g., German, then Russian).
