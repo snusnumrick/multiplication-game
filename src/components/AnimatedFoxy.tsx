@@ -41,8 +41,8 @@ const animationsConfig: Record<string, AnimationConfigType> = {
     isSpriteSheet: true,
   },
   happy: {
-    imageUrl: foxyHappySheet, // Currently points to idle.png (4 frames)
-    frames: 121,
+    imageUrl: foxyHappySheet,
+    frames: 5, // Assuming happy.png has 5 frames as per the dev plan
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 120, // Energetic animation
