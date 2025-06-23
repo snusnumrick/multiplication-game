@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 // If these files don't exist yet, this will cause a compile-time error.
 // This is expected as per the plan (Create/Source Basic Animations is PENDING).
 import foxyIdleSheet from '../assets/animations/foxy/idle.png';
-import foxyTalkingSheet from '../assets/animations/foxy/idle.png';
+import foxyTalkingSheet from '../assets/animations/foxy/talking.png';
 import foxyHappySheet from '../assets/animations/foxy/idle.png';
 import foxyStaticImage from '../../public/images/foxy-mascot.png'; // Fallback static image
 
@@ -34,7 +34,7 @@ const animationsConfig: Record<string, AnimationConfigType> = {
   },
   talking: {
     imageUrl: foxyTalkingSheet,
-    frames: 1, // Example: 4 frames for talking
+    frames: 59, // Example: 4 frames for talking
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 150, // Faster animation for talking
