@@ -159,14 +159,19 @@ Enhance Foxy's presence from a static image with text to an animated character w
         *   Function to play a specific Foxy voice line based on a key (mapping to the audio file).
         *   Ensure sound settings (`soundEnabled`) are respected.
         *   Handle potential issues like audio loading, playback errors.
+    *   **Initial structure:** Add a `playFoxyAudio(messageKey)` function to `GameContext.tsx`.
+        *   This function will be called by `showFoxyMessage`.
+        *   Initially, it will log to the console that audio would play.
+        *   It will respect `settings.soundEnabled`.
+        *   Animation state ('talking'/'idle') will initially continue to be managed by existing `useEffect` based on message visibility. Direct animation control from `playFoxyAudio` will be added later.
 
 4.  **[PENDING] Synchronize Voice and Animation:**
     *   When a Foxy message is displayed:
-        *   Play the corresponding audio file.
-        *   Set Foxy's animation state to 'talking'.
+        *   Play the corresponding audio file (via `playFoxyAudio`).
+        *   `playFoxyAudio` (or a related mechanism) will set Foxy's animation state to 'talking'.
     *   When the audio finishes:
         *   Set Foxy's animation state back to 'idle' (if no new message immediately follows).
-    *   This might involve listening to audio `onended` events.
+    *   This will involve listening to audio `onended` events and refining the animation control logic.
 
 **Files to Modify:**
 *   `src/contexts/GameContext.tsx`
