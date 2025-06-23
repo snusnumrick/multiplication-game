@@ -42,6 +42,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [isFoxyVisible, setIsFoxyVisible] = useState<boolean>(false);
   const [foxyAnimationState, setFoxyAnimationState] = useState<FoxyAnimationState>('idle');
   const foxyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const happyAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const foxyMessageRef = useRef<string | null>(null);
+
+  // Keep foxyMessageRef updated
+  useEffect(() => {
+    foxyMessageRef.current = foxyMessage;
+  }, [foxyMessage]);
 
   // Load saved data on mount
   useEffect(() => {
@@ -164,28 +171,54 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   }, [t, setIsFoxyVisible, setFoxyMessage]);
 
-  // Clear timeout on unmount
+  // Clear timeouts on unmount
   useEffect(() => {
     return () => {
       if (foxyTimeoutRef.current) {
         clearTimeout(foxyTimeoutRef.current);
       }
+      if (happyAnimationTimeoutRef.current) {
+        clearTimeout(happyAnimationTimeoutRef.current);
+      }
     };
   }, []);
 
+  const setFoxyAnimationStateWithHappyLogic = useCallback((newState: FoxyAnimationState) => {
+    // Clear any existing happy animation timeout before setting a new state or a new timeout
+    if (happyAnimationTimeoutRef.current) {
+      clearTimeout(happyAnimationTimeoutRef.current);
+      happyAnimationTimeoutRef.current = null;
+    }
+
+    setFoxyAnimationState(newState);
+
+    if (newState === 'happy') {
+      happyAnimationTimeoutRef.current = setTimeout(() => {
+        // After happy animation, revert based on message presence (using the ref for current message)
+        if (foxyMessageRef.current) {
+          setFoxyAnimationState('talking');
+        } else {
+          setFoxyAnimationState('idle');
+        }
+        happyAnimationTimeoutRef.current = null;
+      }, 2500); // Duration for happy animation (e.g., 2.5 seconds)
+    }
+  }, [setFoxyAnimationState]); // setFoxyAnimationState from useState is stable
+
   useEffect(() => {
+    // Do not interfere if Foxy is in a temporary state like 'happy'
+    if (foxyAnimationState === 'happy') {
+      return;
+    }
+
     if (isFoxyVisible && foxyMessage) {
       // If Foxy is visible and has a message, she should be 'talking'
       // unless she's in a specific non-idle state like 'happy'.
-      // This logic will ensure that if Foxy becomes visible with a message,
-      // or a message is set while she's visible, she transitions to 'talking'
-      // from 'idle'.
       if (foxyAnimationState === 'idle') {
         setFoxyAnimationState('talking');
       }
     } else {
       // If not visible or no message, she should be 'idle'.
-      // This handles cases where Foxy is hidden or message cleared.
       if (foxyAnimationState !== 'idle') {
         setFoxyAnimationState('idle');
       }
@@ -210,7 +243,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setIsFoxyVisible, // Keep for direct control if needed
       showFoxyMessage,
       foxyAnimationState,
-      setFoxyAnimationState,
+      setFoxyAnimationState: setFoxyAnimationStateWithHappyLogic,
     }}>
       {children}
     </GameContext.Provider>

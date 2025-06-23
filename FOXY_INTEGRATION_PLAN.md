@@ -93,16 +93,20 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 4.  **[IN PROGRESS] Control Animations from `GameContext.tsx` or Props:**
     *   Add state to `GameContext.tsx` to control Foxy's current animation.
-        *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and `setFoxyAnimationStateInternal` (renamed from `setFoxyAnimationState` for clarity) added to context. (Commit `c1bffa8`)
-        *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook. This hook is updated to not interfere with temporary states like 'happy'. (Commit `c1bffa8` and subsequent changes)
-    *   **[IN PROGRESS]** Implement a public `setFoxyAnimationState` function in `GameContext.tsx`.
-        *   When `setFoxyAnimationState('happy')` is called, Foxy's animation changes to 'happy'.
-        *   A timer is started (e.g., for 2-3 seconds).
-        *   When the timer expires, Foxy's animation state automatically reverts to 'talking' (if a message is active) or 'idle' (if no message is active).
-    *   **[PENDING]** Trigger 'happy' animation from game modes on specific positive events using the new `setFoxyAnimationState('happy')`.
+        *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and its direct setter are managed internally. (Commit `c1bffa8` and subsequent structure)
+        *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook. This hook is updated to not interfere with temporary states like 'happy'.
+    *   **[COMPLETED]** Implement a public `setFoxyAnimationState` function in `GameContext.tsx` (exposed via context value).
+        *   This function now handles the logic for the 'happy' state.
+        *   When `setFoxyAnimationState('happy')` is called:
+            *   Foxy's animation changes to 'happy'.
+            *   A timer is started (e.g., for 2.5 seconds, managed by `happyAnimationTimeoutRef`).
+            *   A `foxyMessageRef` is used to ensure the timeout callback has access to the current message state.
+            *   When the timer expires, Foxy's animation state automatically reverts to 'talking' (if a message is active, checked via `foxyMessageRef`) or 'idle' (if no message is active).
+        *   Calling this function with states other than 'happy' will clear any active 'happy' animation timeout and set the new state directly.
+    *   **[PENDING]** Trigger 'happy' animation from game modes on specific positive events using the updated `setFoxyAnimationState('happy')`.
 
 **Files to Modify:**
-*   `src/components/AnimatedFoxy.tsx` (minor cleanup)
+*   `src/components/AnimatedFoxy.tsx` (cleanup was already done)
 *   `src/contexts/GameContext.tsx`
 *   Game mode components (to trigger 'happy' animations).
 **New Files/Directories:**
