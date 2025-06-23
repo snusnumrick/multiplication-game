@@ -7,8 +7,9 @@ export function MainMenu() {
   const { t, setCurrentScreen, playSound, progress, foxyMessage, showFoxyMessage, isFoxyVisible, setIsFoxyVisible } = useGame();
 
   useEffect(() => {
-    showFoxyMessage('foxyWelcomeMainMenu'); // Default behavior: stays visible until explicitly hidden or changed
-    // To hide after a delay, e.g., 10 seconds: showFoxyMessage('foxyWelcomeMainMenu', 10);
+    // Show Foxy's welcome message, flagging it as the initial greeting.
+    // It will stay visible until explicitly hidden or changed, or a duration can be set.
+    showFoxyMessage('foxyWelcomeMainMenu', undefined, { isInitialGreeting: true }); 
 
     // Hide Foxy when navigating away from the main menu
     return () => {
