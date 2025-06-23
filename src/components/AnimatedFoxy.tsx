@@ -118,7 +118,7 @@ export function AnimatedFoxy({
         <div
             role="img"
             aria-label={t.foxyMascotAltText}
-            className="mr-4 rounded-full border-[3px] border-[#f0a04b] overflow-hidden" // Removed w-[70px] h-[70px]
+            className="mr-4 rounded-full border-[3px] border-[#f0a04b] overflow-hidden shrink-0" // Added shrink-0
             style={{
               width: `${anim.frameWidth}px`,
               height: `${anim.frameHeight}px`,
