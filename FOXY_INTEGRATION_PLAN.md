@@ -215,7 +215,39 @@ Enhance Foxy's presence from a static image with text to an animated character w
         *   `foxyTimeRunningOutQuiz`
         *   `foxyHintMessage`
     *   *Note: UI-only text keys like `foxyVisibilityTitle` do not need audio.*
-    *   **Automation:** A script (`scripts/generate-foxy-audio.ts`) can be used to automate audio file generation using the Eleven Labs API. This script reads `translations.ts` and outputs MP3s to the correct `public/audio/foxy/{lang_code}/` directories. Requires `ELEVENLABS_API_KEY` environment variable and specific Voice IDs.
+    *   **Automation Script for Audio Generation (`scripts/generate-foxy-audio.ts`):**
+        *   **Purpose:** This Node.js script automates the creation of MP3 audio files for Foxy's messages using the Eleven Labs Text-to-Speech API.
+        *   **Functionality:**
+            *   Reads Foxy-specific message keys and their corresponding text from `src/translations.ts`.
+            *   Iterates through supported languages (currently German 'de' and Russian 'ru').
+            *   For each message in each language, it calls the Eleven Labs API to synthesize speech.
+            *   Saves the generated MP3 audio file to the designated path: `public/audio/foxy/{lang_code}/{messageKey}.mp3`.
+            *   Skips generation if an audio file already exists at the target path.
+            *   Includes a small delay between API calls to help avoid rate-limiting issues.
+        *   **Configuration (within the script):**
+            *   `ELEVENLABS_API_KEY`: Your API key for Eleven Labs. **Must be set as an environment variable.**
+            *   `VOICE_ID_GERMAN`: The Eleven Labs Voice ID for the German voice. **Must be updated with your specific Voice ID.**
+            *   `VOICE_ID_RUSSIAN`: The Eleven Labs Voice ID for the Russian voice. **Must be updated with your specific Voice ID.**
+            *   `SUPPORTED_LANGUAGES`: An array of language codes to process (e.g., `['de', 'ru']`).
+            *   `FOXY_MESSAGE_KEYS`: An array of translation keys that require audio generation.
+            *   `model_id`: Specifies the Eleven Labs model to use (e.g., `eleven_multilingual_v2`).
+            *   `voice_settings`: Configures speech parameters like stability and similarity boost.
+        *   **Prerequisites:**
+            *   Node.js and pnpm installed.
+            *   Dependencies installed: `ts-node`, `typescript`, `dotenv`, `node-fetch`.
+            *   An Eleven Labs account with an API key and desired Voice IDs.
+        *   **Usage:**
+            1.  Ensure your `ELEVENLABS_API_KEY` is set as an environment variable (e.g., in a `.env` file at the project root, which the script is configured to load via `dotenv`).
+            2.  Update `VOICE_ID_GERMAN` and `VOICE_ID_RUSSIAN` constants in the script with your actual Voice IDs from Eleven Labs.
+            3.  Run the script from the project root using the pnpm command defined in `package.json`:
+                ```bash
+                pnpm generate-audio
+                ```
+            4.  Alternatively, run directly (ensuring dependencies are met):
+                ```bash
+                pnpm exec node --loader ts-node/esm scripts/generate-foxy-audio.ts
+                ```
+        *   The script uses `import.meta.url` for ESM-friendly path resolution and is configured to be run with `node --loader ts-node/esm` as defined in `package.json`'s `generate-audio` script. (Commits `cf36748`, `f32734f`, `5547ca9`)
 
 3.  **[PENDING] Integrate Audio Playback:**
     *   Use HTML5 `<audio>` API or a lightweight audio library.
