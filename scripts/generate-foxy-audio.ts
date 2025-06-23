@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url'; // Import for ESM path resolution
 import fetch from 'node-fetch'; // Use 'node-fetch' for making HTTP requests
 import { translations } from '../src/translations'; // Adjust path as necessary, removed .js extension
 
@@ -16,6 +17,10 @@ const VOICE_ID_GERMAN = 'YOUR_GERMAN_VOICE_ID'; // Example: 'Rachel' might be '2
 const VOICE_ID_RUSSIAN = 'YOUR_RUSSIAN_VOICE_ID'; // Example: 'Domi' might be 'AZnzlk1XvdvUeBnXmlld'
 
 const SUPPORTED_LANGUAGES: Array<'de' | 'ru'> = ['de', 'ru'];
+
+// ESM-friendly path resolution
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const OUTPUT_BASE_DIR = path.join(__dirname, '..', 'public', 'audio', 'foxy');
 
 // List of Foxy message keys that require audio files (from FOXY_INTEGRATION_PLAN.md)
