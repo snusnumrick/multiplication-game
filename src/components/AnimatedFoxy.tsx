@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useGame } from '../contexts/game-hooks';
 import { cn } from '@/lib/utils';
 
@@ -68,9 +68,15 @@ export function AnimatedFoxy({
                                message,
                                isVisible,
                              }: AnimatedFoxyProps) {
-  const { t, settings, foxyAnimationState } = useGame();
+  const { t, settings, foxyAnimationState, playFoxyAudio, currentFoxyMessageKey } = useGame();
   const [currentFrame, setCurrentFrame] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const handleFoxyClick = useCallback(() => {
+    if (settings.foxyEnabled && isVisible && currentFoxyMessageKey && playFoxyAudio) {
+      playFoxyAudio(currentFoxyMessageKey);
+    }
+  }, [settings.foxyEnabled, isVisible, currentFoxyMessageKey, playFoxyAudio]);
 
   const currentAnimKey = (foxyAnimationState && animationsConfig[foxyAnimationState])
       ? foxyAnimationState
@@ -109,10 +115,11 @@ export function AnimatedFoxy({
   return (
       <div
           className={cn(
-              "fixed bottom-5 right-5 p-4 bg-white/95 rounded-2xl shadow-lg flex items-center max-w-xs z-[1000]",
+              "fixed bottom-5 right-5 p-4 bg-white/95 rounded-2xl shadow-lg flex items-center max-w-xs z-[1000] cursor-pointer",
               "transition-all duration-300 ease-in-out",
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5 pointer-events-none"
           )}
+          onClick={handleFoxyClick}
       >
         <div
             role="img"

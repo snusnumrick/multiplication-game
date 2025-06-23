@@ -40,6 +40,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [currentScreen, setCurrentScreen] = useState('menu');
   const [foxyMessage, setFoxyMessage] = useState<string | null>(null);
   const [isFoxyVisible, setIsFoxyVisible] = useState<boolean>(false);
+  const [currentFoxyMessageKey, setCurrentFoxyMessageKey] = useState<keyof Translation | null>(null);
+  const [foxyInitialGreetingPlayed, setFoxyInitialGreetingPlayed] = useState<boolean>(false);
   const [foxyAnimationState, _setInternalFoxyAnimationState] = useState<FoxyAnimationState>('idle'); // Renamed raw setter
   const foxyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const happyAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -183,30 +185,27 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const t = translations[settings.language];
 
-  const showFoxyMessage = useCallback((messageKey: keyof Translation, duration?: number) => {
-    if (foxyTimeoutRef.current) {
-      clearTimeout(foxyTimeoutRef.current);
-      foxyTimeoutRef.current = null;
-    }
+  // showFoxyMessage is replaced by showFoxyMessageAndUpdate later, this block removes the old one.
+  // The new showFoxyMessageAndUpdate will be inserted further down.
+  // This SEARCH block is intentionally targeting the old showFoxyMessage.
+  // If showFoxyMessage was already removed or renamed, this block might not match.
+  // Assuming it's present as per the provided file content.
 
-    const messageText = t[messageKey] as string; // Type assertion
-    if (messageText) {
-      setFoxyMessage(messageText);
-      setIsFoxyVisible(true);
+  // const showFoxyMessage = useCallback((messageKey: keyof Translation, duration?: number) => {
+  // ... this function is removed by the next change which replaces showFoxyMessageAndUpdate
+  // ... we'll ensure this section is clear for the new function.
+  // For safety, this block is minimal and might need adjustment if the surrounding code changed.
+  // The goal is to prepare for the insertion of the new showFoxyMessageAndUpdate.
+  // If showFoxyMessage is not found, the next SEARCH/REPLACE for showFoxyMessageAndUpdate will handle it.
+  // This is a placeholder to ensure the old definition is handled if it exists.
+  // If it was already showFoxyMessageAndUpdate, then the next block is the primary one.
+  // To be safe, let's make this block a no-op if showFoxyMessage doesn't exist as defined.
+  // The critical change is to showFoxyMessageAndUpdate.
 
-      if (duration) {
-        foxyTimeoutRef.current = setTimeout(() => {
-          setIsFoxyVisible(false);
-          setFoxyMessage(null);
-          foxyTimeoutRef.current = null;
-        }, duration * 1000); // duration in seconds
-      }
-    } else {
-      console.warn(`Foxy message key "${String(messageKey)}" not found in translations.`);
-      setIsFoxyVisible(false);
-      setFoxyMessage(null);
-    }
-  }, [t, setIsFoxyVisible, setFoxyMessage]);
+  // The following SEARCH/REPLACE block for showFoxyMessageAndUpdate will handle the actual logic update.
+  // This block is primarily to ensure no old showFoxyMessage definition conflicts.
+  // If showFoxyMessage is not exactly as in SEARCH, this block will not apply, which is fine.
+  // The important part is the update to showFoxyMessageAndUpdate.
 
   // This function is exposed via context as `setFoxyAnimationState`
   const setFoxyAnimationStateWithHappyLogic = useCallback((newState: FoxyAnimationState) => {
@@ -278,7 +277,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [settings.soundEnabled, settings.foxyEnabled, settings.language, setFoxyAnimationStateWithHappyLogic, hasUserInteracted]);
 
   // Update showFoxyMessage to also trigger audio playback
-  const showFoxyMessageAndUpdate = useCallback((messageKey: keyof Translation, duration?: number) => {
+  const showFoxyMessageAndUpdate = useCallback((
+    messageKey: keyof Translation,
+    duration?: number,
+    options?: { isInitialGreeting?: boolean }
+  ) => {
     if (foxyTimeoutRef.current) {
       clearTimeout(foxyTimeoutRef.current);
       foxyTimeoutRef.current = null;
@@ -287,23 +290,37 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const messageText = t[messageKey] as string;
     if (messageText) {
       setFoxyMessage(messageText);
+      setCurrentFoxyMessageKey(messageKey);
       setIsFoxyVisible(true);
-      playFoxyAudio(messageKey); // Call to play audio
+
+      let shouldPlayAudio = true;
+      if (options?.isInitialGreeting) {
+        if (foxyInitialGreetingPlayed) {
+          shouldPlayAudio = false;
+        } else {
+          setFoxyInitialGreetingPlayed(true);
+        }
+      }
+
+      if (shouldPlayAudio) {
+        playFoxyAudio(messageKey);
+      }
 
       if (duration) {
         foxyTimeoutRef.current = setTimeout(() => {
           setIsFoxyVisible(false);
           setFoxyMessage(null);
+          setCurrentFoxyMessageKey(null);
           foxyTimeoutRef.current = null;
-          // Note: Animation state will be handled by the useEffect below based on isFoxyVisible/foxyMessage
         }, duration * 1000);
       }
     } else {
       console.warn(`Foxy message key "${String(messageKey)}" not found in translations.`);
       setIsFoxyVisible(false);
       setFoxyMessage(null);
+      setCurrentFoxyMessageKey(null);
     }
-  }, [t, setIsFoxyVisible, setFoxyMessage, playFoxyAudio]);
+  }, [t, setIsFoxyVisible, setFoxyMessage, playFoxyAudio, foxyInitialGreetingPlayed, setFoxyInitialGreetingPlayed, setCurrentFoxyMessageKey]);
 
 
   // Clear timeouts on unmount
@@ -354,7 +371,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
       showFoxyMessage: showFoxyMessageAndUpdate, // Use the updated function
       foxyAnimationState,
       setFoxyAnimationState: setFoxyAnimationStateWithHappyLogic,
-      // playFoxyAudio, // Expose if direct audio control is needed elsewhere, for now it's internal to showFoxyMessage
+      playFoxyAudio, 
+      currentFoxyMessageKey,
+      // foxyInitialGreetingPlayed, // Not strictly needed by consumers if showFoxyMessage handles it
+      // setFoxyInitialGreetingPlayed, // Not strictly needed by consumers
     }}>
       {children}
     </GameContext.Provider>
