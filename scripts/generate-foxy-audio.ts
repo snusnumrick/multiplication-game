@@ -13,8 +13,8 @@ const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
 const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
 
 // Replace with your actual Voice IDs from Eleven Labs
-const VOICE_ID_GERMAN = 'YOUR_GERMAN_VOICE_ID'; // Example: 'Rachel' might be '21m00Tcm4TlvDq8ikWAM'
-const VOICE_ID_RUSSIAN = 'YOUR_RUSSIAN_VOICE_ID'; // Example: 'Domi' might be 'AZnzlk1XvdvUeBnXmlld'
+const VOICE_ID_GERMAN = '21m00Tcm4TlvDq8ikWAM'; // Example: 'Rachel' might be '21m00Tcm4TlvDq8ikWAM'
+const VOICE_ID_RUSSIAN = 'AZnzlk1XvdvUeBnXmlld'; // Example: 'Domi' might be 'AZnzlk1XvdvUeBnXmlld'
 
 const SUPPORTED_LANGUAGES: Array<'de' | 'ru'> = ['de', 'ru'];
 
