@@ -13,7 +13,7 @@ export function MainMenu() {
 
     // Hide Foxy when navigating away from the main menu
     return () => {
-      setIsFoxyVisible(false); 
+      // setIsFoxyVisible(false);
     };
   }, [showFoxyMessage, setIsFoxyVisible]);
 
