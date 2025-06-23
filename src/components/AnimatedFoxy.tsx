@@ -75,7 +75,6 @@ export function AnimatedFoxy({
   const currentAnimKey = (foxyAnimationState && animationsConfig[foxyAnimationState])
       ? foxyAnimationState
       : 'static_default';
-  console.log('currentAnimKey', currentAnimKey);
   const anim = animationsConfig[currentAnimKey];
 
   useEffect(() => {

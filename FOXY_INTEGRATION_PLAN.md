@@ -93,13 +93,16 @@ Enhance Foxy's presence from a static image with text to an animated character w
 
 4.  **[IN PROGRESS] Control Animations from `GameContext.tsx` or Props:**
     *   Add state to `GameContext.tsx` to control Foxy's current animation.
-        *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and `setFoxyAnimationState` added to context. (Commit `c1bffa8`)
-        *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook. (Commit `c1bffa8`)
-    *   Update `setFoxyMessage` or create a new function to also set `foxyAnimationState` to 'talking' when a message appears, and back to 'idle' after. (Handled by `useEffect`)
-    *   Trigger 'happy' animation on specific positive events (will use `setFoxyAnimationState`).
+        *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and `setFoxyAnimationStateInternal` (renamed from `setFoxyAnimationState` for clarity) added to context. (Commit `c1bffa8`)
+        *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook. This hook is updated to not interfere with temporary states like 'happy'. (Commit `c1bffa8` and subsequent changes)
+    *   **[IN PROGRESS]** Implement a public `setFoxyAnimationState` function in `GameContext.tsx`.
+        *   When `setFoxyAnimationState('happy')` is called, Foxy's animation changes to 'happy'.
+        *   A timer is started (e.g., for 2-3 seconds).
+        *   When the timer expires, Foxy's animation state automatically reverts to 'talking' (if a message is active) or 'idle' (if no message is active).
+    *   **[PENDING]** Trigger 'happy' animation from game modes on specific positive events using the new `setFoxyAnimationState('happy')`.
 
 **Files to Modify:**
-*   `src/components/AnimatedFoxy.tsx`
+*   `src/components/AnimatedFoxy.tsx` (minor cleanup)
 *   `src/contexts/GameContext.tsx`
 *   Game mode components (to trigger 'happy' animations).
 **New Files/Directories:**
