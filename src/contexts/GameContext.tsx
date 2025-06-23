@@ -290,7 +290,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const showFoxyMessageAndUpdate = useCallback((
     messageKey: keyof Translation,
     duration?: number,
-    options?: { isInitialGreeting?: boolean }
+    options: { isInitialGreeting?: boolean } = {}
   ) => {
     if (foxyTimeoutRef.current) {
       clearTimeout(foxyTimeoutRef.current);
@@ -304,8 +304,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setIsFoxyVisible(true);
 
       let shouldPlayAudio = true;
-      console.log(options?.isInitialGreeting, foxyInitialGreetingPlayed);
-      if (options?.isInitialGreeting) {
+      console.log(options.isInitialGreeting, foxyInitialGreetingPlayed);
+      if (options.isInitialGreeting) {
         if (foxyInitialGreetingPlayed) {
           shouldPlayAudio = false;
         } else {
