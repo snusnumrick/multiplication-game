@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 // This is expected as per the plan (Create/Source Basic Animations is PENDING).
 import foxyIdleSheet from '../assets/animations/foxy/idle.png';
 import foxyTalkingSheet from '../assets/animations/foxy/talking.png';
-import foxyHappySheet from '../assets/animations/foxy/happy.png';
+import foxyHappySheet from '../assets/animations/foxy/foxy-happy-spritesheet.png'; // Updated import
 import foxyStaticImage from '../../public/images/foxy-mascot.png'; // Fallback static image
 
 const FOXY_FRAME_WIDTH = 70;
@@ -41,8 +41,8 @@ const animationsConfig: Record<string, AnimationConfigType> = {
     isSpriteSheet: true,
   },
   happy: {
-    imageUrl: foxyHappySheet,
-    frames: 121, // Frame count matches the happy.png sprite sheet
+    imageUrl: foxyHappySheet, // Now points to foxy-happy-spritesheet.png
+    frames: 121, // Keeping frame count at 121 as requested
     frameWidth: FOXY_FRAME_WIDTH,
     frameHeight: FOXY_FRAME_HEIGHT,
     duration: 120, // Energetic animation
