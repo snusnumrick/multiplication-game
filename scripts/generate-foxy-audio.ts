@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url'; // Import for ESM path resolution
 // Removed: import fetch from 'node-fetch'; // Node.js built-in fetch will be used
