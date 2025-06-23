@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url'; // Import for ESM path resolution
-import fetch from 'node-fetch'; // Use 'node-fetch' for making HTTP requests
+// Removed: import fetch from 'node-fetch'; // Node.js built-in fetch will be used
 import { translations } from '../src/translations'; // Adjust path as necessary, removed .js extension
 
 // Load environment variables (optional, for local development)
