@@ -6,7 +6,15 @@ import { translations } from '../src/translations'; // Adjust path as necessary,
 
 // Load environment variables (optional, for local development)
 import dotenv from 'dotenv';
-dotenv.config();
+const dotenvResult = dotenv.config();
+
+if (dotenvResult.error) {
+  console.error('Error loading .env file. Details:', dotenvResult.error);
+  // Throw a standard error to provide a clearer stack trace if this is the source.
+  // Accessing .message might fail if dotenvResult.error is truly a null-prototype object without a message property.
+  const errorMessage = dotenvResult.error.message || JSON.stringify(dotenvResult.error);
+  throw new Error(`Failed to initialize dotenv: ${errorMessage}`);
+}
 
 // --- Configuration ---
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
