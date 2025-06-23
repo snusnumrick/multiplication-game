@@ -351,6 +351,23 @@ export function GameProvider({ children }: { children: ReactNode }) {
     // The 'happy' state is managed by setFoxyAnimationStateWithHappyLogic.
   }, [isFoxyVisible, foxyMessage, setFoxyAnimationStateWithHappyLogic]);
 
+  // Effect to hide Foxy and stop audio when returning to the menu
+  useEffect(() => {
+    if (currentScreen === 'menu') {
+      // Clear any pending timeout to hide Foxy
+      if (foxyTimeoutRef.current) {
+        clearTimeout(foxyTimeoutRef.current);
+        foxyTimeoutRef.current = null;
+      }
+      // Hide Foxy and clear her message
+      setIsFoxyVisible(false);
+      setFoxyMessage(null);
+      setCurrentFoxyMessageKey(null);
+      // The useEffect above (dependent on isFoxyVisible/foxyMessage)
+      // will handle stopping audio and setting animation to idle.
+    }
+  }, [currentScreen, setIsFoxyVisible, setFoxyMessage, setCurrentFoxyMessageKey]);
+
 
   return (
     <GameContext.Provider value={{
