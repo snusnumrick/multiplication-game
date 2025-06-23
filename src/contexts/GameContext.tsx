@@ -339,9 +339,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isFoxyVisible || !foxyMessage) {
       // Foxy is hidden or message is cleared, ensure she is idle and audio is stopped.
-      if (foxyAudioRef.current && !foxyAudioRef.current.paused) {
-        foxyAudioRef.current.pause();
-        foxyAudioRef.current.currentTime = 0;
+      if (foxyAudioRef.current) { // Check if audio ref exists
+        if (!foxyAudioRef.current.paused) { // If playing, pause it
+          foxyAudioRef.current.pause();
+          foxyAudioRef.current.currentTime = 0;
+        }
+        foxyAudioRef.current.src = ''; // Always reset src to abort loading/pending play
       }
       // Use the public setter to ensure 'happy' timeout is also cleared.
       setFoxyAnimationStateWithHappyLogic('idle');
