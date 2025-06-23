@@ -215,6 +215,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
         *   `foxyTimeRunningOutQuiz`
         *   `foxyHintMessage`
     *   *Note: UI-only text keys like `foxyVisibilityTitle` do not need audio.*
+    *   **Automation:** A script (`scripts/generate-foxy-audio.ts`) can be used to automate audio file generation using the Eleven Labs API. This script reads `translations.ts` and outputs MP3s to the correct `public/audio/foxy/{lang_code}/` directories. Requires `ELEVENLABS_API_KEY` environment variable and specific Voice IDs.
 
 3.  **[PENDING] Integrate Audio Playback:**
     *   Use HTML5 `<audio>` API or a lightweight audio library.
