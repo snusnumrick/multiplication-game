@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 // This is expected as per the plan (Create/Source Basic Animations is PENDING).
 import foxyIdleSheet from '../assets/animations/foxy/idle.png';
 import foxyTalkingSheet from '../assets/animations/foxy/talking.png';
-import foxyHappySheet from '../assets/animations/foxy/foxy-happy-spritesheet.png'; // Updated import
+import foxyHappySheet from '../assets/animations/foxy/happy.png'; // Updated import
 import foxyStaticImage from '../../public/images/foxy-mascot.png'; // Fallback static image
 
 const FOXY_FRAME_WIDTH = 70;
