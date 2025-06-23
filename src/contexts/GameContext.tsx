@@ -44,8 +44,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const foxyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const happyAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const foxyMessageRef = useRef<string | null>(null);
-  // TODO: Later, this will hold an AudioContext or HTMLAudioElement instance for Foxy's voice
-  // const foxyAudioRef = useRef<any>(null); 
+  const foxyAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize Foxy's audio element
+  useEffect(() => {
+    foxyAudioRef.current = new Audio();
+    // Cleanup audio element if component unmounts
+    return () => {
+      if (foxyAudioRef.current) {
+        foxyAudioRef.current.pause();
+        foxyAudioRef.current.src = '';
+      }
+    };
+  }, []);
 
   // Keep foxyMessageRef updated
   useEffect(() => {
@@ -174,20 +185,34 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [t, setIsFoxyVisible, setFoxyMessage]);
 
   const playFoxyAudio = useCallback((messageKey: keyof Translation) => {
-    if (!settings.soundEnabled) {
-      // console.log(`Sound disabled, not playing audio for: ${String(messageKey)}`);
+    if (!settings.soundEnabled || !foxyAudioRef.current) {
+      // console.log(`Sound disabled or audio element not ready, not playing audio for: ${String(messageKey)}`);
       return;
     }
-    // TODO: Implement actual audio playback
-    // For now, just log that we would play the audio.
-    // The messageKey will be used to determine the audio file path later.
-    // e.g., const audioFile = `/audio/foxy/${settings.language}/${String(messageKey)}.mp3`;
-    console.log(`[GameContext] Would play audio for messageKey: ${String(messageKey)}`);
 
-    // Placeholder for future logic:
-    // - Load and play audio file associated with messageKey
-    // - On audio start: setFoxyAnimationState('talking'); (if not already handled by message visibility)
+    const audio = foxyAudioRef.current;
+
+    // Stop any currently playing audio from this element and clear previous listeners
+    if (!audio.paused) {
+      audio.pause();
+      audio.currentTime = 0; // Reset time to start
+    }
+    audio.onended = null; // Clear previous onended listener
+    audio.onerror = null; // Clear previous onerror listener
+
+    const audioFile = `/audio/foxy/${settings.language}/${String(messageKey)}.mp3`;
+    audio.src = audioFile;
+    
+    audio.play().catch(error => {
+      console.error(`[GameContext] Error playing Foxy audio for "${String(messageKey)}" (${audioFile}):`, error);
+      // Note: Errors like 404 for the audio file might trigger the <audio> element's error event,
+      // rather than rejecting the play() promise. We can add an onerror handler if needed.
+    });
+
+    // Placeholder for future logic (Task 4 - Animation Sync):
+    // - On audio start: setFoxyAnimationState('talking');
     // - On audio end: if (!foxyMessageRef.current) setFoxyAnimationState('idle');
+    //   (This will involve adding audio.onplay and audio.onended event handlers here)
   }, [settings.soundEnabled, settings.language]);
 
   // Update showFoxyMessage to also trigger audio playback
