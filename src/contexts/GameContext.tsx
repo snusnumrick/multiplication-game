@@ -365,25 +365,24 @@ export function GameProvider({ children }: { children: ReactNode }) {
     // The 'happy' state is managed by setFoxyAnimationStateWithHappyLogic.
   }, [isFoxyVisible, foxyMessage, setFoxyAnimationStateWithHappyLogic]);
 
-  // Effect to hide Foxy and stop audio when returning to the menu
+  // Effect to clear Foxy's message and related state when 'menu' screen is activated
   useEffect(() => {
     if (currentScreen === 'menu') {
-      // Clear any pending timeout to hide Foxy
+      // Clear any pending timeout that might hide Foxy (e.g., from a message with a duration)
       if (foxyTimeoutRef.current) {
         clearTimeout(foxyTimeoutRef.current);
         foxyTimeoutRef.current = null;
       }
-      // Hide Foxy and clear her message
-      setIsFoxyVisible(false);
+      // Clear Foxy's message content. 
+      // Foxy's visibility on the MainMenu is now primarily managed by the MainMenu component itself
+      // (showing on mount, hiding on unmount).
       setFoxyMessage(null);
       setCurrentFoxyMessageKey(null);
-      // With persistence, we no longer reset this flag automatically on menu return.
-      // It will remain true across sessions once set.
-      // setFoxyInitialGreetingPlayed(false); 
-      // The useEffect above (dependent on isFoxyVisible/foxyMessage)
-      // will handle stopping audio and setting animation to idle.
+      // With persistence, foxyInitialGreetingPlayed is not reset here.
+      // The useEffect dependent on isFoxyVisible/foxyMessage will handle stopping audio 
+      // and setting Foxy's animation to idle if her message is cleared or if she is hidden by other logic.
     }
-  }, [currentScreen, setIsFoxyVisible, setFoxyMessage, setCurrentFoxyMessageKey]);
+  }, [currentScreen, setFoxyMessage, setCurrentFoxyMessageKey]);
 
 
   return (
