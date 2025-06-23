@@ -322,7 +322,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   Appearance refinement in `AnimatedFoxy.tsx`, including conversion to Tailwind CSS (Done - Commit `b6ebe1d` and prior related changes, Tailwind conversion in commit `6d5d335`).
     *   *Status: Phase 1 is fully complete.*
 *   **Milestone 2 (Phase 2 - COMPLETED):** Foxy is animated with basic idle, talking, and happy states. (Completed with commits `df261bd`, `f53c7e1`, `0d56e50`, `91b70e7` and prior related work).
-*   **Milestone 3 (Phase 3 - Pending):** Foxy speaks pre-recorded voice lines in one language, synchronized with talking animation.
+*   **Milestone 3 (Phase 3 - COMPLETED):** Foxy speaks pre-recorded voice lines in one language, synchronized with talking animation.
 *   **Milestone 4 (Phase 4 - Pending):** Advanced interactions, polish, and multilingual voice support implemented.
 
 This plan provides a roadmap. Specific tasks and timelines within each phase will need further breakdown as development progresses.
