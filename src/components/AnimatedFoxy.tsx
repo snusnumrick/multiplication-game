@@ -72,7 +72,7 @@ export function AnimatedFoxy({
   const [currentFrame, setCurrentFrame] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  console.log("settings.foxyEnabled", settings.foxyEnabled, "isVisible", isVisible);
+  // console.log("settings.foxyEnabled", settings.foxyEnabled, "isVisible", isVisible);
 
   const handleFoxyClick = useCallback(() => {
     if (settings.foxyEnabled && isVisible && currentFoxyMessageKey && playFoxyAudio) {

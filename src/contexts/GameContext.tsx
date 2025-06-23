@@ -292,12 +292,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
     duration?: number,
     options: { isInitialGreeting?: boolean } = {}
   ) => {
+    console.log('showFoxyMessageAndUpdate');
     if (foxyTimeoutRef.current) {
       clearTimeout(foxyTimeoutRef.current);
       foxyTimeoutRef.current = null;
     }
 
     const messageText = t[messageKey] as string;
+    console.log('messageText', messageText);
     if (messageText) {
       setFoxyMessage(messageText);
       setCurrentFoxyMessageKey(messageKey);
