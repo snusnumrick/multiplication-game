@@ -365,6 +365,44 @@ export function GameProvider({ children }: { children: ReactNode }) {
     // The 'happy' state is managed by setFoxyAnimationStateWithHappyLogic.
   }, [isFoxyVisible, foxyMessage, setFoxyAnimationStateWithHappyLogic]);
 
+  const prevScreenRef = useRef<string | null>(null);
+
+  // Effect to stop Foxy and clear her state when navigating away from a screen where she was active
+  useEffect(() => {
+    const previousScreen = prevScreenRef.current;
+    prevScreenRef.current = currentScreen; // Update for the next render cycle
+
+    if (previousScreen && previousScreen !== currentScreen) {
+      // Navigation has occurred from previousScreen to currentScreen.
+      // If Foxy was visible and had a message (potentially from previousScreen),
+      // clean up her state.
+      if (isFoxyVisible && foxyMessage) {
+        // Stop audio if playing
+        if (foxyAudioRef.current && !foxyAudioRef.current.paused) {
+          foxyAudioRef.current.pause();
+          foxyAudioRef.current.currentTime = 0;
+        }
+        // Always reset src to abort any loading/pending play
+        if (foxyAudioRef.current) {
+          foxyAudioRef.current.src = '';
+        }
+        
+        setFoxyAnimationStateWithHappyLogic('idle');
+        
+        // Clear message, key, and hide Foxy
+        setFoxyMessage(null);
+        setCurrentFoxyMessageKey(null);
+        setIsFoxyVisible(false);
+
+        // Clear any pending timeout for message duration
+        if (foxyTimeoutRef.current) {
+          clearTimeout(foxyTimeoutRef.current);
+          foxyTimeoutRef.current = null;
+        }
+      }
+    }
+  }, [currentScreen, isFoxyVisible, foxyMessage, setFoxyAnimationStateWithHappyLogic, setFoxyMessage, setCurrentFoxyMessageKey, setIsFoxyVisible]);
+
   // Effect to clear Foxy's message and related state when 'menu' screen is activated
   useEffect(() => {
     if (currentScreen === 'menu') {
