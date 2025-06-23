@@ -45,6 +45,30 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const happyAnimationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const foxyMessageRef = useRef<string | null>(null);
   const foxyAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+
+  // Effect to detect first user interaction
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      setHasUserInteracted(true);
+    };
+
+    const eventTypes: (keyof DocumentEventMap)[] = ['click', 'keydown', 'touchstart'];
+    
+    if (!hasUserInteracted) {
+      eventTypes.forEach(eventType => {
+        // Listen once for any of these events
+        document.addEventListener(eventType, handleFirstInteraction, { once: true });
+      });
+    }
+
+    // Cleanup: remove event listeners if the component unmounts before interaction
+    return () => {
+      eventTypes.forEach(eventType => {
+        document.removeEventListener(eventType, handleFirstInteraction);
+      });
+    };
+  }, [hasUserInteracted]); // Rerun if hasUserInteracted changes, though {once: true} handles most cases.
 
   // Initialize Foxy's audio element
   useEffect(() => {
@@ -205,8 +229,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [_setInternalFoxyAnimationState]); // Dependency is the internal setter
 
   const playFoxyAudio = useCallback((messageKey: keyof Translation) => {
-    if (!settings.soundEnabled || !settings.foxyEnabled || !foxyAudioRef.current) {
-      // console.log(`Sound or Foxy disabled, or audio element not ready, not playing audio for: ${String(messageKey)}`);
+    if (!settings.soundEnabled || !settings.foxyEnabled || !foxyAudioRef.current || !hasUserInteracted) {
+      if (!hasUserInteracted) {
+        // console.log(`User has not interacted yet, not playing audio for: ${String(messageKey)}`);
+      }
+      // console.log(`Sound or Foxy disabled, audio element not ready, or no user interaction, not playing audio for: ${String(messageKey)}`);
       return;
     }
 
@@ -248,7 +275,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setFoxyAnimationStateWithHappyLogic('idle');
     });
 
-  }, [settings.soundEnabled, settings.language, setFoxyAnimationStateWithHappyLogic]);
+  }, [settings.soundEnabled, settings.foxyEnabled, settings.language, setFoxyAnimationStateWithHappyLogic, hasUserInteracted]);
 
   // Update showFoxyMessage to also trigger audio playback
   const showFoxyMessageAndUpdate = useCallback((messageKey: keyof Translation, duration?: number) => {
