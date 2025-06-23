@@ -64,6 +64,7 @@ export function PracticeMode() {
 
   useEffect(() => {
     showFoxyMessage('foxyIntroPracticeMode');
+    setIsFoxyVisible(true); // Explicitly set Foxy to visible on practice mode entry
     return () => {
       setIsFoxyVisible(false); // Hide Foxy when leaving the mode
     };
