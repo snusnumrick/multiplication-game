@@ -159,7 +159,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   Ensure scripts are natural-sounding and appropriate for the target audience (Eva).
     *   *Status: This is primarily a content generation task.*
 
-2.  **[PENDING] Record Voice Lines:**
+2.  **[COMPLETED] Record Voice Lines:**
     *   Perform voice acting and recording for one language initially (e.g., German, then Russian).
     *   Ensure good audio quality (clear, no background noise, consistent volume) and consistent, engaging delivery.
     *   **Directory Structure:** Audio files should be placed in `public/audio/foxy/{lang_code}/`.
