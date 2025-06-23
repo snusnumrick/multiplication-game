@@ -366,10 +366,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setIsFoxyVisible(false);
       setFoxyMessage(null);
       setCurrentFoxyMessageKey(null);
+      // Reset the initial greeting flag so it plays again next time Foxy greets on the menu
+      setFoxyInitialGreetingPlayed(false);
       // The useEffect above (dependent on isFoxyVisible/foxyMessage)
       // will handle stopping audio and setting animation to idle.
     }
-  }, [currentScreen, setIsFoxyVisible, setFoxyMessage, setCurrentFoxyMessageKey]);
+  }, [currentScreen, setIsFoxyVisible, setFoxyMessage, setCurrentFoxyMessageKey, setFoxyInitialGreetingPlayed]);
 
 
   return (
