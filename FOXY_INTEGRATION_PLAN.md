@@ -64,11 +64,10 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   **Sprite Sheets** selected as the animation technology.
     *   `AnimatedFoxy.tsx` has been updated to use sprite sheets for animations and static images for fallback/specific states. (Reflects changes up to commit `c6e9ab5` and current modifications).
 
-2.  **[IN PROGRESS] Create/Source Basic Animations:**
-    *   **Idle:** `src/assets/animations/foxy/idle.png` (4 frames) - **Implemented**.
-    *   **Talking:** `src/assets/animations/foxy/talking.png` (configured for 59 frames) - **Implemented**. (Assumes this sprite sheet exists or will be created with 59 frames).
-    *   **Happy/Excited:** `foxy-happy-spritesheet.png` (intended with 5 frames) - **PENDING**.
-        *   Currently, `src/assets/animations/foxy/idle.png` (4 frames) is used as a placeholder for the 'happy' animation asset in `AnimatedFoxy.tsx`. The configuration reflects this placeholder.
+2.  **[COMPLETED] Create/Source Basic Animations:** (Assets created/sourced, configuration updated in commit `df261bd` and `0d56e50`)
+    *   **Idle:** `src/assets/animations/foxy/idle.png` - **Implemented**. (Configured for 121 frames)
+    *   **Talking:** `src/assets/animations/foxy/talking.png` - **Implemented**. (Configured for 121 frames)
+    *   **Happy/Excited:** `foxy-happy-spritesheet.png` - **Implemented**. (Configured for 121 frames)
     *   **Asset Details (Target Specifications):**
         *   All sprite sheets should be horizontal strips. Frame dimensions are 70x70 pixels.
         *   **Idle Animation (`idle.png`):**
@@ -113,8 +112,22 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   The component receives `foxyAnimationState` from context (Commit `c1bffa8`) to select the appropriate animation or static image.
     *   Sprite sheet images are imported from `src/assets/animations/foxy/`.
     *   Foxy animation container is prevented from shrinking due to adjacent text (Commit `c6e9ab5`).
+    *   Static image path corrected (Commit `df261bd`).
 
-4.  **[IN PROGRESS] Control Animations from `GameContext.tsx` or Props:**
+3.  **[COMPLETED] Integrate Animation into `AnimatedFoxy.tsx`:** (Completed with commits `df261bd`, `0d56e50` and prior work)
+    *   `AnimatedFoxy.tsx` now utilizes a sprite sheet and static image display system driven by `foxyAnimationState`.
+    *   The static `<img>` tag has been replaced by a `<div>` styled for dynamic background image display (sprite animation).
+    *   Animation states are configured in `animationsConfig`:
+        *   **'idle':** Uses `idle.png` (configured for 121 frames).
+        *   **'talking':** Uses `talking.png` (configured for 121 frames).
+        *   **'happy':** Uses `foxy-happy-spritesheet.png` (configured for 121 frames).
+        *   **'static_default':** Displays the main static Foxy image (`/images/foxy-mascot.png`) using `background-size: contain`.
+    *   The component receives `foxyAnimationState` from context (Commit `c1bffa8`) to select the appropriate animation or static image.
+    *   Sprite sheet images are imported from `src/assets/animations/foxy/`.
+    *   Foxy animation container is prevented from shrinking due to adjacent text (Commit `c6e9ab5`).
+    *   Static image path corrected (Commit `df261bd`).
+
+4.  **[COMPLETED] Control Animations from `GameContext.tsx` or Props:** (Completed with commit `91b70e7` and related context work)
     *   Add state to `GameContext.tsx` to control Foxy's current animation.
         *   **[COMPLETED]** `foxyAnimationState` (supporting 'idle', 'talking', 'happy') and its direct setter are managed internally. (Commit `c1bffa8` and subsequent structure)
         *   **[COMPLETED]** 'idle'/'talking' states are automatically managed based on Foxy's visibility and message presence via a `useEffect` hook. This hook is updated to not interfere with temporary states like 'happy'.
@@ -126,8 +139,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
             *   A `foxyMessageRef` is used to ensure the timeout callback has access to the current message state.
             *   When the timer expires, Foxy's animation state automatically reverts to 'talking' (if a message is active, checked via `foxyMessageRef`) or 'idle' (if no message is active).
         *   Calling this function with states other than 'happy' will clear any active 'happy' animation timeout and set the new state directly.
-    *   **[COMPLETED]** Trigger 'happy' animation from game modes on specific positive events using the updated `setFoxyAnimationState('happy')`. (Commit  
-        `91b70e7`)     *   **[PENDING]** Trigger 'happy' animation from game modes on specific positive events using the updated `setFoxyAnimationState('happy')`.
+    *   **[COMPLETED]** Trigger 'happy' animation from game modes on specific positive events using the updated `setFoxyAnimationState('happy')`. (Commit `91b70e7` and subsequent related work across game modes).
 
 **Files to Modify:**
 *   `src/components/AnimatedFoxy.tsx` (cleanup was already done)
@@ -227,7 +239,7 @@ Enhance Foxy's presence from a static image with text to an animated character w
     *   Generic `showFoxyMessage` helper function implemented and used (Done - Commit `ab828cf`).
     *   Appearance refinement in `AnimatedFoxy.tsx`, including conversion to Tailwind CSS (Done - Commit `b6ebe1d` and prior related changes, Tailwind conversion in commit `6d5d335`).
     *   *Status: Phase 1 is fully complete.*
-*   **Milestone 2 (Phase 2 - Pending):** Foxy is animated with basic idle, talking, and happy states.
+*   **Milestone 2 (Phase 2 - COMPLETED):** Foxy is animated with basic idle, talking, and happy states. (Completed with commits `df261bd`, `f53c7e1`, `0d56e50`, `91b70e7` and prior related work).
 *   **Milestone 3 (Phase 3 - Pending):** Foxy speaks pre-recorded voice lines in one language, synchronized with talking animation.
 *   **Milestone 4 (Phase 4 - Pending):** Advanced interactions, polish, and multilingual voice support implemented.
 
