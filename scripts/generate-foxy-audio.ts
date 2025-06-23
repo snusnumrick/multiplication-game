@@ -4,8 +4,8 @@ import fetch from 'node-fetch'; // Use 'node-fetch' for making HTTP requests
 import { translations } from '../src/translations'; // Adjust path as necessary
 
 // Load environment variables (optional, for local development)
-// import dotenv from 'dotenv';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // --- Configuration ---
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
