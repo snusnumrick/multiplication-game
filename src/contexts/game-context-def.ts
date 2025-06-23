@@ -41,9 +41,11 @@ export interface GameContextType {
   setFoxyMessage: (message: string | null) => void; // Retain for direct control if needed
   isFoxyVisible: boolean;
   setIsFoxyVisible: (visible: boolean) => void; // Retain for direct control if needed
-  showFoxyMessage: (messageKey: keyof Translation, duration?: number) => void;
+  showFoxyMessage: (messageKey: keyof Translation, duration?: number, options?: { isInitialGreeting?: boolean }) => void; // Added options
   foxyAnimationState: FoxyAnimationState;
   setFoxyAnimationState: (state: FoxyAnimationState) => void;
+  playFoxyAudio: (messageKey: keyof Translation) => void; // Added
+  currentFoxyMessageKey: keyof Translation | null; // Added
 }
 
 export type FoxyAnimationState = 'idle' | 'talking' | 'happy';
