@@ -304,6 +304,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setIsFoxyVisible(true);
 
       let shouldPlayAudio = true;
+      console.log(options?.isInitialGreeting, foxyInitialGreetingPlayed);
       if (options?.isInitialGreeting) {
         if (foxyInitialGreetingPlayed) {
           shouldPlayAudio = false;
