@@ -318,6 +318,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
       if (duration) {
         foxyTimeoutRef.current = setTimeout(() => {
+          console.log('setIsFoxyVisible(false)');
           setIsFoxyVisible(false);
           setFoxyMessage(null);
           setCurrentFoxyMessageKey(null);
@@ -326,6 +327,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       }
     } else {
       console.warn(`Foxy message key "${String(messageKey)}" not found in translations.`);
+      console.log('setIsFoxyVisible(false)');
       setIsFoxyVisible(false);
       setFoxyMessage(null);
       setCurrentFoxyMessageKey(null);
@@ -391,6 +393,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         // Clear message, key, and hide Foxy
         setFoxyMessage(null);
         setCurrentFoxyMessageKey(null);
+        console.log('setIsFoxyVisible(false)');
         setIsFoxyVisible(false);
 
         // Clear any pending timeout for message duration
