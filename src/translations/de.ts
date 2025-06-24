@@ -444,4 +444,6 @@ export const germanTranslations: Translation = {
     strategyPatternRecognition: "Mustererkennung",
     strategySkipCounting: "In Schritten zählen",
     strategyDecomposition: "Zerlegung",
+
+  closeHintButton: "Tipp schließen",
 };

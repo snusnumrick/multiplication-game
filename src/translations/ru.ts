@@ -445,4 +445,6 @@ export const russianTranslations: Translation = {
     strategyPatternRecognition: "Распознавание образов",
     strategySkipCounting: "Счёт шагами",
     strategyDecomposition: "Разложение",
+
+  closeHintButton: "Закрыть подсказку",
 };
