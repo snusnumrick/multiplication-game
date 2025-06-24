@@ -27,7 +27,7 @@ const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
 
 // Replace with your actual Voice IDs from Eleven Labs
 const VOICE_ID_GERMAN = 'VD1if7jDVYtAKs4P0FIY'; // Milly Maple
-const VOICE_ID_RUSSIAN = 'lUCNYQh2kqW2wiie85Qk'; // Charmion
+const VOICE_ID_RUSSIAN = 'ycbyWsnf4hqZgdpKHqiU'; // Rina
 
 const SUPPORTED_LANGUAGES: Array<'de' | 'ru'> = ['de', 'ru'];
 

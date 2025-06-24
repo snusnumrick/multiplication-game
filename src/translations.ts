@@ -26,6 +26,7 @@ export interface Translation {
   wellDone: string;
   excellent: string;
   fantastic: string;
+  yourResult: string;
   
   // Adventure Mode
   adventureTitle: string;
@@ -356,7 +357,8 @@ export const translations: Record<string, Translation> = {
     wellDone: "Toll gemacht, Eva!",
     excellent: "Ausgezeichnet, Eva! Foxy ist stolz auf dich!",
     fantastic: "Fantastisch, Eva! Du bist ein Mathe-Star!",
-    
+    yourResult: "Ihr Ergebnis:",
+
     // Adventure Mode
     adventureTitle: "Mathe Abenteuer",
     level: "Level",
@@ -743,6 +745,8 @@ export const translations: Record<string, Translation> = {
     wellDone: "Молодец, Ева!",
     excellent: "Превосходно, Ева! Фокси гордится тобой!",
     fantastic: "Фантастика, Ева! Ты звезда математики!",
+    yourResult: "Твой результат:",
+
     
     // Adventure Mode
     adventureTitle: "Математическое Приключение",
