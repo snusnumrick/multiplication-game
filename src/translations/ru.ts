@@ -1,4 +1,4 @@
-import { Translation, ScenarioText } from '../translations';
+import { Translation } from '../translations.js';
 
 export const russianTranslations: Translation = {
     // Main Menu
