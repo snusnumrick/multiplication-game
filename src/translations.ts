@@ -202,6 +202,22 @@ export interface Translation {
   correctAnswerIs: string;
   newProblemButton: string;
   selectOtherTableButton: string;
+  practiceAreasTitle: string;
+  practiceAreasMessage: string;
+
+
+  // Smart Strategy Legend
+  smartStrategiesTitle: string;
+  visualStrategyLabel: string;
+  patternStrategyLabel: string;
+  countingStrategyLabel: string;
+  breakdownStrategyLabel: string;
+
+
+  // Encouragement Messages
+  keepTryingMessage: string;
+  newStrategyLabel: string;
+  consecutiveCorrectMessage: string;
 
   // Progress specific
   achievedStatus: string;
@@ -345,6 +361,16 @@ export const translations: Record<string, Translation> = {
     selectTable: "Wähle eine Reihe:",
     showHints: "Tipps anzeigen",
     backToMenu: "Zurück zum Menü",
+    smartStrategiesTitle: "Schlaue Strategien:",
+    visualStrategyLabel: "Sehen: Punkte zählen",
+    patternStrategyLabel: "Muster: Spezielle Tricks",
+    countingStrategyLabel: "Schritte: In Schritten zählen",
+    breakdownStrategyLabel: "Aufteilen: Große Zahlen teilen",
+    practiceAreasTitle: "Übungsbereiche:",
+    practiceAreasMessage: "Du übst gerade mit der {tables} Reihe. Das wird bestimmt super - die schlauen Tipps helfen dir dabei! 💪",
+    keepTryingMessage: "Gib nicht auf! Probiere den schlauen Tipp für einen anderen Lösungsweg.",
+    newStrategyLabel: "Neue Strategie",
+    consecutiveCorrectMessage: "{count} hintereinander! Du bist super!",
     
     // Quiz Mode
     quizTitle: "Einmaleins Quiz",
@@ -631,6 +657,7 @@ export const translations: Record<string, Translation> = {
     tableButtonSuffix: "x",
     mathSymbolsAlt: "Mathe Symbole",
 
+
     // Progress specific
     tableProgressSuffix: "x",
 
@@ -733,7 +760,18 @@ export const translations: Record<string, Translation> = {
     selectTable: "Выбери таблицу:",
     showHints: "Показать подсказки",
     backToMenu: "В главное меню",
-    
+    smartStrategiesTitle: "Умные стратегии:",
+    visualStrategyLabel: "Видеть: Считать точки",
+    patternStrategyLabel: "Шаблон: Особые трюки",
+    countingStrategyLabel: "Шаги: Считать по шагам",
+    breakdownStrategyLabel: "Разбивать: Делить большие числа",
+    practiceAreasTitle: "Области практики:",
+    practiceAreasMessage: "Ты практикуешь таблицу на {tables}. Это будет отлично - умные подсказки помогут тебе! 💪",
+    keepTryingMessage: "Не сдавайся! Попробуй умную подсказку для помощи.",
+    newStrategyLabel: "Новая стратегия",
+    consecutiveCorrectMessage: "{count} подряд! Потрясающе!",
+
+
     // Quiz Mode
     quizTitle: "Викторина Умножения",
     score: "Счёт",
