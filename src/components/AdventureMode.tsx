@@ -263,38 +263,8 @@ export function AdventureMode() {
     setCorrectAnswers(0);
     setShowResult(false);
     setStarsEarned(0);
-    playSound?.('click');
+    if (playSound) playSound('click');
   }, [generateQuestions, playSound]);
-
-  const checkAnswer = () => {
-    if (!selectedLevel || !questions[currentQuestionIndex] || !userAnswer) return;
-
-    const currentQuestion = questions[currentQuestionIndex];
-    const isCorrect = parseInt(userAnswer) === currentQuestion.answer;
-
-    if (isCorrect) {
-      setCorrectAnswers(prev => prev + 1);
-      setScore(prev => prev + 10);
-      playSound?.('correct');
-      setFoxyAnimationState?.('happy');
-      // Potentially show a "correct answer" Foxy message here if desired in the future
-    } else {
-      playSound?.('incorrect');
-      showFoxyMessage?.('foxyAdventureIncorrect', 5); // Show incorrect answer message for 5 seconds
-    }
-
-    setShowResult(true);
-
-    setTimeout(() => {
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(prev => prev + 1);
-        setUserAnswer('');
-        setShowResult(false);
-      } else {
-        completeLevel();
-      }
-    }, 1500);
-  };
 
   const completeLevel = useCallback(() => {
     if (!selectedLevel) return;
@@ -315,132 +285,183 @@ export function AdventureMode() {
 
     // Show Foxy message based on level completion result
     if (earnedStars === 3) {
-      showFoxyMessage?.('foxyAdventurePass3Stars');
+      if (showFoxyMessage) showFoxyMessage('foxyAdventurePass3Stars');
     } else if (earnedStars === 2) {
-      showFoxyMessage?.('foxyAdventurePass2Stars');
+      if (showFoxyMessage) showFoxyMessage('foxyAdventurePass2Stars');
     } else if (earnedStars === 1) {
-      showFoxyMessage?.('foxyAdventurePass1Star');
+      if (showFoxyMessage) showFoxyMessage('foxyAdventurePass1Star');
     } else {
-      showFoxyMessage?.('foxyAdventureFail');
+      if (showFoxyMessage) showFoxyMessage('foxyAdventureFail');
     }
 
     if (earnedStars >= 2) { // Trigger happy animation for 2 or 3 stars
-      setFoxyAnimationState?.('happy');
+      if (setFoxyAnimationState) setFoxyAnimationState('happy');
     }
 
     if (earnedStars > 0) {
       // Update progress
       const newAdventureLevels = {
-        ...progress.adventureLevels,
+        ...progress?.adventureLevels,
         [selectedLevel.id]: {
           completed: true,
           stars: Math.max(selectedLevel.stars, earnedStars),
         }
       };
 
-      updateProgress?.({ adventureLevels: newAdventureLevels });
-      addStars?.(earnedStars * 5); // 5 stars per level star
-      playSound?.('success');
+      if (updateProgress) updateProgress({ adventureLevels: newAdventureLevels });
+      if (addStars) addStars(earnedStars * 5); // 5 stars per level star
+      if (playSound) playSound('success');
     }
-  }, [selectedLevel, correctAnswers, questions.length, timeLeft, score, progress.adventureLevels, updateProgress, addStars, playSound, showFoxyMessage, setFoxyAnimationState]);
+  }, [selectedLevel, correctAnswers, questions.length, timeLeft, score, progress?.adventureLevels, updateProgress, addStars, playSound, showFoxyMessage, setFoxyAnimationState]);
+
+  const checkAnswer = useCallback(() => {
+    if (!selectedLevel || !questions[currentQuestionIndex] || !userAnswer) return;
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const isCorrect = parseInt(userAnswer) === currentQuestion.answer;
+
+    if (isCorrect) {
+      setCorrectAnswers(prev => prev + 1);
+      setScore(prev => prev + 10);
+      if (playSound) playSound('correct');
+      if (setFoxyAnimationState) setFoxyAnimationState('happy');
+      // Potentially show a "correct answer" Foxy message here if desired in the future
+    } else {
+      if (playSound) playSound('incorrect');
+      if (showFoxyMessage) showFoxyMessage('foxyAdventureIncorrect', 5); // Show incorrect answer message for 5 seconds
+    }
+
+    setShowResult(true);
+
+    setTimeout(() => {
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(prev => prev + 1);
+        setUserAnswer('');
+        setShowResult(false);
+      } else {
+        completeLevel();
+      }
+    }, 1500);
+  }, [selectedLevel, questions, currentQuestionIndex, userAnswer, playSound, setFoxyAnimationState, showFoxyMessage, completeLevel]);
+
+  // Client-side mount detection
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
+
+  // Initialize Foxy when component mounts or game state changes (client-side only)
+  useEffect(() => {
+    if (!isMounted) return;
+
+    console.log('AdventureMode: Component mounted/game state changed on client');
+
+    // Add a small delay to ensure the context is fully initialized
+    const timeoutId = setTimeout(() => {
+      initializeFoxy();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      cleanupFoxy();
+    };
+  }, [isMounted, gameState, initializeFoxy, cleanupFoxy]);
 
   // Timer logic
   useEffect(() => {
+    if (!isMounted) return;
+
     if (gameState === 'playing' && timeLeft > 0) {
       const timer = setTimeout(() => {
         setTimeLeft(prev => prev - 1);
       }, 1000);
       if (timeLeft === 11) { // Show warning when 10 seconds are about to be displayed
-        showFoxyMessage?.('foxyAdventureTimeLow', 5);
+        if (showFoxyMessage) showFoxyMessage('foxyAdventureTimeLow', 5);
       }
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && gameState === 'playing') {
       completeLevel();
     }
-  }, [gameState, timeLeft, completeLevel, showFoxyMessage]);
+  }, [isMounted, gameState, timeLeft, completeLevel, showFoxyMessage]);
 
-  useEffect(() => {
-    if (gameState === 'levelSelect') {
-      showFoxyMessage?.('foxyIntroAdventureMode');
-    }
-    // Messages for 'completed' state are now handled in completeLevel
-    // Messages for 'playing' state (incorrect, time low) are handled in checkAnswer and timer effect
-
-    // Hide Foxy when navigating away from this component entirely
-    return () => {
-      setIsFoxyVisible?.(false);
-    };
-  }, [gameState, showFoxyMessage, setIsFoxyVisible]);
+  // Don't render anything until client-side mount is complete
+  if (!isMounted) {
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-200 to-green-300 flex items-center justify-center">
+          <div className="text-2xl font-bold text-gray-700">Loading...</div>
+        </div>
+    );
+  }
 
   const renderLevelSelect = () => (
-    <div className="text-center">
-      <h2 className="text-4xl font-bold text-gray-800 mb-8">{t.adventureTitle}</h2>
-      <p className="text-xl text-gray-600 mb-12">{t.chooseAdventure}</p>
+      <div className="text-center">
+        <h2 className="text-4xl font-bold text-gray-800 mb-8">{t?.adventureTitle || 'Adventure Mode'}</h2>
+        <p className="text-xl text-gray-600 mb-12">{t?.chooseAdventure || 'Choose your adventure'}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {levels.map((level) => (
-          <div
-            key={level.id}
-            className={`relative p-6 rounded-3xl shadow-xl transform transition-all duration-200 ${
-              level.unlocked
-                ? level.completed
-                  ? 'bg-gradient-to-br from-green-400 to-green-600 text-white cursor-pointer hover:scale-105'
-                  : 'bg-gradient-to-br from-blue-400 to-blue-600 text-white cursor-pointer hover:scale-105'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
-            onClick={() => level.unlocked && startLevel(level)}
-          >
-            {/* Level Status */}
-            <div className="absolute top-4 right-4">
-              {!level.unlocked ? (
-                <Lock className="w-6 h-6" />
-              ) : level.completed ? (
-                <CheckCircle className="w-6 h-6" />
-              ) : (
-                <Play className="w-6 h-6" />
-              )}
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {levels.map((level) => (
+              <div
+                  key={level.id}
+                  className={`relative p-6 rounded-3xl shadow-xl transform transition-all duration-200 ${
+                      level.unlocked
+                          ? level.completed
+                              ? 'bg-gradient-to-br from-green-400 to-green-600 text-white cursor-pointer hover:scale-105'
+                              : 'bg-gradient-to-br from-blue-400 to-blue-600 text-white cursor-pointer hover:scale-105'
+                          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                  onClick={() => level.unlocked && startLevel(level)}
+              >
+                {/* Level Status */}
+                <div className="absolute top-4 right-4">
+                  {!level.unlocked ? (
+                      <Lock className="w-6 h-6" />
+                  ) : level.completed ? (
+                      <CheckCircle className="w-6 h-6" />
+                  ) : (
+                      <Play className="w-6 h-6" />
+                  )}
+                </div>
 
-            {/* Level Number */}
-            <div className="text-3xl font-bold mb-2">{level.id}</div>
+                {/* Level Number */}
+                <div className="text-3xl font-bold mb-2">{level.id}</div>
 
-            {/* Level Title */}
-            <h3 className="text-xl font-bold mb-3">{getLevelTitle(level.id)}</h3>
+                {/* Level Title */}
+                <h3 className="text-xl font-bold mb-3">{getLevelTitle(level.id)}</h3>
 
-            {/* Description */}
-            <p className="text-sm opacity-90 mb-4">{getLevelDesc(level.id)}</p>
+                {/* Description */}
+                <p className="text-sm opacity-90 mb-4">{getLevelDesc(level.id)}</p>
 
-            {/* Level Info */}
-            <div className="text-sm space-y-1 mb-4">
-              <div>{t.tables} {level.tables.join(', ')}</div>
-              <div>{level.questionsCount} {t.questions}</div>
-              <div>{level.timeLimit}{t.timeSecondsSuffix} {t.time}</div>
-              <div>{level.requiredAccuracy}{t.accuracyPercentSuffix} {t.required}</div>
-            </div>
+                {/* Level Info */}
+                <div className="text-sm space-y-1 mb-4">
+                  <div>{t?.tables || 'Tables'} {level.tables.join(', ')}</div>
+                  <div>{level.questionsCount} {t?.questions || 'questions'}</div>
+                  <div>{level.timeLimit}{t?.timeSecondsSuffix || 's'} {t?.time || 'time'}</div>
+                  <div>{level.requiredAccuracy}{t?.accuracyPercentSuffix || '%'} {t?.required || 'required'}</div>
+                </div>
 
-            {/* Stars */}
-            {level.completed && (
-              <div className="flex justify-center">
-                {[1, 2, 3].map((star) => (
-                  <Star
-                    key={star}
-                    className={`w-6 h-6 mx-1 ${
-                      star <= level.stars ? 'text-yellow-300 fill-current' : 'text-gray-400'
-                    }`}
-                  />
-                ))}
+                {/* Stars */}
+                {level.completed && (
+                    <div className="flex justify-center">
+                      {[1, 2, 3].map((star) => (
+                          <Star
+                              key={star}
+                              className={`w-6 h-6 mx-1 ${
+                                  star <= level.stars ? 'text-yellow-300 fill-current' : 'text-gray-400'
+                              }`}
+                          />
+                      ))}
+                    </div>
+                )}
+
+                {!level.unlocked && level.id > 1 && (
+                    <div className="text-xs opacity-75 mt-2">
+                      {t?.completeLevelRequirement?.replace('{id}', (level.id - 1).toString()) || `Complete level ${level.id - 1} first`}
+                    </div>
+                )}
               </div>
-            )}
-
-            {!level.unlocked && level.id > 1 && (
-              <div className="text-xs opacity-75 mt-2">
-                {t.completeLevelRequirement.replace('{id}', (level.id - 1).toString())}
-              </div>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
   );
 
   const renderGame = () => {
@@ -449,80 +470,80 @@ export function AdventureMode() {
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
-      <div className="max-w-2xl mx-auto">
-        {/* Game Header */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl mb-6">
-          <div className="flex justify-between items-center">
-            <div className="text-center">
-              <div className="text-lg font-bold text-gray-800">{getLevelTitle(selectedLevel.id)}</div>
-              <div className="text-sm text-gray-600">{t.level} {selectedLevel.id}</div>
-            </div>
+        <div className="max-w-2xl mx-auto">
+          {/* Game Header */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl mb-6">
+            <div className="flex justify-between items-center">
+              <div className="text-center">
+                <div className="text-lg font-bold text-gray-800">{getLevelTitle(selectedLevel.id)}</div>
+                <div className="text-sm text-gray-600">{t?.level || 'Level'} {selectedLevel.id}</div>
+              </div>
 
-            <div className="text-center">
-              <div className="text-lg font-medium text-gray-600">
-                {currentQuestionIndex + 1} / {questions.length}
+              <div className="text-center">
+                <div className="text-lg font-medium text-gray-600">
+                  {currentQuestionIndex + 1} / {questions.length}
+                </div>
+              </div>
+
+              <div className="text-center">
+                <div className={`text-xl font-bold ${timeLeft <= 10 ? 'text-red-600 animate-pulse' : 'text-gray-700'}`}>
+                  {timeLeft}{t?.timeSecondsSuffix || 's'}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Question */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
+            <div className="text-center mb-8">
+              <div className="text-5xl font-bold text-gray-800 mb-6">
+                {currentQuestion.a} × {currentQuestion.b} = ?
               </div>
             </div>
 
-            <div className="text-center">
-              <div className={`text-xl font-bold ${timeLeft <= 10 ? 'text-red-600 animate-pulse' : 'text-gray-700'}`}>
-                {timeLeft}{t.timeSecondsSuffix}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Question */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-          <div className="text-center mb-8">
-            <div className="text-5xl font-bold text-gray-800 mb-6">
-              {currentQuestion.a} × {currentQuestion.b} = ?
-            </div>
-          </div>
-
-          {/* Answer Input */}
-          <div className="text-center mb-6">
-            <input
-              type="number"
-              value={userAnswer}
-              onChange={(e) => setUserAnswer(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
-              className="text-4xl font-bold text-center bg-gray-50 border-2 border-gray-300 rounded-2xl p-4 w-48 focus:border-blue-500 focus:outline-none"
-              placeholder="?"
-              autoFocus
-              disabled={showResult}
-            />
-          </div>
-
-          {/* Feedback */}
-          {showResult && (
+            {/* Answer Input */}
             <div className="text-center mb-6">
-              {parseInt(userAnswer) === currentQuestion.answer ? (
-                <div className="text-2xl font-bold text-green-600 animate-bounce">
-                  {t.correct}! +10 {t.points}
-                </div>
-              ) : (
-                <div className="text-2xl font-bold text-red-600">
-                  {t.incorrect}. {t.answer}: {currentQuestion.answer}
-                </div>
-              )}
+              <input
+                  type="number"
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+                  className="text-4xl font-bold text-center bg-gray-50 border-2 border-gray-300 rounded-2xl p-4 w-48 focus:border-blue-500 focus:outline-none"
+                  placeholder="?"
+                  autoFocus
+                  disabled={showResult}
+              />
             </div>
-          )}
 
-          {/* Action Button */}
-          {!showResult && (
-            <div className="text-center">
-              <button
-                onClick={checkAnswer}
-                disabled={!userAnswer}
-                className="bg-green-500 text-white px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transform transition-all duration-200 hover:scale-105 active:scale-95"
-              >
-                {t.check}
-              </button>
-            </div>
-          )}
+            {/* Feedback */}
+            {showResult && (
+                <div className="text-center mb-6">
+                  {parseInt(userAnswer) === currentQuestion.answer ? (
+                      <div className="text-2xl font-bold text-green-600 animate-bounce">
+                        {t?.correct || 'Correct'}! +10 {t?.points || 'points'}
+                      </div>
+                  ) : (
+                      <div className="text-2xl font-bold text-red-600">
+                        {t?.incorrect || 'Incorrect'}. {t?.answer || 'Answer'}: {currentQuestion.answer}
+                      </div>
+                  )}
+                </div>
+            )}
+
+            {/* Action Button */}
+            {!showResult && (
+                <div className="text-center">
+                  <button
+                      onClick={checkAnswer}
+                      disabled={!userAnswer}
+                      className="bg-green-500 text-white px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transform transition-all duration-200 hover:scale-105 active:scale-95"
+                  >
+                    {t?.check || 'Check'}
+                  </button>
+                </div>
+            )}
+          </div>
         </div>
-      </div>
     );
   };
 
@@ -533,109 +554,109 @@ export function AdventureMode() {
     const passed = accuracy >= selectedLevel.requiredAccuracy;
 
     return (
-      <div className="text-center max-w-2xl mx-auto">
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-          {passed ? (
-            <Crown className="w-24 h-24 text-yellow-500 mx-auto mb-6" />
-          ) : (
-            <Trophy className="w-24 h-24 text-gray-400 mx-auto mb-6" />
-          )}
-
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            {passed ? t.levelCompleted : t.levelNotCompleted}
-          </h2>
-
-          {/* Stars */}
-          {passed && (
-            <div className="flex justify-center mb-6">
-              {[1, 2, 3].map((star) => (
-                <Star
-                  key={star}
-                  className={`w-12 h-12 mx-1 ${
-                    star <= starsEarned ? 'text-yellow-500 fill-current animate-bounce' : 'text-gray-300'
-                  }`}
-                  style={{ animationDelay: `${star * 200}ms` }}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Results */}
-          <div className="bg-gray-50 rounded-2xl p-6 mb-6 space-y-3">
-            <div className="flex justify-between">
-              <span>{t.correctAnswersLabel}</span>
-              <span className="font-bold">{correctAnswers}/{questions.length}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>{t.accuracyLabel}</span>
-              <span className={`font-bold ${accuracy >= selectedLevel.requiredAccuracy ? 'text-green-600' : 'text-red-600'}`}>
-                {Math.round(accuracy)}{t.accuracyPercentSuffix}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span>{t.required}</span>
-              <span className="font-bold">{selectedLevel.requiredAccuracy}{t.accuracyPercentSuffix}</span>
-            </div>
-            {passed && (
-              <div className="flex justify-between border-t pt-2">
-                <span>{t.starsEarnedLabel}</span>
-                <span className="font-bold text-yellow-600">+{starsEarned * 5}</span>
-              </div>
+        <div className="text-center max-w-2xl mx-auto">
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
+            {passed ? (
+                <Crown className="w-24 h-24 text-yellow-500 mx-auto mb-6" />
+            ) : (
+                <Trophy className="w-24 h-24 text-gray-400 mx-auto mb-6" />
             )}
-          </div>
 
-          {/* Action Buttons */}
-          <div className="flex justify-center space-x-4">
-            <button
-              onClick={() => startLevel(selectedLevel)}
-              className="bg-blue-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-blue-600 transition-colors"
-            >
-              {t.repeatLevel}
-            </button>
-            <button
-              onClick={() => setGameState('levelSelect')}
-              className="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-green-600 transition-colors"
-            >
-              {t.selectLevel}
-            </button>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              {passed ? (t?.levelCompleted || 'Level Completed!') : (t?.levelNotCompleted || 'Level Not Completed')}
+            </h2>
+
+            {/* Stars */}
+            {passed && (
+                <div className="flex justify-center mb-6">
+                  {[1, 2, 3].map((star) => (
+                      <Star
+                          key={star}
+                          className={`w-12 h-12 mx-1 ${
+                              star <= starsEarned ? 'text-yellow-500 fill-current animate-bounce' : 'text-gray-300'
+                          }`}
+                          style={{ animationDelay: `${star * 200}ms` }}
+                      />
+                  ))}
+                </div>
+            )}
+
+            {/* Results */}
+            <div className="bg-gray-50 rounded-2xl p-6 mb-6 space-y-3">
+              <div className="flex justify-between">
+                <span>{t?.correctAnswersLabel || 'Correct answers'}</span>
+                <span className="font-bold">{correctAnswers}/{questions.length}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>{t?.accuracyLabel || 'Accuracy'}</span>
+                <span className={`font-bold ${accuracy >= selectedLevel.requiredAccuracy ? 'text-green-600' : 'text-red-600'}`}>
+                {Math.round(accuracy)}{t?.accuracyPercentSuffix || '%'}
+              </span>
+              </div>
+              <div className="flex justify-between">
+                <span>{t?.required || 'Required'}</span>
+                <span className="font-bold">{selectedLevel.requiredAccuracy}{t?.accuracyPercentSuffix || '%'}</span>
+              </div>
+              {passed && (
+                  <div className="flex justify-between border-t pt-2">
+                    <span>{t?.starsEarnedLabel || 'Stars earned'}</span>
+                    <span className="font-bold text-yellow-600">+{starsEarned * 5}</span>
+                  </div>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-center space-x-4">
+              <button
+                  onClick={() => startLevel(selectedLevel)}
+                  className="bg-blue-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-blue-600 transition-colors"
+              >
+                {t?.repeatLevel || 'Repeat Level'}
+              </button>
+              <button
+                  onClick={() => setGameState('levelSelect')}
+                  className="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-green-600 transition-colors"
+              >
+                {t?.selectLevel || 'Select Level'}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-200 to-green-300 p-4">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8 pt-4">
-        <button
-          onClick={() => {
-            playSound?.('click');
-            setCurrentScreen?.('menu');
-          }}
-          className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="font-medium">{t.backToMenu}</span>
-        </button>
-
-        {gameState !== 'levelSelect' && (
+      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-200 to-green-300 p-4">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8 pt-4">
           <button
-            onClick={() => setGameState('levelSelect')}
-            className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg hover:bg-white transition-colors font-medium"
+              onClick={() => {
+                if (playSound) playSound('click');
+                if (setCurrentScreen) setCurrentScreen('menu');
+              }}
+              className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
           >
-            {t.selectLevel}
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">{t?.backToMenu || 'Back to Menu'}</span>
           </button>
-        )}
-      </div>
 
-      {/* Content */}
-      <div className="max-w-6xl mx-auto">
-        {gameState === 'levelSelect' && renderLevelSelect()}
-        {gameState === 'playing' && renderGame()}
-        {gameState === 'completed' && renderCompleted()}
+          {gameState !== 'levelSelect' && (
+              <button
+                  onClick={() => setGameState('levelSelect')}
+                  className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg hover:bg-white transition-colors font-medium"
+              >
+                {t?.selectLevel || 'Select Level'}
+              </button>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="max-w-6xl mx-auto">
+          {gameState === 'levelSelect' && renderLevelSelect()}
+          {gameState === 'playing' && renderGame()}
+          {gameState === 'completed' && renderCompleted()}
+        </div>
+        <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible} />
       </div>
-      <AnimatedFoxy message={foxyMessage ?? undefined} isVisible={isFoxyVisible} />
-    </div>
   );
 }
