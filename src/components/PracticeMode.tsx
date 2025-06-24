@@ -129,6 +129,12 @@ export function PracticeMode() {
     }
   }, [selectedTable, generateProblem]);
 
+  const handleCloseHint = useCallback(() => {
+    setShowHint(false);
+    setExplanation(null);
+    playSound?.('click');
+  }, [playSound]);
+
   // Client-side mount detection (preserved from original)
   useEffect(() => {
     setIsMounted(true);
@@ -242,6 +248,7 @@ export function PracticeMode() {
             onCheckAnswer={checkAnswer}
             onShowSmartHint={showSmartHint}
             onRestartProblem={restartProblem}
+            onCloseHint={handleCloseHint} // Pass the new handler
           />
         )}
       </div>

@@ -383,6 +383,8 @@ export interface Translation {
   strategyPatternRecognition?: string;
   strategySkipCounting?: string;
   strategyDecomposition?: string;
+
+  closeHintButton?: string;
 }
 
 export interface ScenarioText {
