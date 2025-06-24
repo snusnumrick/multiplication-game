@@ -430,7 +430,7 @@ export const germanTranslations: Translation = {
     skipCountingMnemonic: "Zähle in {a}er-Schritten!",
     decompositionConcept: "Zerlege in einfachere Teile",
     decompositionPattern: "Zerlege große Zahlen in Zehner und Einer",
-    strategyLabel: "{strategy} Strategie",
+    strategyLabel: "{strategy}",
     strategyLabelSuffix: "Strategie",
     keyConceptLabel: "💡 Schlüsselkonzept:",
     visualLabel: "👁️ Visuell:",

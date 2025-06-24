@@ -431,7 +431,7 @@ export const russianTranslations: Translation = {
     skipCountingMnemonic: "Считай шагами по {a}!",
     decompositionConcept: "Разложи на более простые части",
     decompositionPattern: "Разложи большие числа на десятки и единицы",
-    strategyLabel: "{strategy} стратегия",
+    strategyLabel: "{strategy}",
     strategyLabelSuffix: "Стратегия",
     keyConceptLabel: "💡 Ключевая концепция:",
     visualLabel: "👁️ Визуально:",
