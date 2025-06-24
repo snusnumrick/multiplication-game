@@ -385,8 +385,8 @@ export interface ScenarioText {
   problem: string;
 }
 
-import { germanTranslations } from './translations/de';
-import { russianTranslations } from './translations/ru';
+import { germanTranslations } from './translations/de.js';
+import { russianTranslations } from './translations/ru.js';
 
 export const translations: Record<string, Translation> = {
   de: germanTranslations,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Star, Check, RotateCcw, Lightbulb, Brain, Eye, Zap, Target } from 'lucide-react';
 import type { Translation } from '../../translations';
 import type { ExplanationContent, UserProgress } from './PracticeModeTypes';
-import { getStrategyIcon, getStrategyColor } from './PracticeModeUtils';
+import { getStrategyIcon, getStrategyColor } from './PracticeModeUtils.js';
 
 interface ProblemDisplayUIProps {
   t: Translation;
