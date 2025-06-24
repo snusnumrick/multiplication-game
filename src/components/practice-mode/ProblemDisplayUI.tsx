@@ -70,7 +70,10 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
         {showHint && explanation ? (
           // Explanation Modal Content
           <>
-            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 text-left max-w-2xl mx-auto border border-indigo-200 w-full overflow-y-auto max-h-[calc(100vh-200px)]">
+            <div 
+              className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 text-left max-w-2xl mx-auto border border-indigo-200 w-full overflow-y-auto max-h-[calc(100vh-200px)] cursor-pointer"
+              onClick={onCloseHint} // Add onClick here to close when tapping the hint area
+            >
               <div className="flex items-center mb-3">
                 {getStrategyIcon(explanation.strategy)}
                 {/*<span className="ml-2 font-semibold text-indigo-800">*/}
