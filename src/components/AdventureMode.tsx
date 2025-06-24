@@ -24,25 +24,26 @@ interface Question {
 
 export function AdventureMode() {
   const { t, setCurrentScreen, playSound, addStars, progress, updateProgress, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
-  
+
   // Get localized level title and description
-  const getLevelTitle = (levelId: number): string => {
+  const getLevelTitle = useCallback((levelId: number): string => {
     const titleKey = `level${levelId}Title` as keyof typeof t;
-    const result = t[titleKey];
+    const result = t?.[titleKey];
     if (typeof result === 'string') {
       return result;
     }
-    return t.levelDefaultTitle.replace('{id}', levelId.toString());
-  };
-  
-  const getLevelDesc = (levelId: number): string => {
+    return t?.levelDefaultTitle?.replace('{id}', levelId.toString()) || `Level ${levelId}`;
+  }, [t]);
+
+  const getLevelDesc = useCallback((levelId: number): string => {
     const descKey = `level${levelId}Desc` as keyof typeof t;
-    const result = t[descKey];
+    const result = t?.[descKey];
     if (typeof result === 'string') {
       return result;
     }
-    return t.levelDefaultDesc.replace('{id}', levelId.toString());
-  };
+    return t?.levelDefaultDesc?.replace('{id}', levelId.toString()) || `Complete level ${levelId}`;
+  }, [t]);
+
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
   const [gameState, setGameState] = useState<'levelSelect' | 'playing' | 'completed'>('levelSelect');
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -53,6 +54,7 @@ export function AdventureMode() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [starsEarned, setStarsEarned] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
   const levels: Level[] = useMemo(() => [
     {
@@ -177,15 +179,48 @@ export function AdventureMode() {
     },
   ], []);
 
+  // Memoize the foxy initialization to ensure stable reference
+  const initializeFoxy = useCallback(() => {
+    if (typeof window !== 'undefined' && showFoxyMessage && setIsFoxyVisible) {
+      console.log('AdventureMode: Initializing Foxy for game state:', gameState);
+
+      try {
+        if (gameState === 'levelSelect') {
+          showFoxyMessage('foxyIntroAdventureMode');
+        }
+        // Messages for 'completed' state are handled in completeLevel
+        // Messages for 'playing' state (incorrect, time low) are handled in checkAnswer and timer effect
+      } catch (error) {
+        console.error('Error initializing Foxy in AdventureMode:', error);
+      }
+    } else {
+      console.warn('AdventureMode: Cannot initialize Foxy - missing dependencies or not on client');
+    }
+  }, [gameState, showFoxyMessage, setIsFoxyVisible]);
+
+  // Memoize the cleanup function
+  const cleanupFoxy = useCallback(() => {
+    if (typeof window !== 'undefined' && setIsFoxyVisible) {
+      console.log('AdventureMode: Cleaning up Foxy');
+      try {
+        setIsFoxyVisible(false);
+      } catch (error) {
+        console.error('Error cleaning up Foxy:', error);
+      }
+    }
+  }, [setIsFoxyVisible]);
+
   // Update levels based on progress
   useEffect(() => {
+    if (!progress?.adventureLevels) return;
+
     levels.forEach((level, index) => {
       const levelProgress = progress.adventureLevels[level.id];
       if (levelProgress) {
         level.completed = levelProgress.completed;
         level.stars = levelProgress.stars;
       }
-      
+
       // Unlock logic
       if (index === 0) {
         level.unlocked = true;
@@ -195,28 +230,28 @@ export function AdventureMode() {
         level.unlocked = prevLevelProgress?.completed || false;
       }
     });
-  }, [progress.adventureLevels, levels]);
+  }, [progress?.adventureLevels, levels]);
 
-  const generateQuestions = (level: Level) => {
+  const generateQuestions = useCallback((level: Level) => {
     const newQuestions: Question[] = [];
-    
+
     for (let i = 0; i < level.questionsCount; i++) {
       const table = level.tables[Math.floor(Math.random() * level.tables.length)];
       const multiplier = Math.floor(Math.random() * 10) + 1;
-      
+
       newQuestions.push({
         a: table,
         b: multiplier,
         answer: table * multiplier,
       });
     }
-    
-    return newQuestions;
-  };
 
-  const startLevel = (level: Level) => {
+    return newQuestions;
+  }, []);
+
+  const startLevel = useCallback((level: Level) => {
     if (!level.unlocked) return;
-    
+
     setSelectedLevel(level);
     const newQuestions = generateQuestions(level);
     setQuestions(newQuestions);
@@ -228,15 +263,15 @@ export function AdventureMode() {
     setCorrectAnswers(0);
     setShowResult(false);
     setStarsEarned(0);
-    playSound('click');
-  };
+    playSound && playSound('click');
+  }, [generateQuestions, playSound]);
 
   const checkAnswer = () => {
     if (!selectedLevel || !questions[currentQuestionIndex] || !userAnswer) return;
-    
+
     const currentQuestion = questions[currentQuestionIndex];
     const isCorrect = parseInt(userAnswer) === currentQuestion.answer;
-    
+
     if (isCorrect) {
       setCorrectAnswers(prev => prev + 1);
       setScore(prev => prev + 10);
@@ -249,7 +284,7 @@ export function AdventureMode() {
     }
 
     setShowResult(true);
-    
+
     setTimeout(() => {
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
@@ -263,18 +298,18 @@ export function AdventureMode() {
 
   const completeLevel = useCallback(() => {
     if (!selectedLevel) return;
-    
+
     const accuracy = (correctAnswers / questions.length) * 100;
     const timeBonus = Math.max(0, timeLeft * 2);
     const finalScore = score + timeBonus;
-    
+
     let earnedStars = 0;
     if (accuracy >= selectedLevel.requiredAccuracy) {
       earnedStars = 1;
       if (accuracy >= 85) earnedStars = 2; // Assuming 85% for 2 stars
       if (accuracy >= 95 && timeLeft > 30) earnedStars = 3; // Assuming 95% and time bonus for 3 stars
     }
-    
+
     setStarsEarned(earnedStars);
     setGameState('completed');
 
@@ -288,7 +323,7 @@ export function AdventureMode() {
     } else {
       showFoxyMessage('foxyAdventureFail');
     }
-    
+
     if (earnedStars >= 2) { // Trigger happy animation for 2 or 3 stars
       setFoxyAnimationState('happy');
     }
@@ -302,7 +337,7 @@ export function AdventureMode() {
           stars: Math.max(selectedLevel.stars, earnedStars),
         }
       };
-      
+
       updateProgress({ adventureLevels: newAdventureLevels });
       addStars(earnedStars * 5); // 5 stars per level star
       playSound('success');
@@ -330,7 +365,7 @@ export function AdventureMode() {
     }
     // Messages for 'completed' state are now handled in completeLevel
     // Messages for 'playing' state (incorrect, time low) are handled in checkAnswer and timer effect
-    
+
     // Hide Foxy when navigating away from this component entirely
     return () => {
       setIsFoxyVisible(false);
@@ -341,7 +376,7 @@ export function AdventureMode() {
     <div className="text-center">
       <h2 className="text-4xl font-bold text-gray-800 mb-8">{t.adventureTitle}</h2>
       <p className="text-xl text-gray-600 mb-12">{t.chooseAdventure}</p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {levels.map((level) => (
           <div
@@ -365,16 +400,16 @@ export function AdventureMode() {
                 <Play className="w-6 h-6" />
               )}
             </div>
-            
+
             {/* Level Number */}
             <div className="text-3xl font-bold mb-2">{level.id}</div>
-            
+
             {/* Level Title */}
             <h3 className="text-xl font-bold mb-3">{getLevelTitle(level.id)}</h3>
-            
+
             {/* Description */}
             <p className="text-sm opacity-90 mb-4">{getLevelDesc(level.id)}</p>
-            
+
             {/* Level Info */}
             <div className="text-sm space-y-1 mb-4">
               <div>{t.tables} {level.tables.join(', ')}</div>
@@ -382,7 +417,7 @@ export function AdventureMode() {
               <div>{level.timeLimit}{t.timeSecondsSuffix} {t.time}</div>
               <div>{level.requiredAccuracy}{t.accuracyPercentSuffix} {t.required}</div>
             </div>
-            
+
             {/* Stars */}
             {level.completed && (
               <div className="flex justify-center">
@@ -396,7 +431,7 @@ export function AdventureMode() {
                 ))}
               </div>
             )}
-            
+
             {!level.unlocked && level.id > 1 && (
               <div className="text-xs opacity-75 mt-2">
                 {t.completeLevelRequirement.replace('{id}', (level.id - 1).toString())}
@@ -410,9 +445,9 @@ export function AdventureMode() {
 
   const renderGame = () => {
     if (!selectedLevel || questions.length === 0) return null;
-    
+
     const currentQuestion = questions[currentQuestionIndex];
-    
+
     return (
       <div className="max-w-2xl mx-auto">
         {/* Game Header */}
@@ -422,13 +457,13 @@ export function AdventureMode() {
               <div className="text-lg font-bold text-gray-800">{getLevelTitle(selectedLevel.id)}</div>
               <div className="text-sm text-gray-600">{t.level} {selectedLevel.id}</div>
             </div>
-            
+
             <div className="text-center">
               <div className="text-lg font-medium text-gray-600">
                 {currentQuestionIndex + 1} / {questions.length}
               </div>
             </div>
-            
+
             <div className="text-center">
               <div className={`text-xl font-bold ${timeLeft <= 10 ? 'text-red-600 animate-pulse' : 'text-gray-700'}`}>
                 {timeLeft}{t.timeSecondsSuffix}
@@ -493,10 +528,10 @@ export function AdventureMode() {
 
   const renderCompleted = () => {
     if (!selectedLevel) return null;
-    
+
     const accuracy = (correctAnswers / questions.length) * 100;
     const passed = accuracy >= selectedLevel.requiredAccuracy;
-    
+
     return (
       <div className="text-center max-w-2xl mx-auto">
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
@@ -505,11 +540,11 @@ export function AdventureMode() {
           ) : (
             <Trophy className="w-24 h-24 text-gray-400 mx-auto mb-6" />
           )}
-          
+
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
             {passed ? t.levelCompleted : t.levelNotCompleted}
           </h2>
-          
+
           {/* Stars */}
           {passed && (
             <div className="flex justify-center mb-6">
@@ -524,7 +559,7 @@ export function AdventureMode() {
               ))}
             </div>
           )}
-          
+
           {/* Results */}
           <div className="bg-gray-50 rounded-2xl p-6 mb-6 space-y-3">
             <div className="flex justify-between">
@@ -548,7 +583,7 @@ export function AdventureMode() {
               </div>
             )}
           </div>
-          
+
           {/* Action Buttons */}
           <div className="flex justify-center space-x-4">
             <button
