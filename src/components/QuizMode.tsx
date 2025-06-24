@@ -103,6 +103,21 @@ export function QuizMode() {
     playSound?.('click');
   }, [generateQuestions, playSound]);
 
+  const finishQuiz = useCallback(() => {
+    setGameState('finished');
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+
+    // Bonus stars for completion
+    const bonusStars = Math.floor(score / 50);
+    if (bonusStars > 0 && addStars) {
+      addStars?.(bonusStars);
+    }
+    // Determine if happy animation should play based on score/stars in renderResults
+    playSound?.('success');
+  }, [score, addStars, playSound]);
+
   const selectAnswer = useCallback((answer: number) => {
     if (answered) return;
 
@@ -135,21 +150,6 @@ export function QuizMode() {
       }
     }, 2000);
   }, [answered, questions, currentQuestionIndex, playSound, addStars, setFoxyAnimationState, finishQuiz]);
-
-  const finishQuiz = useCallback(() => {
-    setGameState('finished');
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-
-    // Bonus stars for completion
-    const bonusStars = Math.floor(score / 50);
-    if (bonusStars > 0 && addStars) {
-      addStars?.(bonusStars);
-    }
-    // Determine if happy animation should play based on score/stars in renderResults
-    playSound?.('success');
-  }, [score, addStars, playSound]);
 
   const resetQuiz = useCallback(() => {
     setGameState('setup');

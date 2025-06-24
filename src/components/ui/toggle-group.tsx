@@ -14,16 +14,14 @@ const ToggleGroupContext = React.createContext<
 
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> &
-    VariantProps<typeof toggleVariants> & {
-      type?: "single" | "multiple"; // Add type prop
-    }
->(({ className, variant, size, children, type, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> & // This includes the 'type' prop from Radix
+    VariantProps<typeof toggleVariants>
+  // Removed the explicit 'type?: "single" | "multiple"' from wrapper-specific props
+>(({ className, variant, size, children, ...props }, ref) => ( // 'props' now contains the 'type' from Radix
   <ToggleGroupPrimitive.Root
     ref={ref}
     className={cn("flex items-center justify-center gap-1", className)}
-    type={type} // Pass type prop
-    {...props}
+    {...props} // Spread all props, including 'type', 'value', 'onValueChange' etc.
   >
     <ToggleGroupContext.Provider value={{ variant, size }}>
       {children}
