@@ -103,23 +103,23 @@ export function RealWorldMath() {
 
       try {
         if (!selectedScenario) { // Scenario selection screen
-          showFoxyMessage('foxyIntroRealWorldMath');
+          showFoxyMessage?.('foxyIntroRealWorldMath');
         } else {
           switch (gameStep) {
             case 'problem':
-              showFoxyMessage('foxyRealWorldProblem', 5);
+              showFoxyMessage?.('foxyRealWorldProblem', 5);
               break;
             case 'expression':
-              showFoxyMessage('foxyRealWorldExpression', 5);
+              showFoxyMessage?.('foxyRealWorldExpression', 5);
               break;
             case 'answer':
-              showFoxyMessage('foxyRealWorldAnswer', 5);
+              showFoxyMessage?.('foxyRealWorldAnswer', 5);
               break;
             case 'result':
               if (isCorrect) {
-                showFoxyMessage('foxyRealWorldCorrect');
+                showFoxyMessage?.('foxyRealWorldCorrect');
               } else {
-                showFoxyMessage('foxyRealWorldIncorrect');
+                showFoxyMessage?.('foxyRealWorldIncorrect');
               }
               break;
           }
@@ -138,7 +138,7 @@ export function RealWorldMath() {
       console.log('RealWorldMath: Cleaning up Foxy');
       try {
         if (gameStep !== 'result') { // Keep message if on result screen
-          setIsFoxyVisible(false);
+          setIsFoxyVisible?.(false);
         }
       } catch (error) {
         console.error('Error cleaning up Foxy:', error);
@@ -152,13 +152,13 @@ export function RealWorldMath() {
     setSelectedExpression('');
     setUserAnswer('');
     setIsCorrect(false);
-    playSound && playSound('click');
+    playSound?.('click');
   }, [playSound]);
 
   const selectExpression = useCallback((expression: string) => {
     setSelectedExpression(expression);
     setGameStep('answer');
-    playSound && playSound('click');
+    playSound?.('click');
   }, [playSound]);
 
   const submitAnswer = useCallback(() => {
@@ -170,11 +170,11 @@ export function RealWorldMath() {
     setGameStep('result');
 
     if (bothCorrect) {
-      playSound && playSound('correct');
-      addStars && addStars(3); // Award 3 stars for getting both parts right
-      setFoxyAnimationState && setFoxyAnimationState('happy');
+      playSound?.('correct');
+      addStars?.(3); // Award 3 stars for getting both parts right
+      setFoxyAnimationState?.('happy');
     } else {
-      playSound && playSound('incorrect');
+      playSound?.('incorrect');
     }
   }, [selectedExpression, selectedScenario, userAnswer, playSound, addStars, setFoxyAnimationState]);
 
@@ -237,7 +237,7 @@ export function RealWorldMath() {
           <div className="flex items-center justify-between mb-8 pt-4">
             <button
                 onClick={() => {
-                  playSound && playSound('click');
+                  playSound?.('click');
                   setSelectedScenario(null);
                 }}
                 className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
@@ -394,8 +394,8 @@ export function RealWorldMath() {
         <div className="flex items-center justify-between mb-8 pt-4">
           <button
               onClick={() => {
-                playSound && playSound('click');
-                setCurrentScreen && setCurrentScreen('menu');
+                playSound?.('click');
+                setCurrentScreen?.('menu');
               }}
               className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
           >

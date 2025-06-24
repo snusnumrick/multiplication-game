@@ -22,7 +22,7 @@ export function PracticeMode() {
       console.log('setIsFoxyVisible available:', !!setIsFoxyVisible);
 
       try {
-        showFoxyMessage('foxyIntroPracticeMode');
+        showFoxyMessage?.('foxyIntroPracticeMode');
         // Optionally ensure Foxy is visible
         // setIsFoxyVisible(true);
       } catch (error) {
@@ -38,7 +38,7 @@ export function PracticeMode() {
     if (typeof window !== 'undefined' && setIsFoxyVisible) {
       console.log('PracticeMode: Cleaning up Foxy');
       try {
-        setIsFoxyVisible(false);
+        setIsFoxyVisible?.(false);
       } catch (error) {
         console.error('Error cleaning up Foxy:', error);
       }
@@ -64,22 +64,22 @@ export function PracticeMode() {
 
     if (isRight) {
       setCorrectAnswers(prev => prev + 1);
-      playSound && playSound('correct');
-      addStars && addStars(1);
-      setFoxyAnimationState && setFoxyAnimationState('happy');
+      playSound?.('correct');
+      addStars?.(1);
+      setFoxyAnimationState?.('happy');
 
       // Generate new problem after short delay
       setTimeout(() => {
         generateProblem(currentProblem.a);
       }, 1500);
     } else {
-      playSound && playSound('incorrect');
+      playSound?.('incorrect');
     }
   }, [currentProblem, userAnswer, playSound, addStars, setFoxyAnimationState, generateProblem]);
 
   const showHintHandler = useCallback(() => {
     setShowHint(true);
-    playSound && playSound('click');
+    playSound?.('click');
   }, [playSound]);
 
   const restartProblem = useCallback(() => {
@@ -150,7 +150,7 @@ export function PracticeMode() {
                   key={table}
                   onClick={() => {
                     setSelectedTable(table);
-                    playSound && playSound('click');
+                    playSound?.('click');
                   }}
                   className="bg-gradient-to-br from-blue-400 to-blue-600 text-white text-2xl font-bold py-8 px-4 rounded-2xl shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95"
               >
@@ -269,8 +269,8 @@ export function PracticeMode() {
         <div className="flex items-center justify-between mb-8 pt-4">
           <button
               onClick={() => {
-                playSound && playSound('click');
-                setCurrentScreen && setCurrentScreen('menu');
+                playSound?.('click');
+                setCurrentScreen?.('menu');
               }}
               className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
           >

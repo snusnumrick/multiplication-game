@@ -32,11 +32,11 @@ export function QuizMode() {
 
       try {
         if (gameState === 'setup') {
-          showFoxyMessage('foxyIntroQuizMode');
+          showFoxyMessage?.('foxyIntroQuizMode');
         } else if (gameState === 'finished') {
-          // Example: showFoxyMessage('foxyCongratsQuiz', 5); // Show for 5 seconds
+          // Example: showFoxyMessage?.('foxyCongratsQuiz', 5); // Show for 5 seconds
           // For now, let's keep it visible until navigating away or restarting
-          // showFoxyMessage('foxyCongratsQuiz'); // This would need a new translation key
+          // showFoxyMessage?.('foxyCongratsQuiz'); // This would need a new translation key
         }
       } catch (error) {
         console.error('Error initializing Foxy in QuizMode:', error);
@@ -51,7 +51,7 @@ export function QuizMode() {
     if (typeof window !== 'undefined' && setIsFoxyVisible) {
       console.log('QuizMode: Cleaning up Foxy');
       try {
-        setIsFoxyVisible(false);
+        setIsFoxyVisible?.(false);
       } catch (error) {
         console.error('Error cleaning up Foxy:', error);
       }
@@ -100,7 +100,7 @@ export function QuizMode() {
     setSelectedAnswer(null);
     setShowResult(false);
     setAnswered(false);
-    playSound && playSound('click');
+    playSound?.('click');
   }, [generateQuestions, playSound]);
 
   const selectAnswer = useCallback((answer: number) => {
@@ -114,11 +114,11 @@ export function QuizMode() {
 
     if (isCorrect) {
       setScore(prev => prev + 10);
-      playSound && playSound('correct');
-      addStars && addStars(1);
-      setFoxyAnimationState && setFoxyAnimationState('happy');
+      playSound?.('correct');
+      addStars?.(1);
+      setFoxyAnimationState?.('happy');
     } else {
-      playSound && playSound('incorrect');
+      playSound?.('incorrect');
     }
 
     setShowResult(true);
@@ -134,7 +134,7 @@ export function QuizMode() {
         finishQuiz();
       }
     }, 2000);
-  }, [answered, questions, currentQuestionIndex, playSound, addStars, setFoxyAnimationState]);
+  }, [answered, questions, currentQuestionIndex, playSound, addStars, setFoxyAnimationState, finishQuiz]);
 
   const finishQuiz = useCallback(() => {
     setGameState('finished');
@@ -145,10 +145,10 @@ export function QuizMode() {
     // Bonus stars for completion
     const bonusStars = Math.floor(score / 50);
     if (bonusStars > 0 && addStars) {
-      addStars(bonusStars);
+      addStars?.(bonusStars);
     }
     // Determine if happy animation should play based on score/stars in renderResults
-    playSound && playSound('success');
+    playSound?.('success');
   }, [score, addStars, playSound]);
 
   const resetQuiz = useCallback(() => {
@@ -175,6 +175,19 @@ export function QuizMode() {
     // Add a small delay to ensure the context is fully initialized
     const timeoutId = setTimeout(() => {
       initializeFoxy();
+      // Logic for 'finished' state Foxy animation
+      if (gameState === 'finished') {
+        const questionCount = questions.length > 0 ? questions.length : 10; // Default for safety
+        const percentage = Math.round((score / (questionCount * 10)) * 100);
+        let localStarRating = 0;
+        if (percentage >= 90) localStarRating = 3;
+        else if (percentage >= 70) localStarRating = 2;
+        else if (percentage >= 50) localStarRating = 1;
+
+        if (localStarRating >= 2) {
+          setFoxyAnimationState?.('happy');
+        }
+      }
     }, 100);
 
     return () => {
@@ -183,7 +196,7 @@ export function QuizMode() {
         cleanupFoxy();
       }
     };
-  }, [isMounted, gameState, initializeFoxy, cleanupFoxy]);
+  }, [isMounted, gameState, initializeFoxy, cleanupFoxy, questions, score, setFoxyAnimationState]);
 
   // Timer logic
   useEffect(() => {
@@ -358,11 +371,8 @@ export function QuizMode() {
       starRating = 0;
     }
 
-    useEffect(() => {
-      if (gameState === 'finished' && starRating >= 2 && setFoxyAnimationState) {
-        setFoxyAnimationState('happy');
-      }
-    }, [gameState, starRating, setFoxyAnimationState]);
+    // The useEffect for Foxy animation when gameState is 'finished' has been moved
+    // to the main useEffect hook that depends on gameState.
 
     return (
         <div className="text-center max-w-2xl mx-auto">
@@ -412,8 +422,8 @@ export function QuizMode() {
         <div className="flex items-center justify-between mb-8 pt-4">
           <button
               onClick={() => {
-                playSound && playSound('click');
-                setCurrentScreen && setCurrentScreen('menu');
+                playSound?.('click');
+                setCurrentScreen?.('menu');
               }}
               className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
           >

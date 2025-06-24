@@ -29,9 +29,9 @@ export function MemoryGame() {
 
       try {
         if (!selectedDifficulty) { // Difficulty selection screen
-          showFoxyMessage('foxyIntroMemoryGame');
+          showFoxyMessage?.('foxyIntroMemoryGame');
         } else if (gameComplete) {
-          showFoxyMessage('foxyMemoryGameComplete');
+          showFoxyMessage?.('foxyMemoryGameComplete');
         }
       } catch (error) {
         console.error('Error initializing Foxy in MemoryGame:', error);
@@ -46,7 +46,7 @@ export function MemoryGame() {
     if (typeof window !== 'undefined' && setIsFoxyVisible) {
       console.log('MemoryGame: Cleaning up Foxy');
       try {
-        setIsFoxyVisible(false);
+        setIsFoxyVisible?.(false);
       } catch (error) {
         console.error('Error cleaning up Foxy:', error);
       }
@@ -113,7 +113,7 @@ export function MemoryGame() {
     setMoves(0);
     setMatches(0);
     setGameComplete(false);
-    playSound && playSound('click');
+    playSound?.('click');
   }, [generateCards, playSound]);
 
   const resetGame = useCallback(() => {
@@ -134,7 +134,7 @@ export function MemoryGame() {
         card.id === cardId ? { ...card, isFlipped: true } : card
     ));
 
-    playSound && playSound('click');
+    playSound?.('click');
 
     if (newFlippedCards.length === 2) {
       setMoves(prev => prev + 1);
@@ -153,23 +153,23 @@ export function MemoryGame() {
 
           const currentMatches = matches + 1;
           setMatches(currentMatches);
-          addStars && addStars(2);
-          playSound && playSound('correct');
-          setFoxyAnimationState && setFoxyAnimationState('happy');
-          showFoxyMessage && showFoxyMessage('foxyMemoryMatchFound', 3);
+          addStars?.(2);
+          playSound?.('correct');
+          setFoxyAnimationState?.('happy');
+          showFoxyMessage?.('foxyMemoryMatchFound', 3);
           setFlippedCards([]);
 
           // Check if game is complete
           const totalPairs = cards.length / 2;
           if (currentMatches === totalPairs) {
             setGameComplete(true);
-            addStars && addStars(10); // Bonus for completion
-            playSound && playSound('success');
-            setFoxyAnimationState && setFoxyAnimationState('happy'); // Happy animation on game completion
+            addStars?.(10); // Bonus for completion
+            playSound?.('success');
+            setFoxyAnimationState?.('happy'); // Happy animation on game completion
             // Game complete message is handled by useEffect [gameComplete]
           } else if (totalPairs > 2 && totalPairs - currentMatches === 2) {
             // Show encouragement when 2 pairs are left (if more than 2 pairs total)
-            showFoxyMessage && showFoxyMessage('foxyMemoryFewPairsLeft', 4);
+            showFoxyMessage?.('foxyMemoryFewPairsLeft', 4);
           }
         }, 1000);
       } else {
@@ -181,8 +181,8 @@ export function MemoryGame() {
                   : card
           ));
           setFlippedCards([]);
-          playSound && playSound('incorrect');
-          showFoxyMessage && showFoxyMessage('foxyMemoryNoMatch', 4);
+          playSound?.('incorrect');
+          showFoxyMessage?.('foxyMemoryNoMatch', 4);
         }, 1500);
       }
     }
@@ -358,8 +358,8 @@ export function MemoryGame() {
         <div className="flex items-center justify-between mb-8 pt-4">
           <button
               onClick={() => {
-                playSound && playSound('click');
-                setCurrentScreen && setCurrentScreen('menu');
+                playSound?.('click');
+                setCurrentScreen?.('menu');
               }}
               className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
           >

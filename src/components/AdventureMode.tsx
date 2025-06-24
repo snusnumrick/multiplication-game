@@ -263,7 +263,7 @@ export function AdventureMode() {
     setCorrectAnswers(0);
     setShowResult(false);
     setStarsEarned(0);
-    playSound && playSound('click');
+    playSound?.('click');
   }, [generateQuestions, playSound]);
 
   const checkAnswer = () => {
@@ -275,12 +275,12 @@ export function AdventureMode() {
     if (isCorrect) {
       setCorrectAnswers(prev => prev + 1);
       setScore(prev => prev + 10);
-      playSound('correct');
-      setFoxyAnimationState('happy');
+      playSound?.('correct');
+      setFoxyAnimationState?.('happy');
       // Potentially show a "correct answer" Foxy message here if desired in the future
     } else {
-      playSound('incorrect');
-      showFoxyMessage('foxyAdventureIncorrect', 5); // Show incorrect answer message for 5 seconds
+      playSound?.('incorrect');
+      showFoxyMessage?.('foxyAdventureIncorrect', 5); // Show incorrect answer message for 5 seconds
     }
 
     setShowResult(true);
@@ -315,17 +315,17 @@ export function AdventureMode() {
 
     // Show Foxy message based on level completion result
     if (earnedStars === 3) {
-      showFoxyMessage('foxyAdventurePass3Stars');
+      showFoxyMessage?.('foxyAdventurePass3Stars');
     } else if (earnedStars === 2) {
-      showFoxyMessage('foxyAdventurePass2Stars');
+      showFoxyMessage?.('foxyAdventurePass2Stars');
     } else if (earnedStars === 1) {
-      showFoxyMessage('foxyAdventurePass1Star');
+      showFoxyMessage?.('foxyAdventurePass1Star');
     } else {
-      showFoxyMessage('foxyAdventureFail');
+      showFoxyMessage?.('foxyAdventureFail');
     }
 
     if (earnedStars >= 2) { // Trigger happy animation for 2 or 3 stars
-      setFoxyAnimationState('happy');
+      setFoxyAnimationState?.('happy');
     }
 
     if (earnedStars > 0) {
@@ -338,11 +338,11 @@ export function AdventureMode() {
         }
       };
 
-      updateProgress({ adventureLevels: newAdventureLevels });
-      addStars(earnedStars * 5); // 5 stars per level star
-      playSound('success');
+      updateProgress?.({ adventureLevels: newAdventureLevels });
+      addStars?.(earnedStars * 5); // 5 stars per level star
+      playSound?.('success');
     }
-  }, [selectedLevel, correctAnswers, questions.length, timeLeft, score, progress.adventureLevels, updateProgress, addStars, playSound]);
+  }, [selectedLevel, correctAnswers, questions.length, timeLeft, score, progress.adventureLevels, updateProgress, addStars, playSound, showFoxyMessage, setFoxyAnimationState]);
 
   // Timer logic
   useEffect(() => {
@@ -351,7 +351,7 @@ export function AdventureMode() {
         setTimeLeft(prev => prev - 1);
       }, 1000);
       if (timeLeft === 11) { // Show warning when 10 seconds are about to be displayed
-        showFoxyMessage('foxyAdventureTimeLow', 5);
+        showFoxyMessage?.('foxyAdventureTimeLow', 5);
       }
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && gameState === 'playing') {
@@ -361,14 +361,14 @@ export function AdventureMode() {
 
   useEffect(() => {
     if (gameState === 'levelSelect') {
-      showFoxyMessage('foxyIntroAdventureMode');
+      showFoxyMessage?.('foxyIntroAdventureMode');
     }
     // Messages for 'completed' state are now handled in completeLevel
     // Messages for 'playing' state (incorrect, time low) are handled in checkAnswer and timer effect
 
     // Hide Foxy when navigating away from this component entirely
     return () => {
-      setIsFoxyVisible(false);
+      setIsFoxyVisible?.(false);
     };
   }, [gameState, showFoxyMessage, setIsFoxyVisible]);
 
@@ -610,8 +610,8 @@ export function AdventureMode() {
       <div className="flex items-center justify-between mb-8 pt-4">
         <button
           onClick={() => {
-            playSound('click');
-            setCurrentScreen('menu');
+            playSound?.('click');
+            setCurrentScreen?.('menu');
           }}
           className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
         >

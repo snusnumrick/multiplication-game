@@ -103,23 +103,23 @@ export function FantasyMath() {
 
       try {
         if (!selectedScenario) { // Scenario selection screen
-          showFoxyMessage('foxyIntroFantasyMath');
+          showFoxyMessage?.('foxyIntroFantasyMath');
         } else {
           switch (gameStep) {
             case 'problem':
-              showFoxyMessage('foxyFantasyProblem', 5);
+              showFoxyMessage?.('foxyFantasyProblem', 5);
               break;
             case 'expression':
-              showFoxyMessage('foxyFantasyExpression', 5);
+              showFoxyMessage?.('foxyFantasyExpression', 5);
               break;
             case 'answer':
-              showFoxyMessage('foxyFantasyAnswer', 5);
+              showFoxyMessage?.('foxyFantasyAnswer', 5);
               break;
             case 'result':
               if (isCorrect) {
-                showFoxyMessage('foxyFantasyCorrect');
+                showFoxyMessage?.('foxyFantasyCorrect');
               } else {
-                showFoxyMessage('foxyFantasyIncorrect');
+                showFoxyMessage?.('foxyFantasyIncorrect');
               }
               break;
           }
@@ -138,7 +138,7 @@ export function FantasyMath() {
       console.log('FantasyMath: Cleaning up Foxy');
       try {
         if (gameStep !== 'result') { // Keep message if on result screen
-          setIsFoxyVisible(false);
+          setIsFoxyVisible?.(false);
         }
       } catch (error) {
         console.error('Error cleaning up Foxy:', error);
@@ -152,13 +152,13 @@ export function FantasyMath() {
     setSelectedExpression('');
     setUserAnswer('');
     setIsCorrect(false);
-    playSound && playSound('click');
+    playSound?.('click');
   }, [playSound]);
 
   const selectExpression = useCallback((expression: string) => {
     setSelectedExpression(expression);
     setGameStep('answer');
-    playSound && playSound('click');
+    playSound?.('click');
   }, [playSound]);
 
   const submitAnswer = useCallback(() => {
@@ -170,11 +170,11 @@ export function FantasyMath() {
     setGameStep('result');
 
     if (bothCorrect) {
-      playSound && playSound('correct');
-      addStars && addStars(3); // Award 3 stars for getting both parts right
-      setFoxyAnimationState && setFoxyAnimationState('happy');
+      playSound?.('correct');
+      addStars?.(3); // Award 3 stars for getting both parts right
+      setFoxyAnimationState?.('happy');
     } else {
-      playSound && playSound('incorrect');
+      playSound?.('incorrect');
     }
   }, [selectedExpression, selectedScenario, userAnswer, playSound, addStars, setFoxyAnimationState]);
 
@@ -237,7 +237,7 @@ export function FantasyMath() {
           <div className="flex items-center justify-between mb-8 pt-4">
             <button
                 onClick={() => {
-                  playSound && playSound('click');
+                  playSound?.('click');
                   setSelectedScenario(null);
                 }}
                 className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
@@ -394,8 +394,8 @@ export function FantasyMath() {
         <div className="flex items-center justify-between mb-8 pt-4">
           <button
               onClick={() => {
-                playSound && playSound('click');
-                setCurrentScreen && setCurrentScreen('menu');
+                playSound?.('click');
+                setCurrentScreen?.('menu');
               }}
               className="bg-white/90 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-2xl shadow-lg flex items-center space-x-2 hover:bg-white transition-colors"
           >
