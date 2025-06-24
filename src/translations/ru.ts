@@ -439,4 +439,10 @@ export const russianTranslations: Translation = {
     patternLabel: "🔍 Шаблон:",
     memoryTrickLabel: "🧠 Запоминалка:",
     realWorldLabel: "🌍 Реальный мир:",
+
+    // Strategy Names
+    strategyVisualArray: "Визуальный массив",
+    strategyPatternRecognition: "Распознавание образов",
+    strategySkipCounting: "Счёт шагами",
+    strategyDecomposition: "Разложение",
 };

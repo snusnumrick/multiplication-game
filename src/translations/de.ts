@@ -438,4 +438,10 @@ export const germanTranslations: Translation = {
     patternLabel: "🔍 Muster:",
     memoryTrickLabel: "🧠 Eselsbrücke:",
     realWorldLabel: "🌍 Echte Welt:",
+
+    // Strategy Names
+    strategyVisualArray: "Visuelle Anordnung",
+    strategyPatternRecognition: "Mustererkennung",
+    strategySkipCounting: "In Schritten zählen",
+    strategyDecomposition: "Zerlegung",
 };
