@@ -73,20 +73,20 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
             <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 text-left max-w-2xl mx-auto border border-indigo-200 w-full overflow-y-auto max-h-[calc(100vh-200px)]">
               <div className="flex items-center mb-3">
                 {getStrategyIcon(explanation.strategy)}
-                <span className="ml-2 font-semibold text-indigo-800">
-                  {getTranslatedStrategyName(explanation.strategy)} {t.strategyLabelSuffix || 'Strategy'}
-                </span>
+                {/*<span className="ml-2 font-semibold text-indigo-800">*/}
+                {/*  {getTranslatedStrategyName(explanation.strategy)} {t.strategyLabelSuffix || 'Strategy'}*/}
+                {/*</span>*/}
               </div>
 
               <div className="space-y-4">
                 <div className="bg-white/80 rounded-lg p-3">
-                  <h4 className="font-medium text-indigo-700 mb-2">{t.keyConceptLabel || '💡 Key Concept:'}</h4>
+                  {/*<h4 className="font-medium text-indigo-700 mb-2">{t.keyConceptLabel || '💡 Key Concept:'}</h4>*/}
                   <p className="text-gray-700">{explanation.concept}</p>
                 </div>
 
                 {explanation.visual && (
                   <div className="bg-green-50 rounded-lg p-3">
-                    <h4 className="font-medium text-green-700 mb-2">{t.visualLabel || '👁️ Visual:'}</h4>
+                    {/*<h4 className="font-medium text-green-700 mb-2">{t.visualLabel || '👁️ Visual:'}</h4>*/}
                     <pre className="text-green-800 font-mono text-sm whitespace-pre-wrap">
                       {explanation.visual}
                     </pre>
@@ -94,7 +94,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                 )}
 
                 <div className="bg-blue-50 rounded-lg p-3">
-                  <h4 className="font-medium text-blue-700 mb-2">{t.stepsLabel || '📝 Steps:'}</h4>
+                  {/*<h4 className="font-medium text-blue-700 mb-2">{t.stepsLabel || '📝 Steps:'}</h4>*/}
                   <ol className="space-y-1">
                     {explanation.steps.map((step, index) => (
                       <li key={index} className="text-blue-800">
