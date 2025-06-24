@@ -1,0 +1,400 @@
+import { Translation, ScenarioText } from '../translations';
+
+export const germanTranslations: Translation = {
+    // Main Menu
+    title: "Evas Einmaleins Spiel",
+    subtitle: "Lerne mit Foxy das Einmaleins!",
+    practiceMode: "Üben",
+    quizMode: "Quiz",
+    adventureMode: "Abenteuer",
+    memoryGame: "Memory",
+    settings: "Einstellungen",
+    progress: "Fortschritt",
+    
+    // Practice Mode
+    practiceTitle: "Einmaleins Üben",
+    selectTable: "Wähle eine Reihe:",
+    showHints: "Tipps anzeigen",
+    backToMenu: "Zurück zum Menü",
+    smartStrategiesTitle: "Schlaue Strategien:",
+    visualStrategyLabel: "Sehen: Punkte zählen",
+    patternStrategyLabel: "Muster: Spezielle Tricks",
+    countingStrategyLabel: "Schritte: In Schritten zählen",
+    breakdownStrategyLabel: "Aufteilen: Große Zahlen teilen",
+    practiceAreasTitle: "Übungsbereiche:",
+    practiceAreasMessage: "Du übst gerade mit der {tables} Reihe. Das wird bestimmt super - die schlauen Tipps helfen dir dabei! 💪",
+    keepTryingMessage: "Gib nicht auf! Probiere den schlauen Tipp für einen anderen Lösungsweg.",
+    newStrategyLabel: "Neue Strategie",
+    consecutiveCorrectMessage: "{count} hintereinander! Du bist super!",
+    
+    // Quiz Mode
+    quizTitle: "Einmaleins Quiz",
+    score: "Punkte",
+    timeLeft: "Zeit übrig",
+    question: "Frage",
+    correct: "Super, Eva!",
+    incorrect: "Fast richtig, Eva!",
+    tryAgain: "Du schaffst das, Eva! Foxy glaubt an dich!",
+    wellDone: "Toll gemacht, Eva!",
+    excellent: "Ausgezeichnet, Eva! Foxy ist stolz auf dich!",
+    fantastic: "Fantastisch, Eva! Du bist ein Mathe-Star!",
+    yourResult: "Ihr Ergebnis:",
+
+    // Adventure Mode
+    adventureTitle: "Mathe Abenteuer",
+    level: "Level",
+    stars: "Sterne",
+    complete: "Abgeschlossen",
+    nextLevel: "Nächstes Level",
+    
+    // Memory Game
+    memoryTitle: "Einmaleins Memory",
+    findPairs: "Finde die Paare",
+    moves: "Züge",
+    
+    // Settings
+    settingsTitle: "Einstellungen",
+    language: "Sprache",
+    difficulty: "Schwierigkeit",
+    sound: "Ton",
+    on: "An",
+    off: "Aus",
+    easy: "Leicht",
+    medium: "Mittel",
+    hard: "Schwer",
+    
+    // Progress
+    progressTitle: "Evas Fortschritt",
+    tablesLearned: "Evas gelernte Reihen",
+    totalStars: "Evas Sterne",
+    achievements: "Evas Erfolge",
+    
+    // Common
+    welcomeMessage: "Willkommen zurück, Eva! Foxy freut sich, mit dir zu lernen! 🦊✨",
+    start: "Start",
+    play: "Spielen",
+    pause: "Pause",
+    continue: "Weiter",
+    restart: "Neu starten",
+    finish: "Fertig",
+    next: "Weiter",
+    previous: "Zurück",
+    check: "Prüfen",
+    hint: "Tipp",
+    answer: "Antwort",
+    
+    // Menu descriptions
+    practiceModeDesc: "Übe mit Foxy in deinem eigenen Tempo",
+    quizModeDesc: "Zeige Foxy dein Wissen!",
+    adventureModeDesc: "Gehe mit Foxy auf ein Mathe-Abenteuer!",
+    memoryGameDesc: "Hilf Foxy, die passenden Paare zu finden!",
+    
+    // Quiz specific
+    chooseDifficulty: "Wähle deine Schwierigkeit:",
+    tables1to5: "1-5 Reihen",
+    tables1to10: "1-10 Reihen",
+    tables1to12: "1-12 Reihen",
+    seconds90: "90 Sekunden",
+    seconds60: "60 Sekunden",
+    seconds45: "45 Sekunden",
+    questions10: "10 Fragen",
+    questionOf: "Frage",
+    points: "Punkte",
+    correctAnswer: "Richtige Antwort",
+    quizFinished: "Quiz beendet!",
+    
+    // Settings specific
+    soundEnabled: "Töne und Effekte sind aktiviert",
+    soundDisabled: "Töne und Effekte sind deaktiviert",
+    aboutGame: "Über das Spiel",
+    gameDescription: "Hallo Eva! Dieses Spiel hilft dir und Foxy dabei, das Einmaleins spielerisch zu lernen. Wähle zwischen verschiedenen Spielmodi und sammle Sterne für richtige Antworten!",
+    versionInfo: "Version 2.0 • Speziell für iPad optimiert",
+    
+    // Adventure mode specific
+    chooseAdventure: "Wähle dein Abenteuer!",
+    tables: "Reihen:",
+    questions: "Fragen",
+    time: "Zeit",
+    required: "benötigt",
+    completeLevel: "Schließe Level",
+    
+    // Level titles and descriptions
+    level1Title: "Kleine Schritte",
+    level1Desc: "Lerne die 1er und 2er Reihe",
+    level2Title: "Dreifacher Spaß",
+    level2Desc: "Meistere die 3er Reihe",
+    level3Title: "Viereckige Zahlen",
+    level3Desc: "Entdecke die 4er Reihe",
+    level4Title: "Fünf Sterne",
+    level4Desc: "Die 5er Reihe wartet auf dich!",
+    level5Title: "Sechser Zauber",
+    level5Desc: "Bezaubere mit der 6er Reihe",
+    level6Title: "Glückszahl Sieben",
+    level6Desc: "Die 7er Reihe bringt Glück!",
+    level7Title: "Acht Achterbahn",
+    level7Desc: "Fahre mit der 8er Reihe Achterbahn",
+    level8Title: "Neun Leben",
+    level8Desc: "Die 9er Reihe hat neun Leben",
+    level9Title: "Perfekte Zehn",
+    level9Desc: "Erreiche die Perfektion mit der 10er Reihe",
+    level10Title: "Großer Champion",
+    level10Desc: "Meistere alle Reihen zusammen!",
+    
+    // Memory game specific
+    pairs: "Paare",
+    memoryComplete: "Du hast alle Paare in {moves} Zügen gefunden!",
+    reward: "Belohnung:",
+    playAgain: "Nochmal",
+    
+    // Real-world math
+    realWorldMath: "Mathe im Alltag",
+    fantasyMath: "Zauberhafte Mathematik",
+    realWorldDesc: "Entdecke Foxy, wo Einmaleins im echten Leben vorkommt!",
+    fantasyDesc: "Tauche mit Foxy in magische Welten ein und lerne mit Zauberwesen!",
+    
+    // Progress/Achievement specific
+    tablesProgress: "Einmaleins-Reihen Fortschritt",
+    mathChampion: "Du bist ein echter Mathe-Champion! 🏆",
+    allTablesMastered: "Du hast alle Einmaleins-Reihen gemeistert!",
+    tablesToMaster: "Noch {count} Reihen bis zum Einmaleins-Meister!",
+    fantasticsProgress: "Fantastisch! Du machst tolle Fortschritte! ⭐",
+    greatKeepGoing: "Großartig! Weiter so! 🌟",
+    requiredLabel: "Benötigt:",
+    
+    // Achievement titles
+    firstStarTitle: "Erster Stern",
+    starCollectorTitle: "Sternensammler",
+    firstTableTitle: "Erste Reihe gemeistert",
+    tableMasterTitle: "Einmaleins-Meister",
+    hardWorkerTitle: "Fleißbienchen",
+    mathChampionTitle: "Mathe-Champion",
+    
+    // Achievement descriptions
+    firstStarDesc: "Sammle deinen ersten Stern",
+    starCollectorDesc: "Sammle 50 Sterne",
+    firstTableDesc: "Lerne deine erste Einmaleins-Reihe",
+    tableMasterDesc: "Lerne alle 10 Einmaleins-Reihen",
+    hardWorkerDesc: "Sammle 100 Sterne",
+    mathChampionDesc: "Sammle 200 Sterne",
+
+    // AdventureMode specific
+    levelCompleted: "Level geschafft!",
+    levelNotCompleted: "Noch nicht geschafft",
+    correctAnswersLabel: "Richtige Antworten:",
+    accuracyLabel: "Genauigkeit:",
+    starsEarnedLabel: "Sterne erhalten:",
+    repeatLevel: "Wiederholen",
+    selectLevel: "Level wählen",
+
+    // FantasyMath specific
+    magicProblemTitle: "Magische Aufgabe:",
+    startMagicButton: "Magie beginnen",
+    magicExpressionQuestion: "Welcher Zauber löst diese Aufgabe?",
+    magicAnswerQuestion: "Welches magische Ergebnis?",
+    checkMagicButton: "Magie prüfen",
+    magicCorrectResult: "Fantastisch, Eva! Die Magie hat geklappt!",
+    magicIncorrectResult: "Versuche deine Magie nochmal!",
+    correctSpellLabel: "Richtiger Zauber:",
+    magicStarMessage: "Foxy bewundert deine Magie!",
+    moreMagicButton: "Mehr Magie",
+    otherAdventuresButtonFantasy: "Andere Abenteuer",
+    magicCalculationLabel: "Magische Rechnung:",
+
+    // MemoryGame specific
+    resetButtonLabel: "Neu",
+    newDifficultyButton: "Neue Schwierigkeit",
+    changeDifficultyButton: "Schwierigkeit ändern",
+
+    // PracticeMode specific
+    tableSeriesLabel: "{tableNumber}er Reihe",
+    correctAnswersSuffix: "richtig",
+    percentageCorrectSuffix: "% richtig",
+    thinkHintPrefix: "Denke an:",
+    oneStarEarned: "+1 Stern erhalten!",
+    correctAnswerIs: "Die richtige Antwort ist",
+    newProblemButton: "Neue Aufgabe",
+    selectOtherTableButton: "Andere Reihe wählen",
+
+    // Progress specific
+    achievedStatus: "Erreicht!",
+
+    // RealWorldMath specific
+    problemLabel: "Aufgabe:",
+    startSolutionButton: "Lösung beginnen",
+    expressionQuestion: "Welcher Ausdruck löst diese Aufgabe?",
+    answerQuestion: "Wie lautet die Antwort?",
+    evaFantasticResult: "Fantastisch, Eva!",
+    tryAgainEva: "Versuche es nochmal!",
+    correctSolutionLabel: "Richtige Lösung:",
+    foxyProudMessage: "Foxy ist stolz auf dich!",
+    otherProblemsButton: "Andere Aufgaben",
+    calculationLabel: "Rechnung:",
+
+    // Settings specific
+    germanLanguage: "Deutsch",
+    russianLanguage: "Русский",
+
+    // Scenario Data (RealWorldMath)
+    realWorldScenarioData: [
+      {
+        title: "Einkaufen im Laden",
+        description: "Eva kauft Geschenke für Freunde",
+        problem: "Eva möchte 4 Packungen Aufkleber kaufen. Jede Packung hat 6 Aufkleber. Wie viele Aufkleber wird sie insgesamt haben?",
+      },
+      {
+        title: "Bauen mit Blöcken",
+        description: "Eva baut ein Schloss aus Bauklötzen",
+        problem: "Eva baut ein Schloss. Jede Etage hat 7 Blöcke und es gibt 3 Etagen. Wie viele Blöcke braucht sie für das ganze Schloss?",
+      },
+      {
+        title: "Busfahrt zum Zoo",
+        description: "Ausflug in den Zoo",
+        problem: "Der Bus hat 8 Sitzreihen. In jeder Reihe können 4 Personen sitzen. Wie viele Menschen passen in den Bus?",
+      },
+      {
+        title: "Pizza für die Party",
+        description: "Eva bestellt Pizza für ihren Geburtstag",
+        problem: "Eva hat 3 Pizzen bestellt. Jede Pizza wurde in 8 Stücke geschnitten. Wie viele Pizzastücke gibt es insgesamt?",
+      },
+      {
+        title: "Brettspiel",
+        description: "Spiel mit Foxy und Freunden",
+        problem: "Eva spielt ein Brettspiel. Jeder der 5 Spieler hat 6 Karten. Wie viele Karten sind insgesamt im Spiel?",
+      },
+      {
+        title: "Blumengarten",
+        description: "Eva pflanzt Blumen im Garten",
+        problem: "Eva hat Blumen in 4 Reihen gepflanzt. In jeder Reihe sind 9 Blumen. Wie viele Blumen hat Eva insgesamt gepflanzt?",
+      },
+    ],
+
+    // Scenario Data (FantasyMath)
+    fantasyScenarioData: [
+      {
+        title: "Drachenschätze",
+        description: "Eva hilft einem freundlichen Drachen",
+        problem: "Drache Fira bewacht 3 Schatzhöhlen. In jeder Höhle sind 7 Goldmünzen. Wie viele Goldmünzen hat der Drache insgesamt?",
+      },
+      {
+        title: "Einhorn im Wald",
+        description: "Eva trifft ein magisches Einhorn",
+        problem: "Einhorn Starlight hat 4 Regenbogen erschaffen. Jeder Regenbogen hat 6 bunte Streifen. Wie viele Farbstreifen hat das Einhorn insgesamt gemacht?",
+      },
+      {
+        title: "Meerjungfrau Schloss",
+        description: "Eva taucht zu einer Meerjungfrau ins Unterwasserreich",
+        problem: "Meerjungfrau Marina schmückt ihr Schloss. Sie hat Perlen in 5 Reihen mit je 8 Perlen gelegt. Wie viele Perlen sind das insgesamt?",
+      },
+      {
+        title: "Blütenfee",
+        description: "Eva hilft der Blumenfee",
+        problem: "Fee Bloom pflanzt Zauberblumen. Sie hat 6 Beete angelegt, auf jedem Beet sind 9 Blumen. Wie viele Zauberblumen hat die Fee insgesamt gepflanzt?",
+      },
+      {
+        title: "Phönix und Flammen",
+        description: "Eva beobachtet den Feuervogel",
+        problem: "Phönix Flame erschafft Feuerfedern. Er hat 7 Gruppen mit je 5 Federn pro Gruppe gemacht. Wie viele Feuerfedern sind das insgesamt?",
+      },
+      {
+        title: "Zauberer Foxy",
+        description: "Foxy lernt Magie zusammen mit Eva",
+        problem: "Zauberer Foxy braut Zaubertränke. Er hat 8 Kessel, in jedem Kessel sind 4 magische Zutaten. Wie viele Zutaten sind das insgesamt?",
+      },
+    ],
+
+    // MemoryGame specific
+    easyDetails: "6 Paare • 1-5 Reihen",
+    mediumDetails: "8 Paare • 1-8 Reihen",
+    hardDetails: "10 Paare • 1-10 Reihen",
+    puzzleEmoji: "🧩",
+
+    // PracticeMode specific
+    tableButtonSuffix: "x",
+    mathSymbolsAlt: "Mathe Symbole",
+
+
+    // Progress specific
+    tableProgressSuffix: "x",
+
+    // AdventureMode specific
+    timeSecondsSuffix: "s",
+    accuracyPercentSuffix: "%",
+    levelDefaultTitle: "Level {id}",
+    levelDefaultDesc: "Beschreibung für Level {id}",
+    completeLevelRequirement: "Schließe Level {id} ab",
+
+    // Settings specific
+    difficultyEasyPrefix: "🌟",
+    difficultyMediumPrefix: "⭐⭐",
+    difficultyHardPrefix: "⭐⭐⭐",
+
+    // Foxy specific
+    foxyMascotAltText: "Foxy das Maskottchen",
+    foxyWelcomeMainMenu: "Hallo Eva! Ich bin Foxy! Lass uns zusammen das Einmaleins entdecken. Wähle ein Spiel, um zu starten!",
+    foxyVisibilityTitle: "Foxy Sichtbarkeit",
+    foxyShow: "Anzeigen",
+    foxyHide: "Verstecken",
+    foxyVisibilityDescriptionShow: "Foxy ist sichtbar und hilft dir.",
+    foxyVisibilityDescriptionHide: "Foxy ist versteckt.",
+
+    // Foxy contextual messages
+    foxyIntroPracticeMode: "Hallo Eva! Im Übungsmodus kannst du ganz in Ruhe die Einmaleinsreihen trainieren. Foxy ist da, um dir zu helfen!",
+    foxyIntroQuizMode: "Zeit für ein Quiz, Eva! Zeig Foxy, was du gelernt hast. Viel Erfolg!",
+    foxyIntroAdventureMode: "Auf ins Abenteuer, Eva! Foxy begleitet dich auf dieser spannenden Reise durch die Welt der Zahlen.",
+    foxyIntroMemoryGame: "Finde die passenden Karten, Eva! Foxy drückt dir die Daumen für dieses knifflige Memory.",
+    foxyIntroRealWorldMath: "Schau mal, Eva! Hier zeigt dir Foxy, wo Mathe im Alltag überall steckt. Spannend, oder?",
+    foxyIntroFantasyMath: "Willkommen in der Zauberwelt, Eva! Foxy und magische Wesen warten darauf, mit dir Mathe zu entdecken.",
+
+    foxyEncouragement1: "Du machst das super, Eva! Foxy ist stolz auf dich. Weiter so!",
+    foxyEncouragement2: "Foxy weiß, dass du das schaffst! Gib nicht auf!",
+    foxyEncouragement3: "Genau so! Übung macht den Meister, Eva!",
+
+    foxyCongrats1: "Wow, Eva! Foxy ist total beeindruckt von dir!",
+    foxyCongrats2: "Spitze! Du bist ein richtiges Mathe-Genie, Eva!",
+    foxyCongrats3: "Juhu, geschafft! Foxy feiert mit dir diesen Erfolg!",
+    foxyCongratsAdventureLevel: "Super, Eva! Level geschafft! Foxy ist stolz auf deine Abenteuerlust!",
+    foxyCongratsQuiz: "Klasse Leistung im Quiz, Eva! Foxy wusste, dass du es rockst!",
+    foxyCongratsQuizHigh: "Unglaubliche Punktzahl, Eva! Foxy jubelt über deine Mathe-Künste!",
+    foxyCongratsQuizMid: "Tolle Arbeit, Eva! Foxy sieht einen Mathe-Star heranwachsen!",
+    foxyCongratsQuizLow: "Gut gemacht, Eva! Übe weiter, und Foxy weiß, du wirst noch besser!",
+
+    foxyAdventureCorrectAnswer: "Richtig so, Abenteurerin Eva! Foxy feuert dich an!",
+    foxyQuizCorrectAnswer: "Genau richtig, Quiz-Champion Eva! Foxy ist begeistert!",
+
+    // Adventure Mode specific Foxy messages
+    foxyAdventureIncorrect: "Das war nicht ganz richtig. Schau genau hin und versuch es nochmal!",
+    foxyAdventureTimeLow: "Vorsicht, die Zeit wird knapp!",
+    foxyAdventurePass1Star: "Super, Level geschafft und 1 Stern für dich!",
+    foxyAdventurePass2Stars: "Ausgezeichnet! Level gemeistert und 2 Sterne verdient!",
+    foxyAdventurePass3Stars: "Wow! Fantastisch! 3 Sterne für dich in diesem Level!",
+    foxyAdventureFail: "Schade, diesmal nicht bestanden. Gib nicht auf, versuch es nochmal!",
+
+    // Memory Game specific Foxy messages
+    foxyMemoryMatchFound: "Super Fund, Eva! Das ist ein Paar!",
+    foxyMemoryNoMatch: "Nicht ganz ein Paar. Such weiter, Foxy weiß, du findest sie!",
+    foxyMemoryFewPairsLeft: "Fast geschafft, Eva! Nur noch ein paar Paare!",
+    foxyMemoryGameComplete: "Juhu! Du hast alle Paare gefunden, Eva! Foxy ist mega stolz!",
+
+    // RealWorldMath specific Foxy messages
+    foxyRealWorldProblem: "Hier ist eine Alltagsaufgabe, Eva! Überlege, wie Multiplizieren helfen kann.",
+    foxyRealWorldExpression: "Welche Rechnung passt zur Geschichte, Eva? Foxy ist gespannt!",
+    foxyRealWorldAnswer: "Super! Und was ist die Lösung? Foxy weiß, du kannst das ausrechnen!",
+    foxyRealWorldCorrect: "Genau! Das hast du wie ein Profi gelöst, Eva! Foxy ist super beeindruckt!",
+    foxyRealWorldIncorrect: "Hmm, das stimmt nicht ganz. Schauen wir uns die Lösung gemeinsam an und lernen daraus, Eva!",
+
+    // FantasyMath specific Foxy messages
+    foxyFantasyProblem: "Eine magische Herausforderung erwartet dich, Eva! Welcher Zauber wird sie lösen?",
+    foxyFantasyExpression: "Wähle deine Zauberformel weise, Eva! Foxy glaubt an deine Kraft!",
+    foxyFantasyAnswer: "Der Zauber ist fast fertig! Was ist die letzte magische Zahl, Eva?",
+    foxyFantasyCorrect: "Abrakadabra! Du hast die Magie gemeistert, Eva! Foxy ist erstaunt über deine Fähigkeiten!",
+    foxyFantasyIncorrect: "Oh je, der Zauber ist etwas verpufft. Schauen wir uns die richtige Magie an und versuchen es nochmal, Eva!",
+
+    foxyEncouragementStreak3: "Wow, 3 in Folge! Du hast einen Lauf!",
+    foxyEncouragementStreak5: "Wahnsinn, 5 richtig! Foxy ist super beeindruckt!",
+    foxyEncouragementTryAgain: "Hoppla, nicht ganz! Foxy weiß, du schaffst die nächste!",
+    foxyEncouragementQuizKeepTrying: "Guter Versuch, Eva! Foxy sagt: Nicht aufgeben, Übung macht den Meister!",
+
+    foxyTimeRunningOutQuiz: "Die Zeit wird knapp, Eva! Konzentrier dich und gib nochmal alles!",
+
+    foxyHintMessage: "Hmm, brauchst du einen kleinen Tipp von Foxy?",
+};
