@@ -373,11 +373,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   // Effect to stop Foxy and clear her state when navigating away from a screen where she was active
   useEffect(() => {
-    console.log('stop Foxy and clear her state when navigating away from a screen where she was active', currentScreen);
     const previousScreen = prevScreenRef.current;
     prevScreenRef.current = currentScreen; // Update for the next render cycle
 
     if (previousScreen && previousScreen !== currentScreen) {
+      console.log('stop Foxy', currentScreen);
       // Navigation has occurred from previousScreen to currentScreen.
       // If Foxy was visible and had a message (potentially from previousScreen),
       // clean up her state.
