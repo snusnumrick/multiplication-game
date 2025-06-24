@@ -22,7 +22,7 @@ export const germanTranslations: Translation = {
     countingStrategyLabel: "Schritte: In Schritten zählen",
     breakdownStrategyLabel: "Aufteilen: Große Zahlen teilen",
     practiceAreasTitle: "Übungsbereiche:",
-    practiceAreasMessage: "Du übst gerade mit der {tables} Reihe. Das wird bestimmt super - die schlauen Tipps helfen dir dabei! 💪",
+    practiceAreasMessage: "Du übst gerade das Einmaleins für: {tables}. Das wird bestimmt super – die schlauen Tipps helfen dir dabei!",
     keepTryingMessage: "Gib nicht auf! Probiere den schlauen Tipp für einen anderen Lösungsweg.",
     newStrategyLabel: "Neue Strategie",
     consecutiveCorrectMessage: "{count} hintereinander! Du bist super!",
