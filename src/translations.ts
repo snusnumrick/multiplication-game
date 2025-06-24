@@ -336,6 +336,47 @@ export interface Translation {
   foxyTimeRunningOutQuiz: string;
 
   foxyHintMessage: string;
+
+  // PracticeMode Smart Explanations
+  visualDotsResult?: string;
+  skipCountingStep1?: string;
+  skipCountingStep2?: string;
+  skipCountingStep3?: string;
+  decompositionStep1?: string;
+  decompositionStep2?: string;
+  decompositionStep3?: string;
+  decompositionFallback?: string;
+  ninesPatternConcept?: string;
+  ninesStep1?: string;
+  ninesStep2?: string;
+  ninesStep3?: string;
+  ninesStep4?: string;
+  ninesPattern?: string;
+  ninesMnemonic?: string;
+  elevensPatternConcept?: string;
+  elevensStep1?: string;
+  elevensStep2?: string;
+  elevensStep3?: string;
+  elevensPattern?: string;
+  elevensMnemonic?: string;
+  visualArrayConcept?: string;
+  visualStep1?: string;
+  visualStep2?: string;
+  visualStep3?: string;
+  visualRealWorld?: string;
+  skipCountingConcept?: string;
+  skipCountingPattern?: string;
+  skipCountingMnemonic?: string;
+  decompositionConcept?: string;
+  decompositionPattern?: string;
+  strategyLabel?: string;
+  strategyLabelSuffix?: string;
+  keyConceptLabel?: string;
+  visualLabel?: string;
+  stepsLabel?: string;
+  patternLabel?: string;
+  memoryTrickLabel?: string;
+  realWorldLabel?: string;
 }
 
 export interface ScenarioText {
