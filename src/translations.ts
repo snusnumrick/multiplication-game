@@ -427,7 +427,7 @@ export const translations: Record<string, Translation> = {
     soundDisabled: "Töne und Effekte sind deaktiviert",
     aboutGame: "Über das Spiel",
     gameDescription: "Hallo Eva! Dieses Spiel hilft dir und Foxy dabei, das Einmaleins spielerisch zu lernen. Wähle zwischen verschiedenen Spielmodi und sammle Sterne für richtige Antworten!",
-    versionInfo: "Version 1.0 • Speziell für iPad optimiert",
+    versionInfo: "Version 2.0 • Speziell für iPad optimiert",
     
     // Adventure mode specific
     chooseAdventure: "Wähle dein Abenteuer!",
@@ -816,7 +816,7 @@ export const translations: Record<string, Translation> = {
     soundDisabled: "Звуки и эффекты выключены",
     aboutGame: "Об игре",
     gameDescription: "Привет, Ева! Эта игра поможет тебе и Фокси выучить таблицу умножения, играя. Выбирай между разными режимами игры и собирай звёзды за правильные ответы!",
-    versionInfo: "Версия 1.0 • Специально оптимизировано для iPad",
+    versionInfo: "Версия 2.0 • Специально оптимизировано для iPad",
     
     // Adventure mode specific
     chooseAdventure: "Выбери своё приключение!",
