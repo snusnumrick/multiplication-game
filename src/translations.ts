@@ -377,6 +377,12 @@ export interface Translation {
   patternLabel?: string;
   memoryTrickLabel?: string;
   realWorldLabel?: string;
+
+  // Strategy Names
+  strategyVisualArray?: string;
+  strategyPatternRecognition?: string;
+  strategySkipCounting?: string;
+  strategyDecomposition?: string;
 }
 
 export interface ScenarioText {

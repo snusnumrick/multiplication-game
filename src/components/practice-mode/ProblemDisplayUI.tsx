@@ -43,6 +43,25 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
 
   const correctAnswer = currentProblem.a * currentProblem.b;
 
+  const getTranslatedStrategyName = (strategyKey: string): string => {
+    switch (strategyKey) {
+      case 'visual_array':
+        return t.strategyVisualArray || 'Visual Array';
+      case 'pattern_recognition':
+        return t.strategyPatternRecognition || 'Pattern Recognition';
+      case 'skip_counting':
+        return t.strategySkipCounting || 'Skip Counting';
+      case 'decomposition':
+        return t.strategyDecomposition || 'Decomposition';
+      default:
+        // Fallback for any unknown strategies, convert from snake_case to Title Case
+        return strategyKey
+          .split('_')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+    }
+  };
+
   return (
     <div className="text-center max-w-4xl mx-auto">
       <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
@@ -95,8 +114,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
           <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 mb-6 text-left max-w-2xl mx-auto border border-indigo-200">
             <div className="flex items-center mb-3">
               {getStrategyIcon(explanation.strategy)}
-              <span className="ml-2 font-semibold text-indigo-800 capitalize">
-                {t.strategyLabel?.replace('{strategy}', explanation.strategy.replace('_', ' ')) || explanation.strategy.replace('_', ' ')} {t.strategyLabelSuffix || 'Strategy'}
+              <span className="ml-2 font-semibold text-indigo-800">
+                {getTranslatedStrategyName(explanation.strategy)} {t.strategyLabelSuffix || 'Strategy'}
               </span>
             </div>
 
