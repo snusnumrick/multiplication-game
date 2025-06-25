@@ -490,6 +490,12 @@ export const russianTranslations: Translation = {
     bfkf8sStep5: "Вычтем их: {sum1} - {sum2} = {result}.",
     bfkf8sPattern: "8×N = (10×N) - (2×N)",
     bfkfMnemonic: "Используй то, что знаешь, чтобы найти то, чего не знаешь!",
+    onesConcept: "Умножать на 1 очень просто!",
+    onesStep1: "Это {otherNum} × 1 (или 1 × {otherNum}).",
+    onesStep2: "Любое число, умноженное на 1, остаётся самим собой.",
+    onesStep3: "Итак, {otherNum} × 1 = {result}.",
+    onesPattern: "Любое число × 1 = это же число. Оно не меняется!",
+    onesMnemonic: "Единица как волшебное зеркало, показывает число обратно!",
     visualArrayConcept: "Представь {a} × {b} как создание {b} групп по {a} объектов",
     visualStep1: "Сделай {b} групп по {a} точек",
     visualStep2: "Посчитай все точки: {result}",
@@ -519,6 +525,7 @@ export const russianTranslations: Translation = {
     strategySquares: "Стратегия квадратов чисел",
     strategyNearDoubles: "Стратегия 'Почти двойные'",
     strategyBuildingKnownFacts: "Построение на известном",
+    strategyOnes: "Стратегия единицы",
 
   closeHintButton: "Закрыть подсказку",
 };

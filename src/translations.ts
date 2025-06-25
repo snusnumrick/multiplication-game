@@ -428,6 +428,12 @@ export interface Translation {
   bfkf8sStep5?: string;
   bfkf8sPattern?: string;
   bfkfMnemonic?: string;
+  onesConcept?: string;
+  onesStep1?: string;
+  onesStep2?: string;
+  onesStep3?: string;
+  onesPattern?: string;
+  onesMnemonic?: string;
   visualArrayConcept?: string;
   visualStep1?: string;
   visualStep2?: string;
@@ -457,6 +463,7 @@ export interface Translation {
   strategySquares?: string;
   strategyNearDoubles?: string; // Added for Near Doubles strategy name
   strategyBuildingKnownFacts?: string;
+  strategyOnes?: string;
 
   closeHintButton?: string;
 }

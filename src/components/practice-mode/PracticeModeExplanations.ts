@@ -38,12 +38,31 @@ const generateDecompositionSteps = (a: number, b: number, t: Translation): strin
 
 // Smart explanation generation
 export const generateSmartExplanation = (
-  a: number,
-  b: number,
+  initialA: number,
+  initialB: number,
   attempts: number,
   t: Translation,
   strugglingWith: number[]
 ): ExplanationContent => {
+  // Multiplying by 1 (Identity Property)
+  if (initialA === 1 || initialB === 1) {
+    const otherNum = initialA === 1 ? initialB : initialA;
+    const result = otherNum; // 1 * otherNum is otherNum
+    return {
+      strategy: 'ones',
+      concept: t.onesConcept || `Multiplying by 1 is super simple!`,
+      steps: [
+        t.onesStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is ${otherNum} × 1 (or 1 × ${otherNum}).`,
+        t.onesStep2 || `Any number multiplied by 1 is just itself.`,
+        t.onesStep3?.replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `So, ${otherNum} × 1 = ${result}.`
+      ],
+      pattern: t.onesPattern || `Any number × 1 = that number. It stays the same!`,
+      mnemonics: t.onesMnemonic || `One is like a magic mirror, it shows the number right back!`
+    };
+  }
+
+  let a = initialA;
+  let b = initialB;
   // Symmetry: Internally swap a and b if b < a to potentially simplify strategy selection.
   // This helps use strategies like "multiply by 2" if the problem is e.g. 7x2 (becomes 2x7).
   // Or ensures smaller number is first for skip counting if no other specific strategy matches.

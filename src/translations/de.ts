@@ -489,6 +489,12 @@ export const germanTranslations: Translation = {
     bfkf8sStep5: "Subtrahiere sie: {sum1} - {sum2} = {result}.",
     bfkf8sPattern: "8×N = (10×N) - (2×N)",
     bfkfMnemonic: "Nutze, was du weißt, um herauszufinden, was du nicht weißt!",
+    onesConcept: "Mit 1 multiplizieren ist super einfach!",
+    onesStep1: "Das ist {otherNum} × 1 (oder 1 × {otherNum}).",
+    onesStep2: "Jede Zahl, die mit 1 multipliziert wird, bleibt einfach sie selbst.",
+    onesStep3: "Also, {otherNum} × 1 = {result}.",
+    onesPattern: "Jede Zahl × 1 = diese Zahl. Sie bleibt gleich!",
+    onesMnemonic: "Die Eins ist wie ein Zauberspiegel, sie zeigt die Zahl direkt zurück!",
     visualArrayConcept: "Stell dir {a} × {b} vor, als würdest du {b} Gruppen von {a} Objekten bilden",
     visualStep1: "Mache {b} Gruppen von {a} Punkten",
     visualStep2: "Zähle alle Punkte: {result}",
@@ -518,6 +524,7 @@ export const germanTranslations: Translation = {
     strategySquares: "Quadratzahlen-Strategie",
     strategyNearDoubles: "Nahe-Doppelte-Strategie",
     strategyBuildingKnownFacts: "Aufbau auf Bekanntem",
+    strategyOnes: "Einser-Strategie",
 
   closeHintButton: "Tipp schließen",
 };
