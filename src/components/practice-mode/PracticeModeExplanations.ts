@@ -76,6 +76,23 @@ export const generateSmartExplanation = (
     };
   }
 
+  // Pattern recognition for 10s
+  if (a === 10 || b === 10) {
+    const other = a === 10 ? b : a;
+    return {
+      strategy: 'pattern_recognition', // Or 'tens_trick'
+      concept: t.tensConcept || `Multiplying by 10 is super easy!`,
+      steps: [
+        t.tensStep1?.replace('{other}', other.toString()) || `This is ${other} × 10 (or 10 × ${other}).`,
+        t.tensStep2?.replace('{other}', other.toString()) || `To multiply any number by 10, just add a zero to the end of it.`,
+        t.tensStep3?.replace('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `So, ${other} becomes ${other}0.`,
+        t.tensStep4?.replace('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `The answer is ${other} × 10 = ${other * 10}.`
+      ],
+      pattern: t.tensPattern || `Any number × 10 = that number with a 0 added to the end.`,
+      mnemonics: t.tensMnemonic || `Ten is the easiest - just add a zero!`
+    };
+  }
+
   // For struggling numbers or multiple attempts, use visual
   if (strugglingWith.includes(a) || strugglingWith.includes(b) || attempts > 1) {
     return {
