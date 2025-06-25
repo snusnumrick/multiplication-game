@@ -361,6 +361,13 @@ export interface Translation {
   elevensStep3?: string;
   elevensPattern?: string;
   elevensMnemonic?: string;
+  tensConcept?: string;
+  tensStep1?: string;
+  tensStep2?: string;
+  tensStep3?: string;
+  tensStep4?: string;
+  tensPattern?: string;
+  tensMnemonic?: string;
   visualArrayConcept?: string;
   visualStep1?: string;
   visualStep2?: string;
