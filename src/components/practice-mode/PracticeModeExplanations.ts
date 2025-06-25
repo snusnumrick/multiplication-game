@@ -339,17 +339,15 @@ export const generateSmartExplanation = (
     });
   }
 
-  // If specific strategies were found, sort by success then complexity, and return the best one
+  // If specific strategies were found, sort by complexity and use 'attempts' to cycle
   if (applicableStrategies.length > 0) {
-    applicableStrategies.sort((s1, s2) => {
-      const success1 = strategySuccess[s1.name] || 0;
-      const success2 = strategySuccess[s2.name] || 0;
-      if (success1 !== success2) {
-        return success2 - success1; // Higher success count first
-      }
-      return s1.complexityOrder - s2.complexityOrder; // Lower complexity order first (simpler)
-    });
-    return applicableStrategies[0].generate();
+    // Sort by complexity to ensure a consistent order for cycling
+    applicableStrategies.sort((s1, s2) => s1.complexityOrder - s2.complexityOrder);
+    
+    // Use 'attempts' to cycle through the complexity-sorted strategies
+    // 'attempts' comes from PracticeMode.tsx, which uses values from 0 up to 11 for probing
+    const strategyIndex = attempts % applicableStrategies.length;
+    return applicableStrategies[strategyIndex].generate();
   }
 
   // Fallback strategies if no specific pattern strategy was chosen
