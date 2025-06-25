@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { Translation } from '../translations';
 
-interface GameProgress {
+export interface GameProgress {
   tablesLearned: number[];
   totalStars: number;
   achievements: string[];
