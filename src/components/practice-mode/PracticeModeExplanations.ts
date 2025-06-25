@@ -8,7 +8,7 @@ const generateVisualDots = (a: number, b: number, t: Translation): string => {
     visual += '● '.repeat(Math.min(a, 10)) + (a > 10 ? '...' : '') + '\n';
   }
   if (b > 6) visual += '...\n';
-  return visual + (t.visualDotsResult?.replace('{b}', b.toString()).replace('{a}', a.toString()).replace('{result}', (a * b).toString()) || `${b} rows × ${a} dots = ${a * b} total`);
+  return visual + (t.visualDotsResult?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()).replace('{result}', (a * b).toString()) || `${b} rows × ${a} dots = ${a * b} total`);
 };
 
 const generateSkipCountingSteps = (a: number, b: number, t: Translation): string[] => {
@@ -17,9 +17,9 @@ const generateSkipCountingSteps = (a: number, b: number, t: Translation): string
     sequence.push(a * i);
   }
   return [
-    t.skipCountingStep1?.replace('{a}', a.toString()) || `Start counting by ${a}s:`,
+    t.skipCountingStep1?.replaceAll('{a}', a.toString()) || `Start counting by ${a}s:`,
     t.skipCountingStep2?.replace('{sequence}', sequence.join(' → ')) || `${sequence.join(' → ')}`,
-    t.skipCountingStep3?.replace('{b}', b.toString()).replace('{a}', a.toString()).replace('{result}', (a * b).toString()) || `We counted ${b} times: ${a} × ${b} = ${a * b}`
+    t.skipCountingStep3?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()).replace('{result}', (a * b).toString()) || `We counted ${b} times: ${a} × ${b} = ${a * b}`
   ];
 };
 
@@ -28,12 +28,12 @@ const generateDecompositionSteps = (a: number, b: number, t: Translation): strin
     const tens = Math.floor(a / 10) * 10;
     const ones = a % 10;
     return [
-      t.decompositionStep1?.replace('{a}', a.toString()).replace('{tens}', tens.toString()).replace('{ones}', ones.toString()) || `Break down ${a} = ${tens} + ${ones}`,
-      t.decompositionStep2?.replace('{a}', a.toString()).replaceAll('{b}', b.toString()).replace('{tens}', tens.toString()).replace('{ones}', ones.toString()) || `${a} × ${b} = (${tens} + ${ones}) × ${b}`,
+      t.decompositionStep1?.replaceAll('{a}', a.toString()).replace('{tens}', tens.toString()).replace('{ones}', ones.toString()) || `Break down ${a} = ${tens} + ${ones}`,
+      t.decompositionStep2?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()).replace('{tens}', tens.toString()).replace('{ones}', ones.toString()) || `${a} × ${b} = (${tens} + ${ones}) × ${b}`,
       t.decompositionStep3?.replace('{tensResult}', (tens * b).toString()).replace('{onesResult}', (ones * b).toString()).replace('{result}', (a * b).toString()) || `= ${tens * b} + ${ones * b} = ${a * b}`
     ];
   }
-  return [t.decompositionFallback?.replace('{a}', a.toString()).replace('{b}', b.toString()).replace('{result}', (a * b).toString()) || `${a} × ${b} = ${a * b}`];
+  return [t.decompositionFallback?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()).replace('{result}', (a * b).toString()) || `${a} × ${b} = ${a * b}`];
 };
 
 // Smart explanation generation
@@ -128,9 +128,9 @@ export const generateSmartExplanation = (
       strategy: 'pattern_recognition',
       concept: t.elevensPatternConcept || `Magical 11s pattern for single digits`,
       steps: [
-        t.elevensStep1?.replace('{digit}', b.toString()) || `Special 11 pattern: 11 × ${b}`,
+        t.elevensStep1?.replaceAll('{digit}', b.toString()) || `Special 11 pattern: 11 × ${b}`,
         t.elevensStep2?.replaceAll('{digit}', b.toString()) || `Just write the digit twice: ${b}${b}`,
-        t.elevensStep3?.replace('{digit}', b.toString()).replace('{result}', (11 * b).toString()) || `Check: 11 × ${b} = ${11 * b}`
+        t.elevensStep3?.replaceAll('{digit}', b.toString()).replace('{result}', (11 * b).toString()) || `Check: 11 × ${b} = ${11 * b}`
       ],
       pattern: t.elevensPattern || `11 × single digit = repeat the digit!`,
       mnemonics: t.elevensMnemonic || `11 likes to see double!`
@@ -146,7 +146,7 @@ export const generateSmartExplanation = (
     let steps;
     if (middleSum < 10) {
       steps = [
-        t.advElevensStep1?.replace('{b}', b.toString()) || `For 11 × ${b}:`,
+        t.advElevensStep1?.replaceAll('{b}', b.toString()) || `For 11 × ${b}:`,
         t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
         t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
         t.advElevensStep4?.replace('{firstDigit}', firstDigit.toString()).replace('{middleSum}', middleSum.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{result}', result.toString()) || `Place the sum in the middle: ${firstDigit}${middleSum}${secondDigit}. So, 11 × ${b} = ${result}.`
@@ -155,7 +155,7 @@ export const generateSmartExplanation = (
       const carry = Math.floor(middleSum / 10);
       const middleDigit = middleSum % 10;
       steps = [
-        t.advElevensStep1?.replace('{b}', b.toString()) || `For 11 × ${b}:`,
+        t.advElevensStep1?.replaceAll('{b}', b.toString()) || `For 11 × ${b}:`,
         t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
         t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
         t.advElevensStep5?.replace('{middleSum}', middleSum.toString()).replace('{middleDigit}', middleDigit.toString()).replace('{carry}', carry.toString()) || `${middleSum} is two digits. Use ${middleDigit} for the middle, carry ${carry} to the first digit.`,
@@ -194,12 +194,12 @@ export const generateSmartExplanation = (
     const result = num * num;
     return {
       strategy: 'squares',
-      concept: t.squaresConcept?.replace('{num}', num.toString()) || `Multiplying a number by itself is called 'squaring'.`,
+      concept: t.squaresConcept?.replaceAll('{num}', num.toString()) || `Multiplying a number by itself is called 'squaring'.`,
       steps: [
-        t.squaresStep1?.replace('{num}', num.toString()) || `This is ${num} × ${num}.`,
+        t.squaresStep1?.replaceAll('{num}', num.toString()) || `This is ${num} × ${num}.`,
         t.squaresStep2?.replaceAll('{num}', num.toString()).replace('{result}', result.toString()) || `The square of ${num} is ${result}. So, ${num} × ${num} = ${result}.`
       ],
-      pattern: t.squaresPattern?.replace('{num}', num.toString()) || `${num} × ${num} is a 'perfect square'. These are good to memorize!`,
+      pattern: t.squaresPattern?.replaceAll('{num}', num.toString()) || `${num} × ${num} is a 'perfect square'. These are good to memorize!`,
       mnemonics: t.squaresMnemonic || `Squares are special, learn them well!`
     };
   }
@@ -211,9 +211,9 @@ export const generateSmartExplanation = (
     const aSquared = a * a;
     return {
       strategy: 'near_doubles',
-      concept: t.nearDoublesConcept?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Multiplying consecutive numbers like ${a} × ${b}.`,
+      concept: t.nearDoublesConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Multiplying consecutive numbers like ${a} × ${b}.`,
       steps: [
-        t.nearDoublesStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `This is ${a} × ${b}. Notice ${b} is ${a} + 1.`,
+        t.nearDoublesStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `This is ${a} × ${b}. Notice ${b} is ${a} + 1.`,
         t.nearDoublesStep2?.replaceAll('{a}', a.toString()).replace('{aSquared}', aSquared.toString()) || `You can think of this as (${a} × ${a}) + ${a}, which is ${aSquared} + ${a}.`,
         t.nearDoublesStep3?.replace('{aSquared}', aSquared.toString()).replaceAll('{a}', a.toString()).replace('{result}', result.toString()) || `So, ${aSquared} + ${a} = ${result}. Thus, ${a} × ${b} = ${result}.`
       ],
@@ -231,7 +231,7 @@ export const generateSmartExplanation = (
 
   if (a === 3) { // 3xb = (2xb) + (1xb)
     bfkfSteps = [
-      t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf3sStep2?.replace('{b}', b.toString()) || `Break down 3:  3 = 2 + 1.`,
       t.bfkf3sStep3?.replaceAll('{b}', b.toString()) || `So, 3 × ${b} = (2 × ${b}) + (1 × ${b}).`,
       t.bfkf3sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy), and 1 × ${b} is ${1 * b}.`,
@@ -241,7 +241,7 @@ export const generateSmartExplanation = (
   } else if (a === 4) { // 4xb = (2xb) + (2xb) OR 4xb = (5xb) - (1xb)
     // Prefer (2xb) + (2xb) as it's simpler
     bfkfSteps = [
-      t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf4sStep2?.replace('{b}', b.toString()) || `Break down 4:  4 = 2 + 2.`,
       t.bfkf4sStep3?.replaceAll('{b}', b.toString()) || `So, 4 × ${b} = (2 × ${b}) + (2 × ${b}).`,
       t.bfkf4sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy).`,
@@ -250,7 +250,7 @@ export const generateSmartExplanation = (
     bfkfPattern = t.bfkf4sPattern || `4×N = (2×N) + (2×N)`;
   } else if (a === 6) { // 6xb = (5xb) + (1xb)
     bfkfSteps = [
-      t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf6sStep2?.replace('{b}', b.toString()) || `Break down 6:  6 = 5 + 1.`,
       t.bfkf6sStep3?.replaceAll('{b}', b.toString()) || `So, 6 × ${b} = (5 × ${b}) + (1 × ${b}).`,
       t.bfkf6sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 1 × ${b} is ${1 * b}.`,
@@ -259,7 +259,7 @@ export const generateSmartExplanation = (
     bfkfPattern = t.bfkf6sPattern || `6×N = (5×N) + (1×N)`;
   } else if (a === 7) { // 7xb = (5xb) + (2xb)
     bfkfSteps = [
-      t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf7sStep2?.replace('{b}', b.toString()) || `Break down 7:  7 = 5 + 2.`,
       t.bfkf7sStep3?.replaceAll('{b}', b.toString()) || `So, 7 × ${b} = (5 × ${b}) + (2 × ${b}).`,
       t.bfkf7sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
@@ -268,7 +268,7 @@ export const generateSmartExplanation = (
     bfkfPattern = t.bfkf7sPattern || `7×N = (5×N) + (2×N)`;
   } else if (a === 8) { // 8xb = (10xb) - (2xb)
     bfkfSteps = [
-      t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf8sStep2?.replace('{b}', b.toString()) || `Think of 8 as 10 - 2.`,
       t.bfkf8sStep3?.replaceAll('{b}', b.toString()) || `So, 8 × ${b} = (10 × ${b}) - (2 × ${b}).`,
       t.bfkf8sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (10 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 10 × ${b} is ${10 * b} (Tens Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
@@ -294,11 +294,11 @@ export const generateSmartExplanation = (
       concept: t.visualArrayConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Think of ${a} × ${b} as making ${b} groups of ${a} objects`,
       visual: generateVisualDots(a, b, t),
       steps: [
-        t.visualStep1?.replace('{b}', b.toString()).replace('{a}', a.toString()) || `Make ${b} groups of ${a} dots`,
+        t.visualStep1?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()) || `Make ${b} groups of ${a} dots`,
         t.visualStep2?.replace('{result}', (a * b).toString()) || `Count all the dots: ${a * b}`,
-        t.visualStep3?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Each row has ${a} dots, ${b} rows total`
+        t.visualStep3?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Each row has ${a} dots, ${b} rows total`
       ],
-      realWorld: t.visualRealWorld?.replace('{b}', b.toString()).replace('{a}', a.toString()).replace('{result}', (a * b).toString()) || `Like having ${b} boxes with ${a} toys each = ${a * b} toys total`
+      realWorld: t.visualRealWorld?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()).replace('{result}', (a * b).toString()) || `Like having ${b} boxes with ${a} toys each = ${a * b} toys total`
     };
   }
 
@@ -306,10 +306,10 @@ export const generateSmartExplanation = (
   if (a <= 10 && b <= 10) {
     return {
       strategy: 'skip_counting',
-      concept: t.skipCountingConcept?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Count by ${a}s, ${b} times`,
+      concept: t.skipCountingConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Count by ${a}s, ${b} times`,
       steps: generateSkipCountingSteps(a, b, t),
-      pattern: t.skipCountingPattern?.replace('{a}', a.toString()).replace('{a2}', (a*2).toString()).replace('{a3}', (a*3).toString()).replace('{result}', (a*b).toString()) || `${a}, ${a*2}, ${a*3}... up to ${a*b}`,
-      mnemonics: t.skipCountingMnemonic?.replace('{a}', a.toString()) || `Skip counting by ${a}s!`
+      pattern: t.skipCountingPattern?.replaceAll('{a}', a.toString()).replace('{a2}', (a*2).toString()).replace('{a3}', (a*3).toString()).replace('{result}', (a*b).toString()) || `${a}, ${a*2}, ${a*3}... up to ${a*b}`,
+      mnemonics: t.skipCountingMnemonic?.replaceAll('{a}', a.toString()) || `Skip counting by ${a}s!`
     };
   }
 
