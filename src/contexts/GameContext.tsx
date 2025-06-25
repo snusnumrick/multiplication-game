@@ -1,15 +1,6 @@
 import React, {useState, useEffect, ReactNode, useCallback, useRef} from 'react';
 import {Translation, translations} from '../translations';
-import { GameContext, FoxyAnimationState } from './game-context-def';
-
-interface GameProgress {
-  tablesLearned: number[];
-  totalStars: number;
-  achievements: string[];
-  practiceProgress: Record<number, number>; // table -> score
-  quizHighScores: Record<string, number>; // difficulty -> score
-  adventureLevels: Record<number, { completed: boolean; stars: number }>;
-}
+import { GameContext, FoxyAnimationState, GameProgress } from './game-context-def';
 
 interface GameSettings {
   language: 'de' | 'ru';
