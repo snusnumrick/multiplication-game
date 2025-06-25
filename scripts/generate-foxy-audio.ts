@@ -84,6 +84,7 @@ const FOXY_MESSAGE_KEYS: Array<keyof typeof translations.de> = [
   'foxyEncouragementQuizKeepTrying',
   'foxyTimeRunningOutQuiz',
   'foxyHintMessage',
+  'foxyGeneralCorrectMessage', // Added for the general correct answer feedback
 ];
 
 // --- Helper Functions ---
