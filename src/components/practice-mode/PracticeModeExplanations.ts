@@ -79,14 +79,8 @@ export const generateSmartExplanation = (
   }
   const applicableStrategies: ApplicableStrategy[] = [];
 
-  let a = initialA;
-  let b = initialB;
-  // Symmetry: Internally swap a and b if b < a
-  if (b < a) {
-    [a, b] = [b, a];
-  }
-
   // Define strategy checks and add to applicableStrategies if they match
+  // These checks use 'a' and 'b' which are the (potentially swapped) numbers.
 
   // Strategy: Ones (Identity Property) (Complexity: 1)
   // This is placed first due to its fundamental nature and low complexity.
