@@ -117,7 +117,7 @@ export function PracticeMode() {
         consecutiveCorrect: 0
       }));
     }
-  }, [currentProblem, userAnswer, correctAnswers, playSound, addStars, setFoxyAnimationState, showFoxyMessage, generateProblem]);
+  }, [currentProblem, userAnswer, playSound, addStars, setFoxyAnimationState, showFoxyMessage, generateProblem, explanation, recordStrategySuccess, userProgress.consecutiveCorrect]);
 
   const showSmartHint = useCallback(() => {
     if (!currentProblem) return;
