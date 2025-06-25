@@ -400,6 +400,34 @@ export interface Translation {
   nearDoublesStep3?: string;
   nearDoublesPattern?: string;
   nearDoublesMnemonic?: string;
+  bfkfConcept?: string;
+  bfkfStep1?: string;
+  bfkf3sStep2?: string;
+  bfkf3sStep3?: string;
+  bfkf3sStep4?: string;
+  bfkf3sStep5?: string;
+  bfkf3sPattern?: string;
+  bfkf4sStep2?: string;
+  bfkf4sStep3?: string;
+  bfkf4sStep4?: string;
+  bfkf4sStep5?: string;
+  bfkf4sPattern?: string;
+  bfkf6sStep2?: string;
+  bfkf6sStep3?: string;
+  bfkf6sStep4?: string;
+  bfkf6sStep5?: string;
+  bfkf6sPattern?: string;
+  bfkf7sStep2?: string;
+  bfkf7sStep3?: string;
+  bfkf7sStep4?: string;
+  bfkf7sStep5?: string;
+  bfkf7sPattern?: string;
+  bfkf8sStep2?: string;
+  bfkf8sStep3?: string;
+  bfkf8sStep4?: string;
+  bfkf8sStep5?: string;
+  bfkf8sPattern?: string;
+  bfkfMnemonic?: string;
   visualArrayConcept?: string;
   visualStep1?: string;
   visualStep2?: string;
@@ -428,6 +456,7 @@ export interface Translation {
   strategyFives?: string;
   strategySquares?: string;
   strategyNearDoubles?: string; // Added for Near Doubles strategy name
+  strategyBuildingKnownFacts?: string;
 
   closeHintButton?: string;
 }
