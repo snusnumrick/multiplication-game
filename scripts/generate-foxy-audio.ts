@@ -86,6 +86,7 @@ const FOXY_MESSAGE_KEYS: Array<keyof typeof translations.de> = [
   'foxyHintMessage',
   'foxyGeneralCorrectMessage', // Added for the general correct answer feedback
   'foxyLetsPracticeNewTable', // Added for PracticeMode table selection
+  'foxyAlternativeHintMessage', // Added for when "Explain Differently" is used
 ];
 
 // --- Helper Functions ---
