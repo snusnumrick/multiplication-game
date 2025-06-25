@@ -39,7 +39,7 @@ export function PracticeMode() {
   const checkIfAlternativeExists = useCallback((currentExplanationContent: ExplanationContent | null): boolean => {
     if (!currentProblem || !currentExplanationContent) return false;
     
-    const testAttemptValues = [0, 5, 10]; // Probe with fixed attempt values
+    const testAttemptValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // More comprehensive probing
     for (const ta of testAttemptValues) {
       const potentialAlt = generateSmartExplanation(currentProblem.a, currentProblem.b, ta);
       if (potentialAlt && potentialAlt.strategy !== currentExplanationContent.strategy) {
@@ -164,7 +164,7 @@ export function PracticeMode() {
   const handleExplainDifferently = useCallback(() => {
     if (!currentProblem || !explanation) return;
 
-    const testAttemptValues = [0, 5, 10]; // Probe with fixed attempt values
+    const testAttemptValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // More comprehensive probing
     for (const ta of testAttemptValues) {
       const potentialNewExplanation = generateSmartExplanation(currentProblem.a, currentProblem.b, ta);
       if (potentialNewExplanation && potentialNewExplanation.strategy !== explanation.strategy) {
