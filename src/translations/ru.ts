@@ -442,6 +442,11 @@ export const russianTranslations: Translation = {
     fivesStep3: "Половина от {tenTimesOther} это {result}. Итак, 5 × {otherNum} = {result}.",
     fivesPattern: "Любое число × 5 = (это число × 10) ÷ 2.",
     fivesMnemonic: "Пять - половина десяти, легко победить!",
+    squaresConcept: "Умножение числа само на себя называется 'возведение в квадрат'.",
+    squaresStep1: "Это {num} × {num}.",
+    squaresStep2: "Квадрат числа {num} равен {result}. Итак, {num} × {num} = {result}.",
+    squaresPattern: "{num} × {num} - это 'идеальный квадрат'. Их хорошо запомнить!",
+    squaresMnemonic: "Квадраты особенные, учи их хорошо!",
     visualArrayConcept: "Представь {a} × {b} как создание {b} групп по {a} объектов",
     visualStep1: "Сделай {b} групп по {a} точек",
     visualStep2: "Посчитай все точки: {result}",
@@ -468,6 +473,7 @@ export const russianTranslations: Translation = {
     strategyDecomposition: "Разложение",
     strategyDoubles: "Стратегия удвоения",
     strategyFives: "Стратегия пятёрок",
+    strategySquares: "Стратегия квадратов чисел",
 
   closeHintButton: "Закрыть подсказку",
 };

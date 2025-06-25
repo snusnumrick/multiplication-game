@@ -441,6 +441,11 @@ export const germanTranslations: Translation = {
     fivesStep3: "Die Hälfte von {tenTimesOther} ist {result}. Also, 5 × {otherNum} = {result}.",
     fivesPattern: "Jede Zahl × 5 = (diese Zahl × 10) ÷ 2.",
     fivesMnemonic: "Fünf ist die Hälfte von zehn, leicht zu sehen!",
+    squaresConcept: "Eine Zahl mit sich selbst multiplizieren nennt man 'Quadrieren'.",
+    squaresStep1: "Das ist {num} × {num}.",
+    squaresStep2: "Das Quadrat von {num} ist {result}. Also, {num} × {num} = {result}.",
+    squaresPattern: "{num} × {num} ist ein 'perfektes Quadrat'. Diese sind gut zu lernen!",
+    squaresMnemonic: "Quadrate sind besonders, lerne sie gut!",
     visualArrayConcept: "Stell dir {a} × {b} vor, als würdest du {b} Gruppen von {a} Objekten bilden",
     visualStep1: "Mache {b} Gruppen von {a} Punkten",
     visualStep2: "Zähle alle Punkte: {result}",
@@ -467,6 +472,7 @@ export const germanTranslations: Translation = {
     strategyDecomposition: "Zerlegung",
     strategyDoubles: "Verdopplungsstrategie",
     strategyFives: "Fünferstrategie",
+    strategySquares: "Quadratzahlen-Strategie",
 
   closeHintButton: "Tipp schließen",
 };

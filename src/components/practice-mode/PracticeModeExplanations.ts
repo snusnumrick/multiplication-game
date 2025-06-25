@@ -44,8 +44,15 @@ export const generateSmartExplanation = (
   t: Translation,
   strugglingWith: number[]
 ): ExplanationContent => {
+  // Symmetry: Internally swap a and b if b < a to potentially simplify strategy selection.
+  // This helps use strategies like "multiply by 2" if the problem is e.g. 7x2 (becomes 2x7).
+  // Or ensures smaller number is first for skip counting if no other specific strategy matches.
+  if (b < a) {
+    [a, b] = [b, a];
+  }
+
   // Multiplying by 2 (Doubles)
-  if (a === 2 || b === 2) {
+  if (a === 2 || b === 2) { // b === 2 check is mostly for completeness if swap wasn't done or a=b=2
     const otherNum = a === 2 ? b : a;
     const result = 2 * otherNum;
     return {
@@ -125,6 +132,22 @@ export const generateSmartExplanation = (
       ],
       pattern: t.tensPattern || `Any number × 10 = that number with a 0 added to the end.`,
       mnemonics: t.tensMnemonic || `Ten is the easiest - just add a zero!`
+    };
+  }
+
+  // Perfect Squares
+  if (a === b) {
+    const num = a; // or b, they are the same
+    const result = num * num;
+    return {
+      strategy: 'squares',
+      concept: t.squaresConcept?.replace('{num}', num.toString()) || `Multiplying a number by itself is called 'squaring'.`,
+      steps: [
+        t.squaresStep1?.replace('{num}', num.toString()) || `This is ${num} × ${num}.`,
+        t.squaresStep2?.replaceAll('{num}', num.toString()).replace('{result}', result.toString()) || `The square of ${num} is ${result}. So, ${num} × ${num} = ${result}.`
+      ],
+      pattern: t.squaresPattern?.replace('{num}', num.toString()) || `${num} × ${num} is a 'perfect square'. These are good to memorize!`,
+      mnemonics: t.squaresMnemonic || `Squares are special, learn them well!`
     };
   }
 

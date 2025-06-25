@@ -380,6 +380,11 @@ export interface Translation {
   fivesStep3?: string;
   fivesPattern?: string;
   fivesMnemonic?: string;
+  squaresConcept?: string;
+  squaresStep1?: string;
+  squaresStep2?: string;
+  squaresPattern?: string;
+  squaresMnemonic?: string;
   visualArrayConcept?: string;
   visualStep1?: string;
   visualStep2?: string;
@@ -406,6 +411,7 @@ export interface Translation {
   strategyDecomposition?: string;
   strategyDoubles?: string;
   strategyFives?: string;
+  strategySquares?: string;
 
   closeHintButton?: string;
 }
