@@ -9,7 +9,7 @@ import { TableSelectionUI } from './practice-mode/TableSelectionUI';
 import { ProblemDisplayUI } from './practice-mode/ProblemDisplayUI';
 
 export function PracticeMode() {
-  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState, recordStrategySuccess, progress: gameProgress } = useGame();
 
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [currentProblem, setCurrentProblem] = useState<{ a: number; b: number } | null>(null);
@@ -31,8 +31,8 @@ export function PracticeMode() {
 
   // Smart explanation generation (now uses imported logic)
   const generateSmartExplanation = useCallback((a: number, b: number, attempts: number): ExplanationContent => {
-    return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith);
-  }, [userProgress.strugglingWith, t]);
+    return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess);
+  }, [userProgress.strugglingWith, t, gameProgress.strategySuccess]);
 
   // Foxy initialization
   const initializeFoxy = useCallback(() => {
@@ -88,6 +88,11 @@ export function PracticeMode() {
       playSound?.('correct');
       addStars?.(1);
       setFoxyAnimationState?.('happy');
+
+      // Record strategy success if a hint was shown for this problem
+      if (explanation && explanation.strategy) {
+        recordStrategySuccess?.(explanation.strategy);
+      }
 
       // Show Foxy encouragement using newConsecutiveCorrect
       if (newConsecutiveCorrect % 5 === 0) {
