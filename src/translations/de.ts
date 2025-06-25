@@ -398,6 +398,7 @@ export const germanTranslations: Translation = {
 
     foxyHintMessage: "Hmm, brauchst du einen kleinen Tipp von Foxy?",
     foxyGeneralCorrectMessage: "Super gemacht, Eva! Foxy freut sich mit dir!", // Added for general correct answer feedback
+    foxyLetsPracticeNewTable: "Tolle Wahl! Lass uns anfangen, diese Reihe zu üben.",
 
     // PracticeMode Smart Explanations
     visualDotsResult: "{b} Reihen × {a} Punkte = {result} gesamt",

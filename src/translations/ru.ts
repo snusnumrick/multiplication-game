@@ -399,6 +399,7 @@ export const russianTranslations: Translation = {
 
     foxyHintMessage: "Хмм, нужна небольшая подсказка от Фокси?",
     foxyGeneralCorrectMessage: "Отлично, Ева! Фокси очень рада за тебя!", // Added for general correct answer feedback
+    foxyLetsPracticeNewTable: "Отличный выбор! Давай начнем тренировать эту таблицу.",
 
     // PracticeMode Smart Explanations
     visualDotsResult: "{b} рядов × {a} точек = {result} всего",
