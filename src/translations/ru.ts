@@ -398,6 +398,7 @@ export const russianTranslations: Translation = {
     foxyTimeRunningOutQuiz: "Время на исходе, Ева! Сконцентрируйся и покажи лучший результат!",
 
     foxyHintMessage: "Хмм, нужна небольшая подсказка от Фокси?",
+    foxyGeneralCorrectMessage: "Отлично, Ева! Фокси очень рада за тебя!", // Added for general correct answer feedback
 
     // PracticeMode Smart Explanations
     visualDotsResult: "{b} рядов × {a} точек = {result} всего",

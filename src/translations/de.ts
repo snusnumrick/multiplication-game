@@ -397,6 +397,7 @@ export const germanTranslations: Translation = {
     foxyTimeRunningOutQuiz: "Die Zeit wird knapp, Eva! Konzentrier dich und gib nochmal alles!",
 
     foxyHintMessage: "Hmm, brauchst du einen kleinen Tipp von Foxy?",
+    foxyGeneralCorrectMessage: "Super gemacht, Eva! Foxy freut sich mit dir!", // Added for general correct answer feedback
 
     // PracticeMode Smart Explanations
     visualDotsResult: "{b} Reihen × {a} Punkte = {result} gesamt",
