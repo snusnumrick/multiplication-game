@@ -240,9 +240,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const playFoxyAudio = useCallback((messageKey: keyof Translation) => {
     if (!settings.soundEnabled || !settings.foxyEnabled || !foxyAudioRef.current || !hasUserInteracted) {
       if (!hasUserInteracted) {
-        // console.log(`User has not interacted yet, not playing audio for: ${String(messageKey)}`);
+        console.log(`User has not interacted yet, not playing audio for: ${String(messageKey)}`);
       }
-      // console.log(`Sound or Foxy disabled, audio element not ready, or no user interaction, not playing audio for: ${String(messageKey)}`);
+      console.log(`Sound or Foxy disabled, audio element not ready, or no user interaction, not playing audio for: ${String(messageKey)}`);
       return;
     }
 
@@ -292,18 +292,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
     duration?: number,
     options: { isInitialGreeting?: boolean } = {}
   ) => {
-    console.log('showFoxyMessageAndUpdate');
     if (foxyTimeoutRef.current) {
       clearTimeout(foxyTimeoutRef.current);
       foxyTimeoutRef.current = null;
     }
 
     const messageText = t[messageKey] as string;
-    console.log('messageText', messageText);
     if (messageText) {
       setFoxyMessage(messageText);
       setCurrentFoxyMessageKey(messageKey);
-      console.log('setIsFoxyVisible(true) 1');
       setIsFoxyVisible(true);
 
       let shouldPlayAudio = true;
@@ -321,7 +318,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
       if (duration) {
         foxyTimeoutRef.current = setTimeout(() => {
-          console.log('setIsFoxyVisible(false) 1');
           setIsFoxyVisible(false);
           setFoxyMessage(null);
           setCurrentFoxyMessageKey(null);
@@ -330,7 +326,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
       }
     } else {
       console.warn(`Foxy message key "${String(messageKey)}" not found in translations.`);
-      console.log('setIsFoxyVisible(false) 2');
       setIsFoxyVisible(false);
       setFoxyMessage(null);
       setCurrentFoxyMessageKey(null);
@@ -377,7 +372,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
     prevScreenRef.current = currentScreen; // Update for the next render cycle
 
     if (previousScreen && previousScreen !== currentScreen) {
-      console.log('stop Foxy', currentScreen);
       // Navigation has occurred from previousScreen to currentScreen.
       // If Foxy was visible and had a message (potentially from previousScreen),
       // clean up her state.
@@ -397,7 +391,6 @@ export function GameProvider({ children }: { children: ReactNode }) {
         // Clear message, key, and hide Foxy
         setFoxyMessage(null);
         setCurrentFoxyMessageKey(null);
-        console.log('setIsFoxyVisible(false) 3');
         setIsFoxyVisible(false);
 
         // Clear any pending timeout for message duration
