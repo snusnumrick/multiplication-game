@@ -352,11 +352,19 @@ export const generateSmartExplanation = (
 
   // If specific strategies were found, sort by complexity and use 'attempts' to cycle
   if (applicableStrategies.length > 0) {
-    // Sort by complexity to ensure a consistent order for cycling
-    applicableStrategies.sort((s1, s2) => s1.complexityOrder - s2.complexityOrder);
-    console.log('generateSmartExplanation: applicableStrategies:', applicableStrategies);
+    // Sort strategies: prioritize by success count (descending), then by complexity (ascending)
+    applicableStrategies.sort((s1, s2) => {
+      const success1 = strategySuccess[s1.name] || 0;
+      const success2 = strategySuccess[s2.name] || 0;
 
-    // Use 'attempts' to cycle through the complexity-sorted strategies
+      if (success1 !== success2) {
+        return success2 - success1; // Higher success count comes first
+      }
+      return s1.complexityOrder - s2.complexityOrder; // Then by complexity
+    });
+    console.log('generateSmartExplanation: applicableStrategies (sorted by success & complexity):', applicableStrategies);
+
+    // Use 'attempts' to cycle through the sorted strategies
     // 'attempts' comes from PracticeMode.tsx, which uses values from 0 up to 11 for probing
     const strategyIndex = attempts % applicableStrategies.length;
     console.log(`generateSmartExplanation: strategyIndex: ${strategyIndex}`);
