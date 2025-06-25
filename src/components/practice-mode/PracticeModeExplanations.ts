@@ -56,7 +56,7 @@ export const generateSmartExplanation = (
 
   // Priority 1: Visual explanation if user is struggling with either of the original numbers or after multiple attempts
   // We check strugglingWith against initialA and initialB as those are the numbers from the problem context.
-  if (strugglingWith.includes(initialA) || strugglingWith.includes(initialB) || attempts > 1) {
+  if (strugglingWith.includes(initialA) || strugglingWith.includes(initialB) || attempts > 10) {
     console.log('generateSmartExplanation: visual (priority due to struggle/attempts)', { initialA, initialB, a, b, attempts, strugglingWith });
     return {
       strategy: 'visual_array',

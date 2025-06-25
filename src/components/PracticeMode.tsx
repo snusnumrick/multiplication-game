@@ -54,7 +54,9 @@ export function PracticeMode() {
         uniqueMap.set(exp.strategy, exp);
       }
     }
-    return Array.from(uniqueMap.values());
+    const uniqueList = Array.from(uniqueMap.values());
+    console.log('uniqueList', uniqueList);
+    return uniqueList;
   }, [currentProblem, generateSmartExplanation]);
 
   // Foxy initialization
@@ -174,13 +176,14 @@ export function PracticeMode() {
 
   // New callback for explaining differently
   const handleExplainDifferently = useCallback(() => {
+    console.log('handleExplainDifferently');
     if (!currentProblem || !explanation) return;
 
     const uniqueExplanations = getUniqueExplanationsList();
     
     // Find the index of the currently shown explanation's strategy
     let currentIndexInUnique = uniqueExplanations.findIndex(exp => exp.strategy === explanation.strategy);
-    if (currentIndexInUnique === -1) { 
+    if (currentIndexInUnique === -1) {
         // If current explanation's strategy is not in the unique list (e.g. it was an initial fallback)
         // treat as if we're starting the cycle from the beginning of uniqueExplanations.
         // To find the "next" different one, we'd conceptually be before the first unique one.
@@ -189,6 +192,7 @@ export function PracticeMode() {
                                   // For simplicity, let the loop try to find something different.
                                   // If current is truly unique and not in list, first item of uniqueExplanations will be chosen if different.
     }
+    console.log('currentIndexInUnique', currentIndexInUnique);
 
     let nextDifferentExplanation: ExplanationContent | null = null;
     
@@ -202,6 +206,7 @@ export function PracticeMode() {
       // If all unique explanations have the same strategy as current, this loop won't find a different one.
       if (i === uniqueExplanations.length && !nextDifferentExplanation) break; 
     }
+    console.log('nextDifferentExplanation', nextDifferentExplanation);
 
     if (nextDifferentExplanation) {
       setExplanation(nextDifferentExplanation);
@@ -210,6 +215,7 @@ export function PracticeMode() {
 
       // After setting the new explanation, check if there are further alternatives
       const hasFurtherAlternatives = uniqueExplanations.some(ue => ue.strategy !== nextDifferentExplanation!.strategy);
+      console.log('hasFurtherAlternatives', hasFurtherAlternatives);
       setCanShowAlternative(hasFurtherAlternatives);
       if (!hasFurtherAlternatives) {
         // If no further alternatives after this one, Foxy can say so.
