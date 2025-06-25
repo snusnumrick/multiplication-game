@@ -78,21 +78,24 @@ export function PracticeMode() {
     setAttempts(prev => prev + 1);
 
     if (isRight) {
+      const newConsecutiveCorrect = userProgress.consecutiveCorrect + 1;
       setCorrectAnswers(prev => prev + 1);
       setUserProgress(prev => ({
         ...prev,
-        consecutiveCorrect: prev.consecutiveCorrect + 1
+        consecutiveCorrect: newConsecutiveCorrect
       }));
 
       playSound?.('correct');
       addStars?.(1);
       setFoxyAnimationState?.('happy');
 
-      // Show Foxy encouragement for streaks
-      if ((correctAnswers + 1) % 3 === 0) {
-        showFoxyMessage?.('foxyEncouragementStreak3');
-      } else if ((correctAnswers + 1) % 5 === 0) {
+      // Show Foxy encouragement using newConsecutiveCorrect
+      if (newConsecutiveCorrect % 5 === 0) {
         showFoxyMessage?.('foxyEncouragementStreak5');
+      } else if (newConsecutiveCorrect % 3 === 0) {
+        showFoxyMessage?.('foxyEncouragementStreak3');
+      } else if (newConsecutiveCorrect === 1) { // Only if it's the first in a sequence
+        showFoxyMessage?.('foxyGeneralCorrectMessage');
       }
 
       setTimeout(() => {
