@@ -31,8 +31,8 @@ export function PracticeMode() {
   });
 
   // Smart explanation generation (now uses imported logic)
-  const generateSmartExplanation = useCallback((a: number, b: number, attempts: number): ExplanationContent => {
-    return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess);
+  const generateSmartExplanation = useCallback((a: number, b: number, attempts: number, discoveryMode: boolean = false): ExplanationContent => {
+    return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess, { discoveryMode });
   }, [userProgress.strugglingWith, t, gameProgress.strategySuccess]);
 
   // Helper function to get a list of unique explanations based on strategy name
@@ -44,7 +44,8 @@ export function PracticeMode() {
     for (const ta of testAttemptValues) {
       // Ensure generateSmartExplanation is called with valid problem numbers
       if (currentProblem.a != null && currentProblem.b != null) {
-        allGenerated.push(generateSmartExplanation(currentProblem.a, currentProblem.b, ta));
+        // Pass true for discoveryMode to find all potential strategies
+        allGenerated.push(generateSmartExplanation(currentProblem.a, currentProblem.b, ta, true));
       }
     }
 
