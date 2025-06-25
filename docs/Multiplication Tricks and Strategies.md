@@ -1,5 +1,17 @@
 # 🧮 Complete Multiplication Tricks & Strategies
 
+## 🥇 **0. The Power of 1s (Identity Property)**
+**The Simplest Rule**: `a × 1 = a` - Any number multiplied by 1 is itself!
+
+### Examples:
+- `7 × 1 = 7`
+- `1 × 15 = 15`
+
+**Strategy**: The number stays the same!
+**Implemented in Practice Mode Hints**: Yes
+
+---
+
 ## 🔄 **1. Symmetry (Commutative Property)**
 **The Foundation**: `a × b = b × a` - Order doesn't matter!
 
@@ -9,6 +21,7 @@
 - `9 × 4 = 4 × 9` ✨ Choose `4 × 9` (avoid 9s if struggling)
 
 **Strategy**: Always choose the direction that feels easier!
+**Implemented in Practice Mode Hints**: Yes (internal number swapping to apply simpler strategies)
 
 ---
 
@@ -33,6 +46,7 @@ For `9 × 6`:
 - Pattern: Tens digit goes up, ones digit goes down!
 
 **Mnemonic**: *"Nine is fine, subtract from ten every time!"*
+**Implemented in Practice Mode Hints**: Yes (Method 1: "Subtract from 10 times")
 
 ---
 
@@ -56,6 +70,7 @@ For `11 × 67`:
 3. Result: `6 + 1 = 7`, `3`, `7` → `737`
 
 **Mnemonic**: *"Eleven likes to see double!"*
+**Implemented in Practice Mode Hints**: Yes (for single digits and for two-digit numbers like 11 × 23)
 
 ---
 
@@ -74,6 +89,7 @@ For `11 × 67`:
 - Odd number × 5 → ends in 5
 
 **Mnemonic**: *"Five is half of ten - counting nickels!"*
+**Implemented in Practice Mode Hints**: Yes (Method 1: "Half of 10s")
 
 ---
 
@@ -88,6 +104,7 @@ For `11 × 67`:
 - `30 × 4 = 3 × 4 × 10 = 120`
 
 **Mnemonic**: *"Ten is the easiest - just add a zero!"*
+**Implemented in Practice Mode Hints**: Yes (Basic rule: Add zeros)
 
 ---
 
@@ -102,6 +119,7 @@ For `11 × 67`:
 - `25 × 16 = (100 × 16) ÷ 4 = 1600 ÷ 4 = 400`
 
 **Mnemonic**: *"25 cents makes a quarter!"*
+**Implemented in Practice Mode Hints**: No
 
 ---
 
@@ -120,6 +138,7 @@ For `11 × 67`:
 - `16 × 5 = 8 × 10 = 80` (much easier!)
 
 **Mnemonic**: *"Doubling is just adding to itself!"*
+**Implemented in Practice Mode Hints**: Yes (Pure Doubles for `n × 2`)
 
 ---
 
@@ -134,6 +153,7 @@ For `11 × 67`:
 - `7 × 8 = (7 × 7) + 7 = 49 + 7 = 56`
 
 **Mnemonic**: *"Neighbors help each other - square plus one more!"*
+**Implemented in Practice Mode Hints**: Yes
 
 ---
 
@@ -148,6 +168,7 @@ For `11 × 67`:
 - `12² = 144` (1_2, put 1+2=3, but 3×4=12, so carry: 144)
 
 **Mnemonic**: *"Squares are perfect - memorize the magic numbers!"*
+**Implemented in Practice Mode Hints**: Yes
 
 ---
 
@@ -168,6 +189,7 @@ For `11 × 67`:
 - `8 × 9 = (10 × 9) - (2 × 9) = 90 - 18 = 72`
 
 **Strategy**: Use 2s, 5s, and 10s as your foundation!
+**Implemented in Practice Mode Hints**: Yes (for multipliers 3, 4, 6, 7, 8 using 1s, 2s, 5s, 10s)
 
 ---
 
@@ -184,6 +206,7 @@ For `11 × 67`:
 ### The "Almost 10" Trick:
 - `9 × 9 = (10-1) × (10-1) = 100 - 10 - 10 + 1 = 81`
 - `8 × 9 = (10-2) × (10-1) = 100 - 10 - 20 + 2 = 72`
+**Implemented in Practice Mode Hints**: Partially (mnemonics are part of other strategies, but not specific memory tricks as standalone strategies)
 
 ---
 
@@ -200,6 +223,7 @@ For `11 × 67`:
 - `18 × 5 = (20 - 2) × 5 = 100 - 10 = 90`
 
 **Strategy**: Break into tens and ones, or use nearby friendly numbers!
+**Implemented in Practice Mode Hints**: Yes (for numbers > 10, as a fallback)
 
 ---
 
@@ -228,6 +252,7 @@ For `11 × 67`:
 ██████████ ██
    80    + 16 = 96
 ```
+**Implemented in Practice Mode Hints**: Yes (Visual Array / Dots as a fallback)
 
 ---
 
@@ -247,6 +272,7 @@ For `11 × 67`:
 - Even × Even = Even
 - Odd × Odd = Odd
 - Even × Odd = Even
+**Implemented in Practice Mode Hints**: No (beyond specific patterns for 9s, 10s, 11s)
 
 ---
 
@@ -265,6 +291,7 @@ For `11 × 67`:
 #### Close to 20:
 - `19 × 3 = (20-1) × 3 = 60 - 3 = 57`
 - `21 × 4 = (20+1) × 4 = 80 + 4 = 84`
+**Implemented in Practice Mode Hints**: Partially (covered by "Building From Known Facts" for some cases, e.g., 8xN uses 10xN)
 
 ---
 
@@ -279,6 +306,7 @@ For `11 × 67`:
 - *"Six times eight is forty-eight!"*
 - *"Seven eights are fifty-six!"*
 - *"Nine times nine is eighty-one, multiplication can be fun!"*
+**Implemented in Practice Mode Hints**: No
 
 ---
 
@@ -293,6 +321,7 @@ Try: `20×4=80, 3×4=12, 80+12=92` (easier mental math!)
 ### Rounding and Adjusting:
 - `97 × 6 = (100 × 6) - (3 × 6) = 600 - 18 = 582`
 - `48 × 5 = (50 × 5) - (2 × 5) = 250 - 10 = 240`
+**Implemented in Practice Mode Hints**: No
 
 ---
 
@@ -308,6 +337,7 @@ Try: `20×4=80, 3×4=12, 80+12=92` (easier mental math!)
 - `6 × 8 = 48`: Six ate (8) forty-eight (48) donuts
 - `7 × 7 = 49`: Lucky seven squared gives you 49ers!
 - `8 × 8 = 64`: Eight octopi had 64 tentacles
+**Implemented in Practice Mode Hints**: No
 
 ---
 
