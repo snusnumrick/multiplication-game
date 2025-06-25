@@ -466,6 +466,7 @@ export interface Translation {
   strategyOnes?: string;
 
   closeHintButton?: string;
+  explainDifferentlyButton?: string;
 }
 
 export interface ScenarioText {

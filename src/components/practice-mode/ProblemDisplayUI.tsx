@@ -21,6 +21,8 @@ interface ProblemDisplayUIProps {
   onShowSmartHint: () => void;
   onRestartProblem: () => void;
   onCloseHint: () => void;
+  hasAlternativeStrategy?: boolean;
+  onExplainDifferently?: () => void;
 }
 
 export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
@@ -40,6 +42,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
   onShowSmartHint,
   onRestartProblem,
   onCloseHint,
+  hasAlternativeStrategy,
+  onExplainDifferently,
 }) => {
   if (!currentProblem) return null;
 
@@ -142,13 +146,24 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                 )}
               </div>
             </div>
-            <button
-              onClick={onCloseHint}
-              className="mt-6 bg-gray-200 text-gray-700 px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-gray-300 transform transition-all duration-200 hover:scale-105 active:scale-95 flex items-center mx-auto"
-            >
-              <RotateCcw className="w-5 h-5 mr-2 transform scale-x-[-1]" /> {/* Using RotateCcw and flipping for a 'close' feel */}
-              {t.closeHintButton || "Close Hint"}
-            </button>
+            <div className="mt-6 flex justify-center space-x-4 flex-wrap gap-y-2">
+              {hasAlternativeStrategy && onExplainDifferently && (
+                <button
+                  onClick={onExplainDifferently}
+                  className="bg-teal-500 text-white px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-teal-600 transform transition-all duration-200 hover:scale-105 active:scale-95 flex items-center"
+                >
+                  <Zap className="w-5 h-5 mr-2" />
+                  {t.explainDifferentlyButton || "Explain Differently"}
+                </button>
+              )}
+              <button
+                onClick={onCloseHint}
+                className="bg-gray-200 text-gray-700 px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-gray-300 transform transition-all duration-200 hover:scale-105 active:scale-95 flex items-center"
+              >
+                <RotateCcw className="w-5 h-5 mr-2 transform scale-x-[-1]" /> {/* Using RotateCcw and flipping for a 'close' feel */}
+                {t.closeHintButton || "Close Hint"}
+              </button>
+            </div>
           </>
         ) : (
           // Problem View Content
