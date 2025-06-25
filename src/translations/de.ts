@@ -525,6 +525,7 @@ export const germanTranslations: Translation = {
     strategyNearDoubles: "Nahe-Doppelte-Strategie",
     strategyBuildingKnownFacts: "Aufbau auf Bekanntem",
     strategyOnes: "Einser-Strategie",
+    strategyTens: "Zehner-Strategie",
 
   closeHintButton: "Tipp schließen",
   explainDifferentlyButton: "Anders erklären",

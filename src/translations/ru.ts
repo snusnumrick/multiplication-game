@@ -526,6 +526,7 @@ export const russianTranslations: Translation = {
     strategyNearDoubles: "Стратегия 'Почти двойные'",
     strategyBuildingKnownFacts: "Построение на известном",
     strategyOnes: "Стратегия единицы",
+    strategyTens: "Стратегия умножения на десять",
 
   closeHintButton: "Закрыть подсказку",
   explainDifferentlyButton: "Объяснить иначе",
