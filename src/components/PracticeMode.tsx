@@ -35,6 +35,14 @@ export function PracticeMode() {
     return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess);
   }, [userProgress.strugglingWith, t, gameProgress.strategySuccess]);
 
+  // Helper function to check if a different alternative explanation exists
+  const checkIfAlternativeExists = useCallback((currentExplanationContent: ExplanationContent | null): boolean => {
+    if (!currentProblem || !currentExplanationContent) return false;
+    // Use a different heuristic (e.g., attempts + 10) to encourage a different strategy
+    const potentialAlt = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 10);
+    return !!(potentialAlt && potentialAlt.strategy !== currentExplanationContent.strategy);
+  }, [currentProblem, generateSmartExplanation, attempts]);
+
   // Foxy initialization
   const initializeFoxy = useCallback(() => {
     if (typeof window !== 'undefined' && showFoxyMessage && setIsFoxyVisible) {
@@ -132,15 +140,7 @@ export function PracticeMode() {
     showFoxyMessage?.('foxyHintMessage');
     // Check if an alternative explanation exists for the newly shown hint
     setCanShowAlternative(checkIfAlternativeExists(smartExp));
-  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage, checkIfAlternativeExists]); // Added checkIfAlternativeExists
-
-  // Helper function to check if a different alternative explanation exists
-  const checkIfAlternativeExists = useCallback((currentExplanationContent: ExplanationContent | null): boolean => {
-    if (!currentProblem || !currentExplanationContent) return false;
-    // Use a different heuristic (e.g., attempts + 10) to encourage a different strategy
-    const potentialAlt = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 10);
-    return !!(potentialAlt && potentialAlt.strategy !== currentExplanationContent.strategy);
-  }, [currentProblem, generateSmartExplanation, attempts]);
+  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage, checkIfAlternativeExists]);
 
   const restartProblem = useCallback(() => {
     if (selectedTable) {
