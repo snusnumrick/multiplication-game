@@ -253,6 +253,8 @@ export function PracticeMode() {
     }
   };
 
+  console.log('canShowAlternative', canShowAlternative, 'explanation', explanation);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-200 via-blue-200 to-purple-300 p-4">
       {/* Header */}
