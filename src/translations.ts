@@ -368,6 +368,18 @@ export interface Translation {
   tensStep4?: string;
   tensPattern?: string;
   tensMnemonic?: string;
+  twosConcept?: string;
+  twosStep1?: string;
+  twosStep2?: string;
+  twosStep3?: string;
+  twosPattern?: string;
+  twosMnemonic?: string;
+  fivesConcept?: string;
+  fivesStep1?: string;
+  fivesStep2?: string;
+  fivesStep3?: string;
+  fivesPattern?: string;
+  fivesMnemonic?: string;
   visualArrayConcept?: string;
   visualStep1?: string;
   visualStep2?: string;
@@ -392,6 +404,8 @@ export interface Translation {
   strategyPatternRecognition?: string;
   strategySkipCounting?: string;
   strategyDecomposition?: string;
+  strategyDoubles?: string;
+  strategyFives?: string;
 
   closeHintButton?: string;
 }

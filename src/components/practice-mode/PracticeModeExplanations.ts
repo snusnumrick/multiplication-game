@@ -44,6 +44,41 @@ export const generateSmartExplanation = (
   t: Translation,
   strugglingWith: number[]
 ): ExplanationContent => {
+  // Multiplying by 2 (Doubles)
+  if (a === 2 || b === 2) {
+    const otherNum = a === 2 ? b : a;
+    const result = 2 * otherNum;
+    return {
+      strategy: 'doubles',
+      concept: t.twosConcept || `Multiplying by 2 is just doubling!`,
+      steps: [
+        t.twosStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 2 × ${otherNum} (or ${otherNum} × 2).`,
+        t.twosStep2?.replaceAll('{otherNum}', otherNum.toString()) || `Doubling means adding the number to itself: ${otherNum} + ${otherNum}.`,
+        t.twosStep3?.replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `So, 2 × ${otherNum} = ${result}.`
+      ],
+      pattern: t.twosPattern || `Any number × 2 = that number + itself.`,
+      mnemonics: t.twosMnemonic || `Two makes a pair, just add it there!`
+    };
+  }
+
+  // Multiplying by 5 (Fabulous Fives)
+  if (a === 5 || b === 5) {
+    const otherNum = a === 5 ? b : a;
+    const result = 5 * otherNum;
+    const tenTimesOther = 10 * otherNum;
+    return {
+      strategy: 'fives',
+      concept: t.fivesConcept || `Multiplying by 5 uses the 'half of 10' trick!`,
+      steps: [
+        t.fivesStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 5 × ${otherNum} (or ${otherNum} × 5).`,
+        t.fivesStep2?.replaceAll('{otherNum}', otherNum.toString()).replace('{tenTimesOther}', tenTimesOther.toString()) || `Think: (10 × ${otherNum}) ÷ 2. That's ${tenTimesOther} ÷ 2.`,
+        t.fivesStep3?.replace('{tenTimesOther}', tenTimesOther.toString()).replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `Half of ${tenTimesOther} is ${result}. So, 5 × ${otherNum} = ${result}.`
+      ],
+      pattern: t.fivesPattern || `Any number × 5 = (that number × 10) ÷ 2.`,
+      mnemonics: t.fivesMnemonic || `Five is half of ten, easy to win!`
+    };
+  }
+
   // Pattern recognition for 9s
   if (a === 9 || b === 9) {
     const other = a === 9 ? b : a;
@@ -51,10 +86,10 @@ export const generateSmartExplanation = (
       strategy: 'pattern_recognition',
       concept: t.ninesPatternConcept || `Special 9s trick: Use the "subtract from 10" method`,
       steps: [
-        t.ninesStep1?.replace('{other}', other.toString()) || `Notice this is 9 × ${other}`,
-        t.ninesStep2?.replace('{other}', other.toString()).replace('{result}', (10 * other).toString()) || `Think: 10 × ${other} = ${10 * other}`,
+        t.ninesStep1?.replaceAll('{other}', other.toString()) || `Notice this is 9 × ${other}`,
+        t.ninesStep2?.replaceAll('{other}', other.toString()).replace('{result}', (10 * other).toString()) || `Think: 10 × ${other} = ${10 * other}`,
         t.ninesStep3?.replaceAll('{other}', other.toString()).replace('{calc1}', (10 * other).toString()).replace('{calc2}', (9 * other).toString()) || `Then subtract ${other}: ${10 * other} - ${other} = ${9 * other}`,
-        t.ninesStep4?.replace('{other}', other.toString()).replace('{result}', (9 * other).toString()) || `So 9 × ${other} = ${9 * other}`
+        t.ninesStep4?.replaceAll('{other}', other.toString()).replace('{result}', (9 * other).toString()) || `So 9 × ${other} = ${9 * other}`
       ],
       pattern: t.ninesPattern || `9 times anything: multiply by 10, then subtract the number!`,
       mnemonics: t.ninesMnemonic || `Remember: 9 is just 1 less than 10!`
@@ -83,10 +118,10 @@ export const generateSmartExplanation = (
       strategy: 'pattern_recognition', // Or 'tens_trick'
       concept: t.tensConcept || `Multiplying by 10 is super easy!`,
       steps: [
-        t.tensStep1?.replace('{other}', other.toString()) || `This is ${other} × 10 (or 10 × ${other}).`,
-        t.tensStep2?.replace('{other}', other.toString()) || `To multiply any number by 10, just add a zero to the end of it.`,
-        t.tensStep3?.replace('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `So, ${other} becomes ${other}0.`,
-        t.tensStep4?.replace('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `The answer is ${other} × 10 = ${other * 10}.`
+        t.tensStep1?.replaceAll('{other}', other.toString()) || `This is ${other} × 10 (or 10 × ${other}).`,
+        t.tensStep2?.replaceAll('{other}', other.toString()) || `To multiply any number by 10, just add a zero to the end of it.`,
+        t.tensStep3?.replaceAll('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `So, ${other} becomes ${other}0.`,
+        t.tensStep4?.replaceAll('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `The answer is ${other} × 10 = ${other * 10}.`
       ],
       pattern: t.tensPattern || `Any number × 10 = that number with a 0 added to the end.`,
       mnemonics: t.tensMnemonic || `Ten is the easiest - just add a zero!`
