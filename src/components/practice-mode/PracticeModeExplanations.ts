@@ -62,232 +62,297 @@ export const generateSmartExplanation = (
     };
   }
 
+  // Refactored strategy selection logic starts here
+  interface ApplicableStrategy {
+    name: string;
+    complexityOrder: number;
+    generate: () => ExplanationContent;
+  }
+  const applicableStrategies: ApplicableStrategy[] = [];
+
   let a = initialA;
   let b = initialB;
-  // Symmetry: Internally swap a and b if b < a to potentially simplify strategy selection.
-  // This helps use strategies like "multiply by 2" if the problem is e.g. 7x2 (becomes 2x7).
-  // Or ensures smaller number is first for skip counting if no other specific strategy matches.
+  // Symmetry: Internally swap a and b if b < a
   if (b < a) {
     [a, b] = [b, a];
   }
 
-  // Multiplying by 2 (Doubles)
-  if (a === 2 || b === 2) { // b === 2 check is mostly for completeness if swap wasn't done or a=b=2
-    const otherNum = a === 2 ? b : a;
-    const result = 2 * otherNum;
-    return {
-      strategy: 'doubles',
-      concept: t.twosConcept || `Multiplying by 2 is just doubling!`,
-      steps: [
-        t.twosStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 2 × ${otherNum} (or ${otherNum} × 2).`,
-        t.twosStep2?.replaceAll('{otherNum}', otherNum.toString()) || `Doubling means adding the number to itself: ${otherNum} + ${otherNum}.`,
-        t.twosStep3?.replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `So, 2 × ${otherNum} = ${result}.`
-      ],
-      pattern: t.twosPattern || `Any number × 2 = that number + itself.`,
-      mnemonics: t.twosMnemonic || `Two makes a pair, just add it there!`
-    };
+  // Define strategy checks and add to applicableStrategies if they match
+
+  // Strategy: Tens (Complexity: 2)
+  // Note: The original code had a 'pattern_recognition' for 10s. We use 'tens' for clarity.
+  if (a === 10 || b === 10) { // b === 10 check is for when initialA was 10 and initialB < 10, so no swap happened.
+    const other = (a === 10 && b !== 10) ? b : (b === 10 && a !== 10) ? a : (a === 10 && b === 10) ? 10 : initialA === 10 ? initialB : initialA; // Handle 10x10 and ensure correct 'other'
+    applicableStrategies.push({
+      name: 'tens',
+      complexityOrder: 2,
+      generate: () => ({
+        strategy: 'tens', // Specific strategy name
+        concept: t.tensConcept || `Multiplying by 10 is super easy!`,
+        steps: [
+          t.tensStep1?.replaceAll('{other}', other.toString()) || `This is ${other} × 10 (or 10 × ${other}).`,
+          t.tensStep2?.replaceAll('{other}', other.toString()) || `To multiply any number by 10, just add a zero to the end of it.`,
+          t.tensStep3?.replaceAll('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `So, ${other} becomes ${other}0.`,
+          t.tensStep4?.replaceAll('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `The answer is ${other} × 10 = ${other * 10}.`
+        ],
+        pattern: t.tensPattern || `Any number × 10 = that number with a 0 added to the end.`,
+        mnemonics: t.tensMnemonic || `Ten is the easiest - just add a zero!`
+      })
+    });
   }
 
-  // Multiplying by 5 (Fabulous Fives)
-  if (a === 5 || b === 5) {
-    const otherNum = a === 5 ? b : a;
+  // Strategy: Twos (Doubles) (Complexity: 3)
+  // Original code had 'doubles', we use 'twos' for consistency with translation keys like 'twosConcept'.
+  if (a === 2) { // Check only 'a' due to symmetry swap (initialA or initialB could be 2)
+    const otherNum = b; // 'a' is 2 after potential swap
+    const result = 2 * otherNum;
+    applicableStrategies.push({
+      name: 'twos',
+      complexityOrder: 3,
+      generate: () => ({
+        strategy: 'twos', // Specific strategy name
+        concept: t.twosConcept || `Multiplying by 2 is just doubling!`,
+        steps: [
+          t.twosStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 2 × ${otherNum} (or ${otherNum} × 2).`,
+          t.twosStep2?.replaceAll('{otherNum}', otherNum.toString()) || `Doubling means adding the number to itself: ${otherNum} + ${otherNum}.`,
+          t.twosStep3?.replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `So, 2 × ${otherNum} = ${result}.`
+        ],
+        pattern: t.twosPattern || `Any number × 2 = that number + itself.`,
+        mnemonics: t.twosMnemonic || `Two makes a pair, just add it there!`
+      })
+    });
+  }
+
+  // Strategy: Fives (Complexity: 4)
+  if (a === 5) { // Check only 'a' due to symmetry swap
+    const otherNum = b; // 'a' is 5 after potential swap
     const result = 5 * otherNum;
     const tenTimesOther = 10 * otherNum;
-    return {
-      strategy: 'fives',
-      concept: t.fivesConcept || `Multiplying by 5 uses the 'half of 10' trick!`,
-      steps: [
-        t.fivesStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 5 × ${otherNum} (or ${otherNum} × 5).`,
-        t.fivesStep2?.replaceAll('{otherNum}', otherNum.toString()).replace('{tenTimesOther}', tenTimesOther.toString()) || `Think: (10 × ${otherNum}) ÷ 2. That's ${tenTimesOther} ÷ 2.`,
-        t.fivesStep3?.replace('{tenTimesOther}', tenTimesOther.toString()).replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `Half of ${tenTimesOther} is ${result}. So, 5 × ${otherNum} = ${result}.`
-      ],
-      pattern: t.fivesPattern || `Any number × 5 = (that number × 10) ÷ 2.`,
-      mnemonics: t.fivesMnemonic || `Five is half of ten, easy to win!`
-    };
+    applicableStrategies.push({
+      name: 'fives',
+      complexityOrder: 4,
+      generate: () => ({
+        strategy: 'fives', // Specific strategy name
+        concept: t.fivesConcept || `Multiplying by 5 uses the 'half of 10' trick!`,
+        steps: [
+          t.fivesStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 5 × ${otherNum} (or ${otherNum} × 5).`,
+          t.fivesStep2?.replaceAll('{otherNum}', otherNum.toString()).replace('{tenTimesOther}', tenTimesOther.toString()) || `Think: (10 × ${otherNum}) ÷ 2. That's ${tenTimesOther} ÷ 2.`,
+          t.fivesStep3?.replace('{tenTimesOther}', tenTimesOther.toString()).replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `Half of ${tenTimesOther} is ${result}. So, 5 × ${otherNum} = ${result}.`
+        ],
+        pattern: t.fivesPattern || `Any number × 5 = (that number × 10) ÷ 2.`,
+        mnemonics: t.fivesMnemonic || `Five is half of ten, easy to win!`
+      })
+    });
+  }
+  
+  // Strategy: Elevens (Simple) (Complexity: 5)
+  // Original code had 'pattern_recognition', we use 'elevens_simple'.
+  if (a === 11 && b < 10) { // 'a' is 11 after potential swap, 'b' is the single digit
+    applicableStrategies.push({
+      name: 'elevens_simple',
+      complexityOrder: 5,
+      generate: () => ({
+        strategy: 'elevens_simple', // Specific strategy name
+        concept: t.elevensPatternConcept || `Magical 11s pattern for single digits`,
+        steps: [
+          t.elevensStep1?.replaceAll('{digit}', b.toString()) || `Special 11 pattern: 11 × ${b}`,
+          t.elevensStep2?.replaceAll('{digit}', b.toString()) || `Just write the digit twice: ${b}${b}`,
+          t.elevensStep3?.replaceAll('{digit}', b.toString()).replace('{result}', (11 * b).toString()) || `Check: 11 × ${b} = ${11 * b}`
+        ],
+        pattern: t.elevensPattern || `11 × single digit = repeat the digit!`,
+        mnemonics: t.elevensMnemonic || `11 likes to see double!`
+      })
+    });
   }
 
-  // Pattern recognition for 9s
-  if (a === 9 || b === 9) {
-    const other = a === 9 ? b : a;
-    return {
-      strategy: 'pattern_recognition',
-      concept: t.ninesPatternConcept || `Special 9s trick: Use the "subtract from 10" method`,
-      steps: [
-        t.ninesStep1?.replaceAll('{other}', other.toString()) || `Notice this is 9 × ${other}`,
-        t.ninesStep2?.replaceAll('{other}', other.toString()).replace('{result}', (10 * other).toString()) || `Think: 10 × ${other} = ${10 * other}`,
-        t.ninesStep3?.replaceAll('{other}', other.toString()).replace('{calc1}', (10 * other).toString()).replace('{calc2}', (9 * other).toString()) || `Then subtract ${other}: ${10 * other} - ${other} = ${9 * other}`,
-        t.ninesStep4?.replaceAll('{other}', other.toString()).replace('{result}', (9 * other).toString()) || `So 9 × ${other} = ${9 * other}`
-      ],
-      pattern: t.ninesPattern || `9 times anything: multiply by 10, then subtract the number!`,
-      mnemonics: t.ninesMnemonic || `Remember: 9 is just 1 less than 10!`
-    };
-  }
-
-  // Pattern recognition for 11s
-  if (a === 11 && b < 10) { // Simple 11s (e.g., 11x7)
-    return {
-      strategy: 'pattern_recognition',
-      concept: t.elevensPatternConcept || `Magical 11s pattern for single digits`,
-      steps: [
-        t.elevensStep1?.replaceAll('{digit}', b.toString()) || `Special 11 pattern: 11 × ${b}`,
-        t.elevensStep2?.replaceAll('{digit}', b.toString()) || `Just write the digit twice: ${b}${b}`,
-        t.elevensStep3?.replaceAll('{digit}', b.toString()).replace('{result}', (11 * b).toString()) || `Check: 11 × ${b} = ${11 * b}`
-      ],
-      pattern: t.elevensPattern || `11 × single digit = repeat the digit!`,
-      mnemonics: t.elevensMnemonic || `11 likes to see double!`
-    };
-  }
-
-  // Advanced 11s for two-digit numbers (e.g., 11x23)
-  if (a === 11 && b >= 10 && b < 100) {
-    const firstDigit = Math.floor(b / 10);
-    const secondDigit = b % 10;
-    const middleSum = firstDigit + secondDigit;
-    const result = 11 * b;
-    let steps;
-    if (middleSum < 10) {
-      steps = [
-        t.advElevensStep1?.replaceAll('{b}', b.toString()) || `For 11 × ${b}:`,
-        t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
-        t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
-        t.advElevensStep4?.replace('{firstDigit}', firstDigit.toString()).replace('{middleSum}', middleSum.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{result}', result.toString()) || `Place the sum in the middle: ${firstDigit}${middleSum}${secondDigit}. So, 11 × ${b} = ${result}.`
-      ];
-    } else {
-      const carry = Math.floor(middleSum / 10);
-      const middleDigit = middleSum % 10;
-      steps = [
-        t.advElevensStep1?.replaceAll('{b}', b.toString()) || `For 11 × ${b}:`,
-        t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
-        t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
-        t.advElevensStep5?.replace('{middleSum}', middleSum.toString()).replace('{middleDigit}', middleDigit.toString()).replace('{carry}', carry.toString()) || `${middleSum} is two digits. Use ${middleDigit} for the middle, carry ${carry} to the first digit.`,
-        t.advElevensStep6?.replace('{firstDigit}', firstDigit.toString()).replace('{carry}', carry.toString()).replace('{newFirstDigit}', (firstDigit + carry).toString()).replace('{middleDigit}', middleDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{result}', result.toString()) || `New first digit: ${firstDigit}+${carry}=${firstDigit + carry}. Result: ${(firstDigit + carry)}${middleDigit}${secondDigit}. So, 11 × ${b} = ${result}.`
-      ];
-    }
-    return {
-      strategy: 'pattern_recognition',
-      concept: t.advElevensConcept || `Advanced 11s trick for two-digit numbers`,
-      steps: steps,
-      pattern: t.advElevensPattern || `11 × AB = A (A+B) B. If A+B > 9, carry over.`,
-      mnemonics: t.advElevensMnemonic || `11s are tricky but cool!`
-    };
-  }
-
-  // Pattern recognition for 10s
-  if (a === 10 || b === 10) {
-    const other = a === 10 ? b : a;
-    return {
-      strategy: 'pattern_recognition', // Or 'tens_trick'
-      concept: t.tensConcept || `Multiplying by 10 is super easy!`,
-      steps: [
-        t.tensStep1?.replaceAll('{other}', other.toString()) || `This is ${other} × 10 (or 10 × ${other}).`,
-        t.tensStep2?.replaceAll('{other}', other.toString()) || `To multiply any number by 10, just add a zero to the end of it.`,
-        t.tensStep3?.replaceAll('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `So, ${other} becomes ${other}0.`,
-        t.tensStep4?.replaceAll('{other}', other.toString()).replace('{result}', (other * 10).toString()) || `The answer is ${other} × 10 = ${other * 10}.`
-      ],
-      pattern: t.tensPattern || `Any number × 10 = that number with a 0 added to the end.`,
-      mnemonics: t.tensMnemonic || `Ten is the easiest - just add a zero!`
-    };
-  }
-
-  // Perfect Squares
+  // Strategy: Squares (Complexity: 6)
   if (a === b) {
     const num = a; // or b, they are the same
     const result = num * num;
-    return {
-      strategy: 'squares',
-      concept: t.squaresConcept?.replaceAll('{num}', num.toString()) || `Multiplying a number by itself is called 'squaring'.`,
-      steps: [
-        t.squaresStep1?.replaceAll('{num}', num.toString()) || `This is ${num} × ${num}.`,
-        t.squaresStep2?.replaceAll('{num}', num.toString()).replace('{result}', result.toString()) || `The square of ${num} is ${result}. So, ${num} × ${num} = ${result}.`
-      ],
-      pattern: t.squaresPattern?.replaceAll('{num}', num.toString()) || `${num} × ${num} is a 'perfect square'. These are good to memorize!`,
-      mnemonics: t.squaresMnemonic || `Squares are special, learn them well!`
-    };
+    applicableStrategies.push({
+      name: 'squares',
+      complexityOrder: 6,
+      generate: () => ({
+        strategy: 'squares', // Specific strategy name
+        concept: t.squaresConcept?.replaceAll('{num}', num.toString()) || `Multiplying a number by itself is called 'squaring'.`,
+        steps: [
+          t.squaresStep1?.replaceAll('{num}', num.toString()) || `This is ${num} × ${num}.`,
+          t.squaresStep2?.replaceAll('{num}', num.toString()).replace('{result}', result.toString()) || `The square of ${num} is ${result}. So, ${num} × ${num} = ${result}.`
+        ],
+        pattern: t.squaresPattern?.replaceAll('{num}', num.toString()) || `${num} × ${num} is a 'perfect square'. These are good to memorize!`,
+        mnemonics: t.squaresMnemonic || `Squares are special, learn them well!`
+      })
+    });
   }
 
-  // Near Doubles (Consecutive Numbers), e.g. 6x7
-  // This check assumes a and b were swapped if b < a, so a is the smaller number.
-  if (b === a + 1) {
+  // Strategy: Nines (Complexity: 7)
+  // Original code had 'pattern_recognition', we use 'nines'.
+  if (a === 9) { // Check only 'a' due to symmetry swap
+    const other = b; // 'a' is 9 after potential swap
+    applicableStrategies.push({
+      name: 'nines',
+      complexityOrder: 7,
+      generate: () => ({
+        strategy: 'nines', // Specific strategy name
+        concept: t.ninesPatternConcept || `Special 9s trick: Use the "subtract from 10" method`,
+        steps: [
+          t.ninesStep1?.replaceAll('{other}', other.toString()) || `Notice this is 9 × ${other}`,
+          t.ninesStep2?.replaceAll('{other}', other.toString()).replace('{result}', (10 * other).toString()) || `Think: 10 × ${other} = ${10 * other}`,
+          t.ninesStep3?.replaceAll('{other}', other.toString()).replace('{calc1}', (10 * other).toString()).replace('{calc2}', (9 * other).toString()) || `Then subtract ${other}: ${10 * other} - ${other} = ${9 * other}`,
+          t.ninesStep4?.replaceAll('{other}', other.toString()).replace('{result}', (9 * other).toString()) || `So 9 × ${other} = ${9 * other}`
+        ],
+        pattern: t.ninesPattern || `9 times anything: multiply by 10, then subtract the number!`,
+        mnemonics: t.ninesMnemonic || `Remember: 9 is just 1 less than 10!`
+      })
+    });
+  }
+  
+  // Strategy: Near Doubles (Complexity: 8)
+  if (b === a + 1) { // 'a' is smaller due to symmetry swap
     const result = a * b;
     const aSquared = a * a;
-    return {
-      strategy: 'near_doubles',
-      concept: t.nearDoublesConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Multiplying consecutive numbers like ${a} × ${b}.`,
-      steps: [
-        t.nearDoublesStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `This is ${a} × ${b}. Notice ${b} is ${a} + 1.`,
-        t.nearDoublesStep2?.replaceAll('{a}', a.toString()).replace('{aSquared}', aSquared.toString()) || `You can think of this as (${a} × ${a}) + ${a}, which is ${aSquared} + ${a}.`,
-        t.nearDoublesStep3?.replace('{aSquared}', aSquared.toString()).replaceAll('{a}', a.toString()).replace('{result}', result.toString()) || `So, ${aSquared} + ${a} = ${result}. Thus, ${a} × ${b} = ${result}.`
-      ],
-      pattern: t.nearDoublesPattern || `n × (n+1) = n² + n. (Square the smaller number, then add it again).`,
-      mnemonics: t.nearDoublesMnemonic || `Neighbors help: square the small one, add it on!`
-    };
+    applicableStrategies.push({
+      name: 'near_doubles',
+      complexityOrder: 8,
+      generate: () => ({
+        strategy: 'near_doubles', // Specific strategy name
+        concept: t.nearDoublesConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Multiplying consecutive numbers like ${a} × ${b}.`,
+        steps: [
+          t.nearDoublesStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `This is ${a} × ${b}. Notice ${b} is ${a} + 1.`,
+          t.nearDoublesStep2?.replaceAll('{a}', a.toString()).replace('{aSquared}', aSquared.toString()) || `You can think of this as (${a} × ${a}) + ${a}, which is ${aSquared} + ${a}.`,
+          t.nearDoublesStep3?.replace('{aSquared}', aSquared.toString()).replaceAll('{a}', a.toString()).replace('{result}', result.toString()) || `So, ${aSquared} + ${a} = ${result}. Thus, ${a} × ${b} = ${result}.`
+        ],
+        pattern: t.nearDoublesPattern || `n × (n+1) = n² + n. (Square the smaller number, then add it again).`,
+        mnemonics: t.nearDoublesMnemonic || `Neighbors help: square the small one, add it on!`
+      })
+    });
   }
 
-  // Building From Known Facts (BFKF)
-  // Applied when 'a' is 3, 4, 6, 7, 8 and not caught by simpler specific rules.
-  // Assumes facts with 1, 2, 5, 10 are foundational.
-  let bfkfSteps: string[] | undefined;
-  let bfkfPattern: string | undefined;
-  let bfkfConcept = t.bfkfConcept || `Building from simpler known facts.`;
+  // Strategy: Building From Known Facts (BFKF) (Complexity: 9)
+  if ([3, 4, 6, 7, 8].includes(a)) { // 'a' is the smaller number after swap
+    applicableStrategies.push({
+      name: 'building_known_facts',
+      complexityOrder: 9,
+      generate: () => {
+        let generatedBfkfSteps: string[];
+        let generatedBfkfPattern: string;
+        const generatedBfkfConceptText = t.bfkfConcept || `Building from simpler known facts.`;
 
-  if (a === 3) { // 3xb = (2xb) + (1xb)
-    bfkfSteps = [
-      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
-      t.bfkf3sStep2?.replace('{b}', b.toString()) || `Break down 3:  3 = 2 + 1.`,
-      t.bfkf3sStep3?.replaceAll('{b}', b.toString()) || `So, 3 × ${b} = (2 × ${b}) + (1 × ${b}).`,
-      t.bfkf3sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy), and 1 × ${b} is ${1 * b}.`,
-      t.bfkf3sStep5?.replace('{sum1}', (2 * b).toString()).replace('{sum2}', (1 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${2 * b} + ${1 * b} = ${a * b}.`,
-    ];
-    bfkfPattern = t.bfkf3sPattern || `3×N = (2×N) + (1×N)`;
-  } else if (a === 4) { // 4xb = (2xb) + (2xb) OR 4xb = (5xb) - (1xb)
-    // Prefer (2xb) + (2xb) as it's simpler
-    bfkfSteps = [
-      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
-      t.bfkf4sStep2?.replace('{b}', b.toString()) || `Break down 4:  4 = 2 + 2.`,
-      t.bfkf4sStep3?.replaceAll('{b}', b.toString()) || `So, 4 × ${b} = (2 × ${b}) + (2 × ${b}).`,
-      t.bfkf4sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy).`,
-      t.bfkf4sStep5?.replace('{sum1}', (2 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${2 * b} + ${2 * b} = ${a * b}.`,
-    ];
-    bfkfPattern = t.bfkf4sPattern || `4×N = (2×N) + (2×N)`;
-  } else if (a === 6) { // 6xb = (5xb) + (1xb)
-    bfkfSteps = [
-      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
-      t.bfkf6sStep2?.replace('{b}', b.toString()) || `Break down 6:  6 = 5 + 1.`,
-      t.bfkf6sStep3?.replaceAll('{b}', b.toString()) || `So, 6 × ${b} = (5 × ${b}) + (1 × ${b}).`,
-      t.bfkf6sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 1 × ${b} is ${1 * b}.`,
-      t.bfkf6sStep5?.replace('{sum1}', (5 * b).toString()).replace('{sum2}', (1 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${5 * b} + ${1 * b} = ${a * b}.`,
-    ];
-    bfkfPattern = t.bfkf6sPattern || `6×N = (5×N) + (1×N)`;
-  } else if (a === 7) { // 7xb = (5xb) + (2xb)
-    bfkfSteps = [
-      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
-      t.bfkf7sStep2?.replace('{b}', b.toString()) || `Break down 7:  7 = 5 + 2.`,
-      t.bfkf7sStep3?.replaceAll('{b}', b.toString()) || `So, 7 × ${b} = (5 × ${b}) + (2 × ${b}).`,
-      t.bfkf7sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
-      t.bfkf7sStep5?.replace('{sum1}', (5 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${5 * b} + ${2 * b} = ${a * b}.`,
-    ];
-    bfkfPattern = t.bfkf7sPattern || `7×N = (5×N) + (2×N)`;
-  } else if (a === 8) { // 8xb = (10xb) - (2xb)
-    bfkfSteps = [
-      t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
-      t.bfkf8sStep2?.replace('{b}', b.toString()) || `Think of 8 as 10 - 2.`,
-      t.bfkf8sStep3?.replaceAll('{b}', b.toString()) || `So, 8 × ${b} = (10 × ${b}) - (2 × ${b}).`,
-      t.bfkf8sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (10 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 10 × ${b} is ${10 * b} (Tens Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
-      t.bfkf8sStep5?.replace('{sum1}', (10 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Subtract them: ${10 * b} - ${2 * b} = ${a * b}.`,
-    ];
-    bfkfPattern = t.bfkf8sPattern || `8×N = (10×N) - (2×N)`;
+        if (a === 3) {
+          generatedBfkfSteps = [
+            t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+            t.bfkf3sStep2?.replace('{b}', b.toString()) || `Break down 3:  3 = 2 + 1.`,
+            t.bfkf3sStep3?.replaceAll('{b}', b.toString()) || `So, 3 × ${b} = (2 × ${b}) + (1 × ${b}).`,
+            t.bfkf3sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy), and 1 × ${b} is ${1 * b}.`,
+            t.bfkf3sStep5?.replace('{sum1}', (2 * b).toString()).replace('{sum2}', (1 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${2 * b} + ${1 * b} = ${a * b}.`,
+          ];
+          generatedBfkfPattern = t.bfkf3sPattern || `3×N = (2×N) + (1×N)`;
+        } else if (a === 4) {
+          generatedBfkfSteps = [
+            t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+            t.bfkf4sStep2?.replace('{b}', b.toString()) || `Break down 4:  4 = 2 + 2.`,
+            t.bfkf4sStep3?.replaceAll('{b}', b.toString()) || `So, 4 × ${b} = (2 × ${b}) + (2 × ${b}).`,
+            t.bfkf4sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy).`,
+            t.bfkf4sStep5?.replace('{sum1}', (2 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${2 * b} + ${2 * b} = ${a * b}.`,
+          ];
+          generatedBfkfPattern = t.bfkf4sPattern || `4×N = (2×N) + (2×N)`;
+        } else if (a === 6) {
+          generatedBfkfSteps = [
+            t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+            t.bfkf6sStep2?.replace('{b}', b.toString()) || `Break down 6:  6 = 5 + 1.`,
+            t.bfkf6sStep3?.replaceAll('{b}', b.toString()) || `So, 6 × ${b} = (5 × ${b}) + (1 × ${b}).`,
+            t.bfkf6sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 1 × ${b} is ${1 * b}.`,
+            t.bfkf6sStep5?.replace('{sum1}', (5 * b).toString()).replace('{sum2}', (1 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${5 * b} + ${1 * b} = ${a * b}.`,
+          ];
+          generatedBfkfPattern = t.bfkf6sPattern || `6×N = (5×N) + (1×N)`;
+        } else if (a === 7) {
+          generatedBfkfSteps = [
+            t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+            t.bfkf7sStep2?.replace('{b}', b.toString()) || `Break down 7:  7 = 5 + 2.`,
+            t.bfkf7sStep3?.replaceAll('{b}', b.toString()) || `So, 7 × ${b} = (5 × ${b}) + (2 × ${b}).`,
+            t.bfkf7sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
+            t.bfkf7sStep5?.replace('{sum1}', (5 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${5 * b} + ${2 * b} = ${a * b}.`,
+          ];
+          generatedBfkfPattern = t.bfkf7sPattern || `7×N = (5×N) + (2×N)`;
+        } else if (a === 8) {
+          generatedBfkfSteps = [
+            t.bfkfStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+            t.bfkf8sStep2?.replace('{b}', b.toString()) || `Think of 8 as 10 - 2.`,
+            t.bfkf8sStep3?.replaceAll('{b}', b.toString()) || `So, 8 × ${b} = (10 × ${b}) - (2 × ${b}).`,
+            t.bfkf8sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (10 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 10 × ${b} is ${10 * b} (Tens Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
+            t.bfkf8sStep5?.replace('{sum1}', (10 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Subtract them: ${10 * b} - ${2 * b} = ${a * b}.`,
+          ];
+          generatedBfkfPattern = t.bfkf8sPattern || `8×N = (10×N) - (2×N)`;
+        } else {
+          // This case should ideally not be reached due to the outer if condition.
+          return { strategy: 'error_bfkf_unexpected_a', concept: 'Error', steps: ['Unexpected number for BFKF'], pattern: '' };
+        }
+        return {
+          strategy: 'building_known_facts', // Specific strategy name
+          concept: generatedBfkfConceptText,
+          steps: generatedBfkfSteps,
+          pattern: generatedBfkfPattern,
+          mnemonics: t.bfkfMnemonic || `Use what you know to find what you don't!`,
+        };
+      }
+    });
   }
 
-  if (bfkfSteps && bfkfPattern) {
-    return {
-      strategy: 'building_known_facts',
-      concept: bfkfConcept,
-      steps: bfkfSteps,
-      pattern: bfkfPattern,
-      mnemonics: t.bfkfMnemonic || `Use what you know to find what you don't!`,
-    };
+  // Strategy: Elevens (Advanced) (Complexity: 10)
+  // Original code had 'pattern_recognition', we use 'elevens_advanced'.
+  if (a === 11 && b >= 10 && b < 100) { // 'a' is 11 after potential swap, 'b' is the two-digit number
+    applicableStrategies.push({
+      name: 'elevens_advanced',
+      complexityOrder: 10,
+      generate: () => {
+        const firstDigit = Math.floor(b / 10);
+        const secondDigit = b % 10;
+        const middleSum = firstDigit + secondDigit;
+        const result = 11 * b;
+        let advSteps;
+        if (middleSum < 10) {
+          advSteps = [
+            t.advElevensStep1?.replaceAll('{b}', b.toString()) || `For 11 × ${b}:`,
+            t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
+            t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
+            t.advElevensStep4?.replace('{firstDigit}', firstDigit.toString()).replace('{middleSum}', middleSum.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{result}', result.toString()) || `Place the sum in the middle: ${firstDigit}${middleSum}${secondDigit}. So, 11 × ${b} = ${result}.`
+          ];
+        } else {
+          const carry = Math.floor(middleSum / 10);
+          const middleDigit = middleSum % 10;
+          advSteps = [
+            t.advElevensStep1?.replaceAll('{b}', b.toString()) || `For 11 × ${b}:`,
+            t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
+            t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
+            t.advElevensStep5?.replace('{middleSum}', middleSum.toString()).replace('{middleDigit}', middleDigit.toString()).replace('{carry}', carry.toString()) || `${middleSum} is two digits. Use ${middleDigit} for the middle, carry ${carry} to the first digit.`,
+            t.advElevensStep6?.replace('{firstDigit}', firstDigit.toString()).replace('{carry}', carry.toString()).replace('{newFirstDigit}', (firstDigit + carry).toString()).replace('{middleDigit}', middleDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{result}', result.toString()) || `New first digit: ${firstDigit}+${carry}=${firstDigit + carry}. Result: ${(firstDigit + carry)}${middleDigit}${secondDigit}. So, 11 × ${b} = ${result}.`
+          ];
+        }
+        return {
+          strategy: 'elevens_advanced', // Specific strategy name
+          concept: t.advElevensConcept || `Advanced 11s trick for two-digit numbers`,
+          steps: advSteps,
+          pattern: t.advElevensPattern || `11 × AB = A (A+B) B. If A+B > 9, carry over.`,
+          mnemonics: t.advElevensMnemonic || `11s are tricky but cool!`
+        };
+      }
+    });
   }
 
+  // If specific strategies were found, sort by success then complexity, and return the best one
+  if (applicableStrategies.length > 0) {
+    applicableStrategies.sort((s1, s2) => {
+      const success1 = strategySuccess[s1.name] || 0;
+      const success2 = strategySuccess[s2.name] || 0;
+      if (success1 !== success2) {
+        return success2 - success1; // Higher success count first
+      }
+      return s1.complexityOrder - s2.complexityOrder; // Lower complexity order first (simpler)
+    });
+    return applicableStrategies[0].generate();
+  }
+
+  // Fallback strategies if no specific pattern strategy was chosen
   // For struggling numbers or multiple attempts, use visual
   if (strugglingWith.includes(a) || strugglingWith.includes(b) || attempts > 1) {
     return {
@@ -304,7 +369,7 @@ export const generateSmartExplanation = (
   }
 
   // Skip counting for medium numbers
-  if (a <= 10 && b <= 10) {
+  if (a <= 10 && b <= 10) { // Ensure 'a' and 'b' are the potentially swapped values
     return {
       strategy: 'skip_counting',
       concept: t.skipCountingConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Count by ${a}s, ${b} times`,
@@ -318,7 +383,7 @@ export const generateSmartExplanation = (
   return {
     strategy: 'decomposition',
     concept: t.decompositionConcept || `Break down into easier parts`,
-    steps: generateDecompositionSteps(a, b, t),
+    steps: generateDecompositionSteps(a, b, t), // Ensure 'a' and 'b' are the potentially swapped values
     pattern: t.decompositionPattern || `Break large numbers into tens and ones`
   };
 };
