@@ -76,9 +76,9 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
             >
               <div className="flex items-center mb-3">
                 {getStrategyIcon(explanation.strategy)}
-                {/*<span className="ml-2 font-semibold text-indigo-800">*/}
-                {/*  {getTranslatedStrategyName(explanation.strategy)} {t.strategyLabelSuffix || 'Strategy'}*/}
-                {/*</span>*/}
+                <span className="ml-2 font-semibold text-indigo-800">
+                  {getTranslatedStrategyName(explanation.strategy)} {t.strategyLabelSuffix || 'Strategy'}
+                </span>
               </div>
 
               <div className="space-y-4">
@@ -89,7 +89,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
 
                 {explanation.visual && (
                   <div className="bg-green-50 rounded-lg p-3">
-                    {/*<h4 className="font-medium text-green-700 mb-2">{t.visualLabel || '👁️ Visual:'}</h4>*/}
+                    <h4 className="font-medium text-green-700 mb-2">{t.visualLabel || '👁️ Visual:'}</h4>
                     <pre className="text-green-800 font-mono text-sm whitespace-pre-wrap">
                       {explanation.visual}
                     </pre>
@@ -97,7 +97,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                 )}
 
                 <div className="bg-blue-50 rounded-lg p-3">
-                  {/*<h4 className="font-medium text-blue-700 mb-2">{t.stepsLabel || '📝 Steps:'}</h4>*/}
+                  <h4 className="font-medium text-blue-700 mb-2">{t.stepsLabel || '📝 Steps:'}</h4>
                   <ol className="space-y-1">
                     {explanation.steps.map((step, index) => (
                       <li key={index} className="text-blue-800">
