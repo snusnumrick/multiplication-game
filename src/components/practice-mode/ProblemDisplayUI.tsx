@@ -55,8 +55,21 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
         return t.strategySkipCounting || 'Skip Counting';
       case 'decomposition':
         return t.strategyDecomposition || 'Decomposition';
+      case 'doubles':
+        return t.strategyDoubles || 'Doubles';
+      case 'fives':
+        return t.strategyFives || 'Fives';
+      case 'squares':
+        return t.strategySquares || 'Squares';
+      case 'near_doubles':
+        return t.strategyNearDoubles || 'Near Doubles';
+      case 'building_known_facts':
+        return t.strategyBuildingKnownFacts || 'Building From Known Facts';
+      case 'ones':
+        return t.strategyOnes || 'Ones';
       default:
         // Fallback for any unknown strategies, convert from snake_case to Title Case
+        console.warn(`Missing translation for strategy: ${strategyKey}`);
         return strategyKey
           .split('_')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
