@@ -35,19 +35,27 @@ export function PracticeMode() {
     return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess);
   }, [userProgress.strugglingWith, t, gameProgress.strategySuccess]);
 
-  // Helper function to check if a different alternative explanation exists
-  const checkIfAlternativeExists = useCallback((currentExplanationContent: ExplanationContent | null): boolean => {
-    if (!currentProblem || !currentExplanationContent) return false;
-    
-    const testAttemptValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // More comprehensive probing
+  // Helper function to get a list of unique explanations based on strategy name
+  const getUniqueExplanationsList = useCallback((): ExplanationContent[] => {
+    if (!currentProblem) return [];
+
+    const testAttemptValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const allGenerated: ExplanationContent[] = [];
     for (const ta of testAttemptValues) {
-      const potentialAlt = generateSmartExplanation(currentProblem.a, currentProblem.b, ta);
-      if (potentialAlt && potentialAlt.strategy !== currentExplanationContent.strategy) {
-        return true; // Found a different strategy
+      // Ensure generateSmartExplanation is called with valid problem numbers
+      if (currentProblem.a != null && currentProblem.b != null) {
+        allGenerated.push(generateSmartExplanation(currentProblem.a, currentProblem.b, ta));
       }
     }
-    return false; // No different strategy found with the test values
-  }, [currentProblem, generateSmartExplanation]); // Removed 'attempts' from dependencies
+
+    const uniqueMap = new Map<string, ExplanationContent>();
+    for (const exp of allGenerated) {
+      if (exp && exp.strategy && !uniqueMap.has(exp.strategy)) {
+        uniqueMap.set(exp.strategy, exp);
+      }
+    }
+    return Array.from(uniqueMap.values());
+  }, [currentProblem, generateSmartExplanation]);
 
   // Foxy initialization
   const initializeFoxy = useCallback(() => {
@@ -144,9 +152,13 @@ export function PracticeMode() {
 
     // Show Foxy hint message
     showFoxyMessage?.('foxyHintMessage');
-    // Check if an alternative explanation exists for the newly shown hint
-    setCanShowAlternative(checkIfAlternativeExists(smartExp));
-  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage, checkIfAlternativeExists]);
+    
+    // Determine if alternative explanations exist
+    const uniqueExplanations = getUniqueExplanationsList();
+    const hasAlternatives = uniqueExplanations.some(ue => ue.strategy !== smartExp.strategy);
+    setCanShowAlternative(hasAlternatives);
+
+  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage, getUniqueExplanationsList]);
 
   const restartProblem = useCallback(() => {
     if (selectedTable) {
@@ -164,24 +176,52 @@ export function PracticeMode() {
   const handleExplainDifferently = useCallback(() => {
     if (!currentProblem || !explanation) return;
 
-    const testAttemptValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // More comprehensive probing
-    for (const ta of testAttemptValues) {
-      const potentialNewExplanation = generateSmartExplanation(currentProblem.a, currentProblem.b, ta);
-      if (potentialNewExplanation && potentialNewExplanation.strategy !== explanation.strategy) {
-        setExplanation(potentialNewExplanation);
-        playSound?.('click');
-        showFoxyMessage?.('foxyAlternativeHintMessage');
-        // After showing a new one, check if there's yet another alternative
-        setCanShowAlternative(checkIfAlternativeExists(potentialNewExplanation));
-        return; // Found and set a new explanation
-      }
+    const uniqueExplanations = getUniqueExplanationsList();
+    
+    // Find the index of the currently shown explanation's strategy
+    let currentIndexInUnique = uniqueExplanations.findIndex(exp => exp.strategy === explanation.strategy);
+    if (currentIndexInUnique === -1) { 
+        // If current explanation's strategy is not in the unique list (e.g. it was an initial fallback)
+        // treat as if we're starting the cycle from the beginning of uniqueExplanations.
+        // To find the "next" different one, we'd conceptually be before the first unique one.
+        // The loop below will handle finding the first actual unique one different from current.
+        currentIndexInUnique = 0; // Default to start, or handle as a special case if needed
+                                  // For simplicity, let the loop try to find something different.
+                                  // If current is truly unique and not in list, first item of uniqueExplanations will be chosen if different.
     }
 
-    // If loop completes, no different explanation was found with the test values
-    playSound?.('click');
-    showFoxyMessage?.('foxyNoMoreHintsMessage');
-    setCanShowAlternative(false);
-  }, [currentProblem, explanation, generateSmartExplanation, playSound, showFoxyMessage, setExplanation, setCanShowAlternative, checkIfAlternativeExists]); // Removed 'attempts' from dependencies
+    let nextDifferentExplanation: ExplanationContent | null = null;
+    
+    // Iterate through the unique explanations, starting from the one after the current, to find the *next different* one
+    for (let i = 1; i <= uniqueExplanations.length; i++) { // Iterate up to length to check all, including wrap-around
+      const potentialNextIndex = (currentIndexInUnique + i) % uniqueExplanations.length;
+      if (uniqueExplanations.length > 0 && uniqueExplanations[potentialNextIndex].strategy !== explanation.strategy) {
+        nextDifferentExplanation = uniqueExplanations[potentialNextIndex];
+        break;
+      }
+      // If all unique explanations have the same strategy as current, this loop won't find a different one.
+      if (i === uniqueExplanations.length && !nextDifferentExplanation) break; 
+    }
+
+    if (nextDifferentExplanation) {
+      setExplanation(nextDifferentExplanation);
+      playSound?.('click');
+      showFoxyMessage?.('foxyAlternativeHintMessage');
+
+      // After setting the new explanation, check if there are further alternatives
+      const hasFurtherAlternatives = uniqueExplanations.some(ue => ue.strategy !== nextDifferentExplanation!.strategy);
+      setCanShowAlternative(hasFurtherAlternatives);
+      if (!hasFurtherAlternatives) {
+        // If no further alternatives after this one, Foxy can say so.
+        showFoxyMessage?.('foxyNoMoreHintsMessage');
+      }
+    } else {
+      // No different explanation was found
+      playSound?.('click');
+      showFoxyMessage?.('foxyNoMoreHintsMessage');
+      setCanShowAlternative(false);
+    }
+  }, [currentProblem, explanation, getUniqueExplanationsList, playSound, showFoxyMessage, setExplanation, setCanShowAlternative]);
 
 
   // Client-side mount detection (preserved from original)
