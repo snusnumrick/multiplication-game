@@ -46,23 +46,6 @@ export const generateSmartExplanation = (
   strategySuccess: Record<string, number> // Added strategySuccess
 ): ExplanationContent => {
   console.log('generateSmartExplanation', initialA, initialB, attempts, strugglingWith, strategySuccess);
-  // Multiplying by 1 (Identity Property)
-  if (initialA === 1 || initialB === 1) {
-    console.log('generateSmartExplanation: 1');
-    const otherNum = initialA === 1 ? initialB : initialA;
-    const result = otherNum; // 1 * otherNum is otherNum
-    return {
-      strategy: 'ones',
-      concept: t.onesConcept || `Multiplying by 1 is super simple!`,
-      steps: [
-        t.onesStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is ${otherNum} × 1 (or 1 × ${otherNum}).`,
-        t.onesStep2 || `Any number multiplied by 1 is just itself.`,
-        t.onesStep3?.replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `So, ${otherNum} × 1 = ${result}.`
-      ],
-      pattern: t.onesPattern || `Any number × 1 = that number. It stays the same!`,
-      mnemonics: t.onesMnemonic || `One is like a magic mirror, it shows the number right back!`
-    };
-  }
 
   // Refactored strategy selection logic starts here
   interface ApplicableStrategy {
@@ -80,6 +63,30 @@ export const generateSmartExplanation = (
   }
 
   // Define strategy checks and add to applicableStrategies if they match
+
+  // Strategy: Ones (Identity Property) (Complexity: 1)
+  // This is placed first due to its fundamental nature and low complexity.
+  // 'a' will be 1 if either initialA or initialB was 1, due to the symmetry swap.
+  if (a === 1) {
+    console.log('generateSmartExplanation: ones');
+    const otherNum = b; // 'b' is the other number since 'a' is 1
+    const result = b;   // 1 * b = b
+    applicableStrategies.push({
+      name: 'ones',
+      complexityOrder: 1, // Simplest strategy
+      generate: () => ({
+        strategy: 'ones',
+        concept: t.onesConcept || `Multiplying by 1 is super simple!`,
+        steps: [
+          t.onesStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is ${otherNum} × 1 (or 1 × ${otherNum}).`,
+          t.onesStep2 || `Any number multiplied by 1 is just itself.`,
+          t.onesStep3?.replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `So, ${otherNum} × 1 = ${result}.`
+        ],
+        pattern: t.onesPattern || `Any number × 1 = that number. It stays the same!`,
+        mnemonics: t.onesMnemonic || `One is like a magic mirror, it shows the number right back!`
+      })
+    });
+  }
 
   // Strategy: Tens (Complexity: 2)
   // Note: The original code had a 'pattern_recognition' for 10s. We use 'tens' for clarity.
