@@ -90,7 +90,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
               <div className="flex items-center mb-3">
                 {getStrategyIcon(explanation.strategy)}
                 <span className="ml-2 font-semibold text-indigo-800">
-                  {getTranslatedStrategyName(explanation.strategy)} {t.strategyLabelSuffix || 'Strategy'}
+                  {t.strategyLabelSuffix || 'Strategy'} {getTranslatedStrategyName(explanation.strategy)}
                 </span>
               </div>
 
