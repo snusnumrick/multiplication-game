@@ -81,6 +81,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
     }
   };
 
+  console.log('hasAlternativeStrategy', hasAlternativeStrategy, 'onExplainDifferently', onExplainDifferently);
   return (
     <div className="text-center max-w-4xl mx-auto">
       <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl min-h-[500px] flex flex-col justify-center">
