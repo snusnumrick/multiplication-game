@@ -385,6 +385,21 @@ export interface Translation {
   squaresStep2?: string;
   squaresPattern?: string;
   squaresMnemonic?: string;
+  advElevensConcept?: string;
+  advElevensStep1?: string;
+  advElevensStep2?: string;
+  advElevensStep3?: string;
+  advElevensStep4?: string;
+  advElevensStep5?: string;
+  advElevensStep6?: string;
+  advElevensPattern?: string;
+  advElevensMnemonic?: string;
+  nearDoublesConcept?: string;
+  nearDoublesStep1?: string;
+  nearDoublesStep2?: string;
+  nearDoublesStep3?: string;
+  nearDoublesPattern?: string;
+  nearDoublesMnemonic?: string;
   visualArrayConcept?: string;
   visualStep1?: string;
   visualStep2?: string;
@@ -412,6 +427,7 @@ export interface Translation {
   strategyDoubles?: string;
   strategyFives?: string;
   strategySquares?: string;
+  strategyNearDoubles?: string; // Added for Near Doubles strategy name
 
   closeHintButton?: string;
 }

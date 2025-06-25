@@ -104,7 +104,7 @@ export const generateSmartExplanation = (
   }
 
   // Pattern recognition for 11s
-  if (a === 11 && b < 10) {
+  if (a === 11 && b < 10) { // Simple 11s (e.g., 11x7)
     return {
       strategy: 'pattern_recognition',
       concept: t.elevensPatternConcept || `Magical 11s pattern for single digits`,
@@ -115,6 +115,40 @@ export const generateSmartExplanation = (
       ],
       pattern: t.elevensPattern || `11 × single digit = repeat the digit!`,
       mnemonics: t.elevensMnemonic || `11 likes to see double!`
+    };
+  }
+
+  // Advanced 11s for two-digit numbers (e.g., 11x23)
+  if (a === 11 && b >= 10 && b < 100) {
+    const firstDigit = Math.floor(b / 10);
+    const secondDigit = b % 10;
+    const middleSum = firstDigit + secondDigit;
+    const result = 11 * b;
+    let steps;
+    if (middleSum < 10) {
+      steps = [
+        t.advElevensStep1?.replace('{b}', b.toString()) || `For 11 × ${b}:`,
+        t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
+        t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
+        t.advElevensStep4?.replace('{firstDigit}', firstDigit.toString()).replace('{middleSum}', middleSum.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{result}', result.toString()) || `Place the sum in the middle: ${firstDigit}${middleSum}${secondDigit}. So, 11 × ${b} = ${result}.`
+      ];
+    } else {
+      const carry = Math.floor(middleSum / 10);
+      const middleDigit = middleSum % 10;
+      steps = [
+        t.advElevensStep1?.replace('{b}', b.toString()) || `For 11 × ${b}:`,
+        t.advElevensStep2?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()) || `Separate the digits of ${b}: ${firstDigit} and ${secondDigit}.`,
+        t.advElevensStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{middleSum}', middleSum.toString()) || `Add them: ${firstDigit} + ${secondDigit} = ${middleSum}.`,
+        t.advElevensStep5?.replace('{middleSum}', middleSum.toString()).replace('{middleDigit}', middleDigit.toString()).replace('{carry}', carry.toString()) || `${middleSum} is two digits. Use ${middleDigit} for the middle, carry ${carry} to the first digit.`,
+        t.advElevensStep6?.replace('{firstDigit}', firstDigit.toString()).replace('{carry}', carry.toString()).replace('{newFirstDigit}', (firstDigit + carry).toString()).replace('{middleDigit}', middleDigit.toString()).replace('{secondDigit}', secondDigit.toString()).replace('{result}', result.toString()) || `New first digit: ${firstDigit}+${carry}=${firstDigit + carry}. Result: ${(firstDigit + carry)}${middleDigit}${secondDigit}. So, 11 × ${b} = ${result}.`
+      ];
+    }
+    return {
+      strategy: 'pattern_recognition',
+      concept: t.advElevensConcept || `Advanced 11s trick for two-digit numbers`,
+      steps: steps,
+      pattern: t.advElevensPattern || `11 × AB = A (A+B) B. If A+B > 9, carry over.`,
+      mnemonics: t.advElevensMnemonic || `11s are tricky but cool!`
     };
   }
 
@@ -148,6 +182,24 @@ export const generateSmartExplanation = (
       ],
       pattern: t.squaresPattern?.replace('{num}', num.toString()) || `${num} × ${num} is a 'perfect square'. These are good to memorize!`,
       mnemonics: t.squaresMnemonic || `Squares are special, learn them well!`
+    };
+  }
+
+  // Near Doubles (Consecutive Numbers), e.g. 6x7
+  // This check assumes a and b were swapped if b < a, so a is the smaller number.
+  if (b === a + 1) {
+    const result = a * b;
+    const aSquared = a * a;
+    return {
+      strategy: 'near_doubles',
+      concept: t.nearDoublesConcept?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Multiplying consecutive numbers like ${a} × ${b}.`,
+      steps: [
+        t.nearDoublesStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `This is ${a} × ${b}. Notice ${b} is ${a} + 1.`,
+        t.nearDoublesStep2?.replaceAll('{a}', a.toString()).replace('{aSquared}', aSquared.toString()) || `You can think of this as (${a} × ${a}) + ${a}, which is ${aSquared} + ${a}.`,
+        t.nearDoublesStep3?.replace('{aSquared}', aSquared.toString()).replaceAll('{a}', a.toString()).replace('{result}', result.toString()) || `So, ${aSquared} + ${a} = ${result}. Thus, ${a} × ${b} = ${result}.`
+      ],
+      pattern: t.nearDoublesPattern || `n × (n+1) = n² + n. (Square the smaller number, then add it again).`,
+      mnemonics: t.nearDoublesMnemonic || `Neighbors help: square the small one, add it on!`
     };
   }
 
