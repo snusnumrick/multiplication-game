@@ -530,4 +530,5 @@ export const russianTranslations: Translation = {
   closeHintButton: "Закрыть подсказку",
   explainDifferentlyButton: "Объяснить иначе",
   foxyAlternativeHintMessage: "Хорошо, Ева! У Фокси есть другая подсказка для тебя. Посмотри!",
+  foxyNoMoreHintsMessage: "Фокси показала тебе все хитрости для этой задачки!",
 };

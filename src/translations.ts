@@ -339,6 +339,7 @@ export interface Translation {
   foxyGeneralCorrectMessage: string; // Added for general correct answer feedback
   foxyLetsPracticeNewTable?: string; // Added for PracticeMode table selection
   foxyAlternativeHintMessage?: string; // Added for when "Explain Differently" is used
+  foxyNoMoreHintsMessage?: string; // Added for when no more alternative hints are available
 
   // PracticeMode Smart Explanations
   visualDotsResult?: string;

@@ -19,6 +19,7 @@ export function PracticeMode() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [totalAnswers, setTotalAnswers] = useState(0);
   const [explanation, setExplanation] = useState<ExplanationContent | null>(null);
+  const [canShowAlternative, setCanShowAlternative] = useState(false); // New state
   const [attempts, setAttempts] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [userProgress, setUserProgress] = useState<UserProgress>({
@@ -129,7 +130,17 @@ export function PracticeMode() {
 
     // Show Foxy hint message
     showFoxyMessage?.('foxyHintMessage');
-  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage]);
+    // Check if an alternative explanation exists for the newly shown hint
+    setCanShowAlternative(checkIfAlternativeExists(smartExp));
+  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage, checkIfAlternativeExists]); // Added checkIfAlternativeExists
+
+  // Helper function to check if a different alternative explanation exists
+  const checkIfAlternativeExists = useCallback((currentExplanationContent: ExplanationContent | null): boolean => {
+    if (!currentProblem || !currentExplanationContent) return false;
+    // Use a different heuristic (e.g., attempts + 10) to encourage a different strategy
+    const potentialAlt = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 10);
+    return !!(potentialAlt && potentialAlt.strategy !== currentExplanationContent.strategy);
+  }, [currentProblem, generateSmartExplanation, attempts]);
 
   const restartProblem = useCallback(() => {
     if (selectedTable) {
@@ -145,19 +156,25 @@ export function PracticeMode() {
 
   // New callback for explaining differently
   const handleExplainDifferently = useCallback(() => {
-    if (!currentProblem) return;
+    if (!currentProblem || !explanation) return; // Ensure there's a current explanation
 
-    // Increment attempts slightly as a heuristic to potentially get a different explanation
-    // from generateSmartExplanationLogic, if it varies output based on attempts.
-    const newExplanation = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 1); 
-    setExplanation(newExplanation);
-    playSound?.('click');
-    showFoxyMessage?.('foxyAlternativeHintMessage'); 
-  }, [currentProblem, attempts, generateSmartExplanation, setExplanation, playSound, showFoxyMessage]);
+    // Try to generate a new explanation using a heuristic to get a different one
+    const potentialNewExplanation = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 10);
 
-  // Determine if an alternative strategy can be shown.
-  // If an explanation exists, we assume an alternative might be possible.
-  const hasAlternativeStrategy = !!explanation;
+    if (potentialNewExplanation && potentialNewExplanation.strategy !== explanation.strategy) {
+      setExplanation(potentialNewExplanation);
+      playSound?.('click');
+      showFoxyMessage?.('foxyAlternativeHintMessage');
+      // After showing a new one, check if there's yet another alternative
+      setCanShowAlternative(checkIfAlternativeExists(potentialNewExplanation));
+    } else {
+      // No different explanation found, or potentialNewExplanation is null
+      playSound?.('click'); // Still play click for button feedback
+      showFoxyMessage?.('foxyNoMoreHintsMessage');
+      setCanShowAlternative(false);
+    }
+  }, [currentProblem, explanation, attempts, generateSmartExplanation, playSound, showFoxyMessage, checkIfAlternativeExists, setExplanation, setCanShowAlternative]);
+
 
   // Client-side mount detection (preserved from original)
   useEffect(() => {
@@ -285,7 +302,7 @@ export function PracticeMode() {
             onShowSmartHint={showSmartHint}
             onRestartProblem={restartProblem}
             onCloseHint={handleCloseHint} // Pass the new handler
-            hasAlternativeStrategy={hasAlternativeStrategy}
+            hasAlternativeStrategy={canShowAlternative && !!explanation} // Use new state
             onExplainDifferently={handleExplainDifferently}
           />
         )}

@@ -529,4 +529,5 @@ export const germanTranslations: Translation = {
   closeHintButton: "Tipp schließen",
   explainDifferentlyButton: "Anders erklären",
   foxyAlternativeHintMessage: "Okay, Eva! Foxy hat einen anderen Tipp für dich. Schau mal!",
+  foxyNoMoreHintsMessage: "Foxy hat dir alle Tricks für diese Aufgabe gezeigt!",
 };
