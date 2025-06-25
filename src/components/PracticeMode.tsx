@@ -38,10 +38,16 @@ export function PracticeMode() {
   // Helper function to check if a different alternative explanation exists
   const checkIfAlternativeExists = useCallback((currentExplanationContent: ExplanationContent | null): boolean => {
     if (!currentProblem || !currentExplanationContent) return false;
-    // Use a different heuristic (e.g., attempts + 10) to encourage a different strategy
-    const potentialAlt = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 10);
-    return !!(potentialAlt && potentialAlt.strategy !== currentExplanationContent.strategy);
-  }, [currentProblem, generateSmartExplanation, attempts]);
+    
+    const testAttemptValues = [0, 5, 10]; // Probe with fixed attempt values
+    for (const ta of testAttemptValues) {
+      const potentialAlt = generateSmartExplanation(currentProblem.a, currentProblem.b, ta);
+      if (potentialAlt && potentialAlt.strategy !== currentExplanationContent.strategy) {
+        return true; // Found a different strategy
+      }
+    }
+    return false; // No different strategy found with the test values
+  }, [currentProblem, generateSmartExplanation]); // Removed 'attempts' from dependencies
 
   // Foxy initialization
   const initializeFoxy = useCallback(() => {
@@ -156,24 +162,26 @@ export function PracticeMode() {
 
   // New callback for explaining differently
   const handleExplainDifferently = useCallback(() => {
-    if (!currentProblem || !explanation) return; // Ensure there's a current explanation
+    if (!currentProblem || !explanation) return;
 
-    // Try to generate a new explanation using a heuristic to get a different one
-    const potentialNewExplanation = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 10);
-
-    if (potentialNewExplanation && potentialNewExplanation.strategy !== explanation.strategy) {
-      setExplanation(potentialNewExplanation);
-      playSound?.('click');
-      showFoxyMessage?.('foxyAlternativeHintMessage');
-      // After showing a new one, check if there's yet another alternative
-      setCanShowAlternative(checkIfAlternativeExists(potentialNewExplanation));
-    } else {
-      // No different explanation found, or potentialNewExplanation is null
-      playSound?.('click'); // Still play click for button feedback
-      showFoxyMessage?.('foxyNoMoreHintsMessage');
-      setCanShowAlternative(false);
+    const testAttemptValues = [0, 5, 10]; // Probe with fixed attempt values
+    for (const ta of testAttemptValues) {
+      const potentialNewExplanation = generateSmartExplanation(currentProblem.a, currentProblem.b, ta);
+      if (potentialNewExplanation && potentialNewExplanation.strategy !== explanation.strategy) {
+        setExplanation(potentialNewExplanation);
+        playSound?.('click');
+        showFoxyMessage?.('foxyAlternativeHintMessage');
+        // After showing a new one, check if there's yet another alternative
+        setCanShowAlternative(checkIfAlternativeExists(potentialNewExplanation));
+        return; // Found and set a new explanation
+      }
     }
-  }, [currentProblem, explanation, attempts, generateSmartExplanation, playSound, showFoxyMessage, checkIfAlternativeExists, setExplanation, setCanShowAlternative]);
+
+    // If loop completes, no different explanation was found with the test values
+    playSound?.('click');
+    showFoxyMessage?.('foxyNoMoreHintsMessage');
+    setCanShowAlternative(false);
+  }, [currentProblem, explanation, generateSmartExplanation, playSound, showFoxyMessage, setExplanation, setCanShowAlternative, checkIfAlternativeExists]); // Removed 'attempts' from dependencies
 
 
   // Client-side mount detection (preserved from original)
