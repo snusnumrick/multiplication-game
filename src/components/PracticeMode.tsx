@@ -192,9 +192,19 @@ export function PracticeMode() {
   // Handler for table selection from the UI component
   const handleTableSelect = (table: number) => {
     setSelectedTable(table);
-    // Initialize strugglingWith with the current table to make the "practicing table X" line visible
-    setUserProgress(prev => ({ ...prev, strugglingWith: [table] }));
+    setUserProgress(prev => ({
+      ...prev,
+      strugglingWith: [], // Clear struggling numbers; line will appear on first mistake with specific numbers
+      consecutiveCorrect: 0,   // Reset streak for the new table
+    }));
     // playSound is called within TableSelectionUI
+
+    // Foxy announces the new table selection
+    if (showFoxyMessage) {
+      // This assumes a new translation key 'foxyLetsPracticeNewTable' will be added, e.g.,
+      // "Great choice! Let's start practicing this table."
+      showFoxyMessage('foxyLetsPracticeNewTable');
+    }
   };
 
   return (
