@@ -25,6 +25,7 @@ const defaultProgress: GameProgress = {
   practiceProgress: {},
   quizHighScores: {},
   adventureLevels: {},
+  strategySuccess: {}, // Initialize strategySuccess
 };
 
 const defaultSettings: GameSettings = {
@@ -143,6 +144,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
       ...prev,
       tablesLearned: [...new Set([...prev.tablesLearned, table])],
     }));
+  };
+
+  const recordStrategySuccess = (strategyName: string) => {
+    setProgress(prev => {
+      const currentSuccess = prev.strategySuccess[strategyName] || 0;
+      return {
+        ...prev,
+        strategySuccess: {
+          ...prev.strategySuccess,
+          [strategyName]: currentSuccess + 1,
+        },
+      };
+    });
   };
 
   // Simple sound effects using Web Audio API
@@ -443,6 +457,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setFoxyAnimationState: setFoxyAnimationStateWithHappyLogic,
       playFoxyAudio, 
       currentFoxyMessageKey,
+      recordStrategySuccess, // Expose recordStrategySuccess
       // foxyInitialGreetingPlayed, // Not strictly needed by consumers if showFoxyMessage handles it
       // setFoxyInitialGreetingPlayed, // Not strictly needed by consumers
     }}>

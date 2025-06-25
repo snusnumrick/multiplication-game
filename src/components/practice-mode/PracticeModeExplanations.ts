@@ -42,7 +42,8 @@ export const generateSmartExplanation = (
   initialB: number,
   attempts: number,
   t: Translation,
-  strugglingWith: number[]
+  strugglingWith: number[],
+  strategySuccess: Record<string, number> // Added strategySuccess
 ): ExplanationContent => {
   // Multiplying by 1 (Identity Property)
   if (initialA === 1 || initialB === 1) {
