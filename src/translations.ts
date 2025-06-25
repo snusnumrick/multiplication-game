@@ -336,6 +336,7 @@ export interface Translation {
   foxyTimeRunningOutQuiz: string;
 
   foxyHintMessage: string;
+  foxyGeneralCorrectMessage: string; // Added for general correct answer feedback
 
   // PracticeMode Smart Explanations
   visualDotsResult?: string;
