@@ -45,8 +45,10 @@ export const generateSmartExplanation = (
   strugglingWith: number[],
   strategySuccess: Record<string, number> // Added strategySuccess
 ): ExplanationContent => {
+  console.log('generateSmartExplanation', initialA, initialB, attempts, strugglingWith, strategySuccess);
   // Multiplying by 1 (Identity Property)
   if (initialA === 1 || initialB === 1) {
+    console.log('generateSmartExplanation: 1');
     const otherNum = initialA === 1 ? initialB : initialA;
     const result = otherNum; // 1 * otherNum is otherNum
     return {
@@ -82,6 +84,7 @@ export const generateSmartExplanation = (
   // Strategy: Tens (Complexity: 2)
   // Note: The original code had a 'pattern_recognition' for 10s. We use 'tens' for clarity.
   if (a === 10 || b === 10) { // b === 10 check is for when initialA was 10 and initialB < 10, so no swap happened.
+    console.log('generateSmartExplanation: 10');
     const other = (a === 10 && b !== 10) ? b : (b === 10 && a !== 10) ? a : (a === 10 && b === 10) ? 10 : initialA === 10 ? initialB : initialA; // Handle 10x10 and ensure correct 'other'
     applicableStrategies.push({
       name: 'tens',
@@ -104,6 +107,7 @@ export const generateSmartExplanation = (
   // Strategy: Twos (Doubles) (Complexity: 3)
   // Original code had 'doubles', we use 'twos' for consistency with translation keys like 'twosConcept'.
   if (a === 2) { // Check only 'a' due to symmetry swap (initialA or initialB could be 2)
+    console.log('generateSmartExplanation: 2');
     const otherNum = b; // 'a' is 2 after potential swap
     const result = 2 * otherNum;
     applicableStrategies.push({
@@ -125,6 +129,7 @@ export const generateSmartExplanation = (
 
   // Strategy: Fives (Complexity: 4)
   if (a === 5) { // Check only 'a' due to symmetry swap
+    console.log('generateSmartExplanation: 5');
     const otherNum = b; // 'a' is 5 after potential swap
     const result = 5 * otherNum;
     const tenTimesOther = 10 * otherNum;
@@ -148,6 +153,7 @@ export const generateSmartExplanation = (
   // Strategy: Elevens (Simple) (Complexity: 5)
   // Original code had 'pattern_recognition', we use 'elevens_simple'.
   if (a === 11 && b < 10) { // 'a' is 11 after potential swap, 'b' is the single digit
+    console.log('generateSmartExplanation: 11');
     applicableStrategies.push({
       name: 'elevens_simple',
       complexityOrder: 5,
@@ -167,6 +173,7 @@ export const generateSmartExplanation = (
 
   // Strategy: Squares (Complexity: 6)
   if (a === b) {
+    console.log('generateSmartExplanation: squares');
     const num = a; // or b, they are the same
     const result = num * num;
     applicableStrategies.push({
@@ -188,6 +195,7 @@ export const generateSmartExplanation = (
   // Strategy: Nines (Complexity: 7)
   // Original code had 'pattern_recognition', we use 'nines'.
   if (a === 9) { // Check only 'a' due to symmetry swap
+    console.log('generateSmartExplanation: 9');
     const other = b; // 'a' is 9 after potential swap
     applicableStrategies.push({
       name: 'nines',
@@ -209,6 +217,7 @@ export const generateSmartExplanation = (
   
   // Strategy: Near Doubles (Complexity: 8)
   if (b === a + 1) { // 'a' is smaller due to symmetry swap
+    console.log('generateSmartExplanation: near doubles');
     const result = a * b;
     const aSquared = a * a;
     applicableStrategies.push({
@@ -230,6 +239,7 @@ export const generateSmartExplanation = (
 
   // Strategy: Building From Known Facts (BFKF) (Complexity: 9)
   if ([3, 4, 6, 7, 8].includes(a)) { // 'a' is the smaller number after swap
+    console.log('generateSmartExplanation: bfkf');
     applicableStrategies.push({
       name: 'building_known_facts',
       complexityOrder: 9,
@@ -301,6 +311,7 @@ export const generateSmartExplanation = (
   // Strategy: Elevens (Advanced) (Complexity: 10)
   // Original code had 'pattern_recognition', we use 'elevens_advanced'.
   if (a === 11 && b >= 10 && b < 100) { // 'a' is 11 after potential swap, 'b' is the two-digit number
+    console.log('generateSmartExplanation: elevens_advanced');
     applicableStrategies.push({
       name: 'elevens_advanced',
       complexityOrder: 10,
@@ -343,16 +354,19 @@ export const generateSmartExplanation = (
   if (applicableStrategies.length > 0) {
     // Sort by complexity to ensure a consistent order for cycling
     applicableStrategies.sort((s1, s2) => s1.complexityOrder - s2.complexityOrder);
-    
+    console.log('generateSmartExplanation: applicableStrategies:', applicableStrategies);
+
     // Use 'attempts' to cycle through the complexity-sorted strategies
     // 'attempts' comes from PracticeMode.tsx, which uses values from 0 up to 11 for probing
     const strategyIndex = attempts % applicableStrategies.length;
+    console.log(`generateSmartExplanation: strategyIndex: ${strategyIndex}`);
     return applicableStrategies[strategyIndex].generate();
   }
 
   // Fallback strategies if no specific pattern strategy was chosen
   // For struggling numbers or multiple attempts, use visual
   if (strugglingWith.includes(a) || strugglingWith.includes(b) || attempts > 1) {
+    console.log('generateSmartExplanation: visual');
     return {
       strategy: 'visual_array',
       concept: t.visualArrayConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Think of ${a} × ${b} as making ${b} groups of ${a} objects`,
@@ -368,6 +382,7 @@ export const generateSmartExplanation = (
 
   // Skip counting for medium numbers
   if (a <= 10 && b <= 10) { // Ensure 'a' and 'b' are the potentially swapped values
+    console.log('generateSmartExplanation: skip_counting');
     return {
       strategy: 'skip_counting',
       concept: t.skipCountingConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Count by ${a}s, ${b} times`,
@@ -378,6 +393,7 @@ export const generateSmartExplanation = (
   }
 
   // Decomposition for larger numbers
+  console.log('generateSmartExplanation: decomposition');
   return {
     strategy: 'decomposition',
     concept: t.decompositionConcept || `Break down into easier parts`,
