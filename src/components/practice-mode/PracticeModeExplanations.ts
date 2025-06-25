@@ -45,9 +45,33 @@ export const generateSmartExplanation = (
   strugglingWith: number[],
   strategySuccess: Record<string, number> // Added strategySuccess
 ): ExplanationContent => {
-  console.log('generateSmartExplanation', initialA, initialB, attempts, strugglingWith, strategySuccess);
+  console.log('generateSmartExplanation entry:', { initialA, initialB, attempts, strugglingWithCount: strugglingWith.length, strategySuccess });
 
-  // Refactored strategy selection logic starts here
+  let a = initialA;
+  let b = initialB;
+  // Symmetry: Internally swap a and b if b < a for consistent strategy application
+  if (b < a) {
+    [a, b] = [b, a]; // 'a' is now always the smaller or equal number
+  }
+
+  // Priority 1: Visual explanation if user is struggling with either of the original numbers or after multiple attempts
+  // We check strugglingWith against initialA and initialB as those are the numbers from the problem context.
+  if (strugglingWith.includes(initialA) || strugglingWith.includes(initialB) || attempts > 1) {
+    console.log('generateSmartExplanation: visual (priority due to struggle/attempts)', { initialA, initialB, a, b, attempts, strugglingWith });
+    return {
+      strategy: 'visual_array',
+      concept: t.visualArrayConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Think of ${a} × ${b} as making ${b} groups of ${a} objects`,
+      visual: generateVisualDots(a, b, t), // Uses potentially swapped a, b
+      steps: [
+        t.visualStep1?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()) || `Make ${b} groups of ${a} dots`,
+        t.visualStep2?.replace('{result}', (a * b).toString()) || `Count all the dots: ${a * b}`,
+        t.visualStep3?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Each row has ${a} dots, ${b} rows total`
+      ],
+      realWorld: t.visualRealWorld?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()).replace('{result}', (a * b).toString()) || `Like having ${b} boxes with ${a} toys each = ${a * b} toys total`
+    };
+  }
+
+  // Priority 2: Specific strategies if applicable and not overridden by the struggle/attempts check
   interface ApplicableStrategy {
     name: string;
     complexityOrder: number;
@@ -369,35 +393,19 @@ export const generateSmartExplanation = (
       }
       return s1.complexityOrder - s2.complexityOrder; // Then by complexity
     });
-    console.log('generateSmartExplanation: applicableStrategies (sorted by success & complexity):', applicableStrategies);
+    console.log('generateSmartExplanation: applicableStrategies (sorted by success & complexity, not struggling):', applicableStrategies.map(s => s.name));
 
-    // Use 'attempts' to cycle through the sorted strategies
-    // 'attempts' comes from PracticeMode.tsx, which uses values from 0 up to 11 for probing
+    // Use 'attempts' to cycle through the sorted strategies.
+    // This applies if not struggling and attempts <= 1 (usually 0 or 1 for hints).
     const strategyIndex = attempts % applicableStrategies.length;
-    console.log(`generateSmartExplanation: strategyIndex: ${strategyIndex}`);
+    console.log(`generateSmartExplanation: specific strategy (index: ${strategyIndex}, not struggling)`);
     return applicableStrategies[strategyIndex].generate();
   }
 
-  // Fallback strategies if no specific pattern strategy was chosen
-  // For struggling numbers or multiple attempts, use visual
-  if (strugglingWith.includes(a) || strugglingWith.includes(b) || attempts > 1) {
-    console.log('generateSmartExplanation: visual');
-    return {
-      strategy: 'visual_array',
-      concept: t.visualArrayConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Think of ${a} × ${b} as making ${b} groups of ${a} objects`,
-      visual: generateVisualDots(a, b, t),
-      steps: [
-        t.visualStep1?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()) || `Make ${b} groups of ${a} dots`,
-        t.visualStep2?.replace('{result}', (a * b).toString()) || `Count all the dots: ${a * b}`,
-        t.visualStep3?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Each row has ${a} dots, ${b} rows total`
-      ],
-      realWorld: t.visualRealWorld?.replaceAll('{b}', b.toString()).replaceAll('{a}', a.toString()).replace('{result}', (a * b).toString()) || `Like having ${b} boxes with ${a} toys each = ${a * b} toys total`
-    };
-  }
-
-  // Skip counting for medium numbers
-  if (a <= 10 && b <= 10) { // Ensure 'a' and 'b' are the potentially swapped values
-    console.log('generateSmartExplanation: skip_counting');
+  // Priority 3: Fallback to other general strategies if no specific ones and not caught by priority visual check.
+  // Skip counting for medium numbers (a, b are already swapped, a <= b)
+  if (a <= 10 && b <= 10) {
+    console.log('generateSmartExplanation: skip_counting (fallback, not struggling, no specific strategy found)');
     return {
       strategy: 'skip_counting',
       concept: t.skipCountingConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Count by ${a}s, ${b} times`,
@@ -407,12 +415,12 @@ export const generateSmartExplanation = (
     };
   }
 
-  // Decomposition for larger numbers
-  console.log('generateSmartExplanation: decomposition');
+  // Decomposition for larger numbers (a, b are already swapped, a <= b)
+  console.log('generateSmartExplanation: decomposition (fallback, not struggling, no specific strategy found)');
   return {
     strategy: 'decomposition',
     concept: t.decompositionConcept || `Break down into easier parts`,
-    steps: generateDecompositionSteps(a, b, t), // Ensure 'a' and 'b' are the potentially swapped values
+    steps: generateDecompositionSteps(a, b, t),
     pattern: t.decompositionPattern || `Break large numbers into tens and ones`
   };
 };
