@@ -233,8 +233,8 @@ export const generateSmartExplanation = (
     bfkfSteps = [
       t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf3sStep2?.replace('{b}', b.toString()) || `Break down 3:  3 = 2 + 1.`,
-      t.bfkf3sStep3?.replace('{b}', b.toString()) || `So, 3 × ${b} = (2 × ${b}) + (1 × ${b}).`,
-      t.bfkf3sStep4?.replace('{val1}', (2 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy), and 1 × ${b} is ${1 * b}.`,
+      t.bfkf3sStep3?.replaceAll('{b}', b.toString()) || `So, 3 × ${b} = (2 × ${b}) + (1 × ${b}).`,
+      t.bfkf3sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy), and 1 × ${b} is ${1 * b}.`,
       t.bfkf3sStep5?.replace('{sum1}', (2 * b).toString()).replace('{sum2}', (1 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${2 * b} + ${1 * b} = ${a * b}.`,
     ];
     bfkfPattern = t.bfkf3sPattern || `3×N = (2×N) + (1×N)`;
@@ -243,8 +243,8 @@ export const generateSmartExplanation = (
     bfkfSteps = [
       t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf4sStep2?.replace('{b}', b.toString()) || `Break down 4:  4 = 2 + 2.`,
-      t.bfkf4sStep3?.replace('{b}', b.toString()) || `So, 4 × ${b} = (2 × ${b}) + (2 × ${b}).`,
-      t.bfkf4sStep4?.replace('{val1}', (2 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy).`,
+      t.bfkf4sStep3?.replaceAll('{b}', b.toString()) || `So, 4 × ${b} = (2 × ${b}) + (2 × ${b}).`,
+      t.bfkf4sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (2 * b).toString()) || `We know 2 × ${b} is ${2 * b} (Doubles Strategy).`,
       t.bfkf4sStep5?.replace('{sum1}', (2 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${2 * b} + ${2 * b} = ${a * b}.`,
     ];
     bfkfPattern = t.bfkf4sPattern || `4×N = (2×N) + (2×N)`;
@@ -252,8 +252,8 @@ export const generateSmartExplanation = (
     bfkfSteps = [
       t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf6sStep2?.replace('{b}', b.toString()) || `Break down 6:  6 = 5 + 1.`,
-      t.bfkf6sStep3?.replace('{b}', b.toString()) || `So, 6 × ${b} = (5 × ${b}) + (1 × ${b}).`,
-      t.bfkf6sStep4?.replace('{val1}', (5 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 1 × ${b} is ${1 * b}.`,
+      t.bfkf6sStep3?.replaceAll('{b}', b.toString()) || `So, 6 × ${b} = (5 × ${b}) + (1 × ${b}).`,
+      t.bfkf6sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (1 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 1 × ${b} is ${1 * b}.`,
       t.bfkf6sStep5?.replace('{sum1}', (5 * b).toString()).replace('{sum2}', (1 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${5 * b} + ${1 * b} = ${a * b}.`,
     ];
     bfkfPattern = t.bfkf6sPattern || `6×N = (5×N) + (1×N)`;
@@ -261,8 +261,8 @@ export const generateSmartExplanation = (
     bfkfSteps = [
       t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf7sStep2?.replace('{b}', b.toString()) || `Break down 7:  7 = 5 + 2.`,
-      t.bfkf7sStep3?.replace('{b}', b.toString()) || `So, 7 × ${b} = (5 × ${b}) + (2 × ${b}).`,
-      t.bfkf7sStep4?.replace('{val1}', (5 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
+      t.bfkf7sStep3?.replaceAll('{b}', b.toString()) || `So, 7 × ${b} = (5 × ${b}) + (2 × ${b}).`,
+      t.bfkf7sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (5 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 5 × ${b} is ${5 * b} (Fives Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
       t.bfkf7sStep5?.replace('{sum1}', (5 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Add them: ${5 * b} + ${2 * b} = ${a * b}.`,
     ];
     bfkfPattern = t.bfkf7sPattern || `7×N = (5×N) + (2×N)`;
@@ -270,8 +270,8 @@ export const generateSmartExplanation = (
     bfkfSteps = [
       t.bfkfStep1?.replace('{a}', a.toString()).replace('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
       t.bfkf8sStep2?.replace('{b}', b.toString()) || `Think of 8 as 10 - 2.`,
-      t.bfkf8sStep3?.replace('{b}', b.toString()) || `So, 8 × ${b} = (10 × ${b}) - (2 × ${b}).`,
-      t.bfkf8sStep4?.replace('{val1}', (10 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 10 × ${b} is ${10 * b} (Tens Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
+      t.bfkf8sStep3?.replaceAll('{b}', b.toString()) || `So, 8 × ${b} = (10 × ${b}) - (2 × ${b}).`,
+      t.bfkf8sStep4?.replaceAll('{b}', b.toString()).replace('{val1}', (10 * b).toString()).replace('{val2}', (2 * b).toString()) || `We know 10 × ${b} is ${10 * b} (Tens Strategy), and 2 × ${b} is ${2 * b} (Doubles Strategy).`,
       t.bfkf8sStep5?.replace('{sum1}', (10 * b).toString()).replace('{sum2}', (2 * b).toString()).replace('{result}', (a * b).toString()) || `Subtract them: ${10 * b} - ${2 * b} = ${a * b}.`,
     ];
     bfkfPattern = t.bfkf8sPattern || `8×N = (10×N) - (2×N)`;
