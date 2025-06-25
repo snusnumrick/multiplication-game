@@ -527,4 +527,6 @@ export const germanTranslations: Translation = {
     strategyOnes: "Einser-Strategie",
 
   closeHintButton: "Tipp schließen",
+  explainDifferentlyButton: "Anders erklären",
+  foxyAlternativeHintMessage: "Okay, Eva! Foxy hat einen anderen Tipp für dich. Schau mal!",
 };

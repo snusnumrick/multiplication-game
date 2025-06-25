@@ -528,4 +528,6 @@ export const russianTranslations: Translation = {
     strategyOnes: "Стратегия единицы",
 
   closeHintButton: "Закрыть подсказку",
+  explainDifferentlyButton: "Объяснить иначе",
+  foxyAlternativeHintMessage: "Хорошо, Ева! У Фокси есть другая подсказка для тебя. Посмотри!",
 };
