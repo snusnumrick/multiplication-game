@@ -192,6 +192,7 @@ export function PracticeMode() {
   // Handler for table selection from the UI component
   const handleTableSelect = (table: number) => {
     setSelectedTable(table);
+    setUserProgress(prev => ({ ...prev, strugglingWith: [] })); // Reset strugglingWith
     // playSound is called within TableSelectionUI
   };
 
