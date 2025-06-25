@@ -143,6 +143,22 @@ export function PracticeMode() {
     playSound?.('click');
   }, [playSound]);
 
+  // New callback for explaining differently
+  const handleExplainDifferently = useCallback(() => {
+    if (!currentProblem) return;
+
+    // Increment attempts slightly as a heuristic to potentially get a different explanation
+    // from generateSmartExplanationLogic, if it varies output based on attempts.
+    const newExplanation = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts + 1); 
+    setExplanation(newExplanation);
+    playSound?.('click');
+    showFoxyMessage?.('foxyAlternativeHintMessage'); 
+  }, [currentProblem, attempts, generateSmartExplanation, setExplanation, playSound, showFoxyMessage]);
+
+  // Determine if an alternative strategy can be shown.
+  // If an explanation exists, we assume an alternative might be possible.
+  const hasAlternativeStrategy = !!explanation;
+
   // Client-side mount detection (preserved from original)
   useEffect(() => {
     setIsMounted(true);
@@ -269,6 +285,8 @@ export function PracticeMode() {
             onShowSmartHint={showSmartHint}
             onRestartProblem={restartProblem}
             onCloseHint={handleCloseHint} // Pass the new handler
+            hasAlternativeStrategy={hasAlternativeStrategy}
+            onExplainDifferently={handleExplainDifferently}
           />
         )}
       </div>
