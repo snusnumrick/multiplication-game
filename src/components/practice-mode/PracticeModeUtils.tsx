@@ -1,6 +1,39 @@
 import React from 'react';
 import { Eye, Zap, Target, Brain, Lightbulb } from 'lucide-react';
 
+export type StrategyCategory = 'visual' | 'pattern' | 'counting' | 'breakdown' | 'default';
+
+export const getStrategyCategory = (strategy: string): StrategyCategory => {
+  console.log('getStrategyCategory', strategy);
+  switch (strategy) {
+    case 'visual_array':
+      return 'visual';
+
+    case 'ones':
+    case 'tens':
+    case 'nines':
+    case 'elevens_simple':
+    case 'elevens_advanced':
+    case 'squares':
+    case 'near_doubles':
+    case 'pattern_recognition': // Keep old key for safety
+      return 'pattern';
+
+    case 'twos':
+    case 'doubles': // Keep old key
+    case 'fives':
+    case 'skip_counting':
+      return 'counting';
+
+    case 'building_known_facts':
+    case 'decomposition':
+      return 'breakdown';
+
+    default:
+      return 'default';
+  }
+};
+
 export const getStrategyIcon = (strategy: string): JSX.Element => {
   switch (strategy) {
     case 'visual_array': return <Eye className="w-5 h-5" />;

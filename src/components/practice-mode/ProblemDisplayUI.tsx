@@ -82,7 +82,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
     }
   };
 
-  console.log('hasAlternativeStrategy', hasAlternativeStrategy, 'onExplainDifferently', onExplainDifferently);
+  // console.log('hasAlternativeStrategy', hasAlternativeStrategy);
   return (
     <div className="text-center max-w-4xl mx-auto">
       <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl min-h-[500px] flex flex-col justify-center">
@@ -96,7 +96,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
               <div className="flex items-center mb-3">
                 {getStrategyIcon(explanation.strategy)}
                 <span className="ml-2 font-semibold text-indigo-800">
-                  {t.strategyLabelSuffix || 'Strategy'} {getTranslatedStrategyName(explanation.strategy)}
+                  {/*{t.strategyLabelSuffix || 'Strategy'} */}
+                  {getTranslatedStrategyName(explanation.strategy)}
                 </span>
               </div>
 
@@ -151,7 +152,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
             <div className="mt-6 flex justify-center space-x-4 flex-wrap gap-y-2">
               {hasAlternativeStrategy && onExplainDifferently && (
                 <button
-                  onClick={onExplainDifferently}
+                  onClick={(e) => { e.stopPropagation(); onExplainDifferently?.(); }}
                   className="bg-teal-500 text-white px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-teal-600 transform transition-all duration-200 hover:scale-105 active:scale-95 flex items-center"
                 >
                   <Zap className="w-5 h-5 mr-2" />

@@ -7,6 +7,7 @@ import { ExplanationContent, UserProgress } from './practice-mode/PracticeModeTy
 import { generateSmartExplanation as generateSmartExplanationLogic } from './practice-mode/PracticeModeExplanations';
 import { TableSelectionUI } from './practice-mode/TableSelectionUI';
 import { ProblemDisplayUI } from './practice-mode/ProblemDisplayUI';
+import { getStrategyCategory } from './practice-mode/PracticeModeUtils';
 
 export function PracticeMode() {
   const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState, recordStrategySuccess, progress: gameProgress } = useGame();
@@ -177,53 +178,34 @@ export function PracticeMode() {
 
   // New callback for explaining differently
   const handleExplainDifferently = useCallback(() => {
-    console.log('handleExplainDifferently');
     if (!currentProblem || !explanation) return;
 
+    // This list is sorted from simplest/most successful to most complex
     const uniqueExplanations = getUniqueExplanationsList();
-    
-    // Find the index of the currently shown explanation's strategy
-    let currentIndexInUnique = uniqueExplanations.findIndex(exp => exp.strategy === explanation.strategy);
-    if (currentIndexInUnique === -1) {
-        // If current explanation's strategy is not in the unique list (e.g. it was an initial fallback)
-        // treat as if we're starting the cycle from the beginning of uniqueExplanations.
-        // To find the "next" different one, we'd conceptually be before the first unique one.
-        // The loop below will handle finding the first actual unique one different from current.
-        currentIndexInUnique = 0; // Default to start, or handle as a special case if needed
-                                  // For simplicity, let the loop try to find something different.
-                                  // If current is truly unique and not in list, first item of uniqueExplanations will be chosen if different.
-    }
-    console.log('currentIndexInUnique', currentIndexInUnique);
+    const currentIndex = uniqueExplanations.findIndex(exp => exp.strategy === explanation.strategy);
 
-    let nextDifferentExplanation: ExplanationContent | null = null;
-    
-    // Iterate through the unique explanations, starting from the one after the current, to find the *next different* one
-    for (let i = 1; i <= uniqueExplanations.length; i++) { // Iterate up to length to check all, including wrap-around
-      const potentialNextIndex = (currentIndexInUnique + i) % uniqueExplanations.length;
-      if (uniqueExplanations.length > 0 && uniqueExplanations[potentialNextIndex].strategy !== explanation.strategy) {
-        nextDifferentExplanation = uniqueExplanations[potentialNextIndex];
-        break;
-      }
-      // If all unique explanations have the same strategy as current, this loop won't find a different one.
-      if (i === uniqueExplanations.length && !nextDifferentExplanation) break; 
-    }
-    console.log('nextDifferentExplanation', nextDifferentExplanation);
+    // The next explanation is simply the next one in the sorted list.
+    const nextIndex = currentIndex + 1;
 
-    if (nextDifferentExplanation) {
-      setExplanation(nextDifferentExplanation);
+    if (nextIndex < uniqueExplanations.length) {
+      // A next explanation exists, so show it.
+      const nextExplanation = uniqueExplanations[nextIndex];
+      setExplanation(nextExplanation);
       playSound?.('click');
-      showFoxyMessage?.('foxyAlternativeHintMessage');
-
-      // After setting the new explanation, check if there are further alternatives
-      const hasFurtherAlternatives = uniqueExplanations.some(ue => ue.strategy !== nextDifferentExplanation!.strategy);
-      console.log('hasFurtherAlternatives', hasFurtherAlternatives);
+      
+      // Check if there are any *more* explanations after this new one.
+      const hasFurtherAlternatives = nextIndex + 1 < uniqueExplanations.length;
       setCanShowAlternative(hasFurtherAlternatives);
-      if (!hasFurtherAlternatives) {
-        // If no further alternatives after this one, Foxy can say so.
+
+      if (hasFurtherAlternatives) {
+        showFoxyMessage?.('foxyAlternativeHintMessage');
+      } else {
+        // This is the last available hint. Show it and tell the user.
         showFoxyMessage?.('foxyNoMoreHintsMessage');
       }
     } else {
-      // No different explanation was found
+      // This case should ideally not be reached if the button is correctly hidden.
+      // But as a safeguard:
       playSound?.('click');
       showFoxyMessage?.('foxyNoMoreHintsMessage');
       setCanShowAlternative(false);
@@ -300,7 +282,7 @@ export function PracticeMode() {
     }
   };
 
-  console.log('canShowAlternative', canShowAlternative, 'explanation', explanation);
+  // console.log('canShowAlternative', canShowAlternative, 'explanation', explanation);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-200 via-blue-200 to-purple-300 p-4">
@@ -366,29 +348,29 @@ export function PracticeMode() {
       </div>
 
       {/* Strategy Legend */}
-        {selectedTable && (
-            <div className="fixed bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl max-w-xs">
-              <h4 className="font-bold text-gray-700 mb-2 text-sm">{t.smartStrategiesTitle}</h4>
-              <div className="space-y-2 text-xs">
-                <div className="flex items-center">
-                  <Eye className="w-4 h-4 text-green-500 mr-2" />
-                  <span>{t.visualStrategyLabel}</span>
-                </div>
-                <div className="flex items-center">
-                  <Zap className="w-4 h-4 text-purple-500 mr-2" />
-                  <span>{t.patternStrategyLabel}</span>
-                </div>
-                <div className="flex items-center">
-                  <Target className="w-4 h-4 text-blue-500 mr-2" />
-                  <span>{t.countingStrategyLabel}</span>
-                </div>
-                <div className="flex items-center">
-                  <Brain className="w-4 h-4 text-orange-500 mr-2" />
-                  <span>{t.breakdownStrategyLabel}</span>
-                </div>
+      {selectedTable && (
+          <div className="fixed bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl max-w-xs transition-all duration-300">
+            <h4 className="font-bold text-gray-700 mb-2 text-sm">{t.smartStrategiesTitle}</h4>
+            <div className="space-y-2 text-xs">
+              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'visual' ? 'bg-green-100 scale-105' : 'bg-transparent'}`}>
+                <Eye className="w-4 h-4 text-green-500 mr-2" />
+                <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'visual' ? 'font-bold text-green-800' : 'text-gray-600'}`}>{t.visualStrategyLabel}</span>
+              </div>
+              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'pattern' ? 'bg-purple-100 scale-105' : 'bg-transparent'}`}>
+                <Zap className="w-4 h-4 text-purple-500 mr-2" />
+                <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'pattern' ? 'font-bold text-purple-800' : 'text-gray-600'}`}>{t.patternStrategyLabel}</span>
+              </div>
+              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'counting' ? 'bg-blue-100 scale-105' : 'bg-transparent'}`}>
+                <Target className="w-4 h-4 text-blue-500 mr-2" />
+                <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'counting' ? 'font-bold text-blue-800' : 'text-gray-600'}`}>{t.countingStrategyLabel}</span>
+              </div>
+              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'breakdown' ? 'bg-orange-100 scale-105' : 'bg-transparent'}`}>
+                <Brain className="w-4 h-4 text-orange-500 mr-2" />
+                <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'breakdown' ? 'font-bold text-orange-800' : 'text-gray-600'}`}>{t.breakdownStrategyLabel}</span>
               </div>
             </div>
-        )}
+          </div>
+      )}
 
         {/* Decorative Elements (preserved from original) */}
         <div className="fixed top-16 right-16 animate-spin-slow">

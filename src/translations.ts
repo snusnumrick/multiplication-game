@@ -466,6 +466,7 @@ export interface Translation {
   strategyNearDoubles?: string; // Added for Near Doubles strategy name
   strategyBuildingKnownFacts?: string;
   strategyOnes?: string;
+  strategyTens?: string;
 
   closeHintButton?: string;
   explainDifferentlyButton?: string;
