@@ -16,7 +16,8 @@ const defaultProgress: GameProgress = {
   practiceProgress: {},
   quizHighScores: {},
   adventureLevels: {},
-  strategySuccess: {}, // Initialize strategySuccess
+  strategySuccess: {},
+  learningStyleSuccess: {},
 };
 
 const defaultSettings: GameSettings = {
@@ -145,6 +146,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
         strategySuccess: {
           ...prev.strategySuccess,
           [strategyName]: currentSuccess + 1,
+        },
+      };
+    });
+  };
+
+  const recordLearningStyleSuccess = (learningStyle: string) => {
+    setProgress(prev => {
+      const currentSuccess = prev.learningStyleSuccess[learningStyle] || 0;
+      return {
+        ...prev,
+        learningStyleSuccess: {
+          ...prev.learningStyleSuccess,
+          [learningStyle]: currentSuccess + 1,
         },
       };
     });
@@ -449,6 +463,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       playFoxyAudio, 
       currentFoxyMessageKey,
       recordStrategySuccess, // Expose recordStrategySuccess
+      recordLearningStyleSuccess,
       // foxyInitialGreetingPlayed, // Not strictly needed by consumers if showFoxyMessage handles it
       // setFoxyInitialGreetingPlayed, // Not strictly needed by consumers
     }}>

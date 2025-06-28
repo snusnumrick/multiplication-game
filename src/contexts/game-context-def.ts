@@ -9,6 +9,7 @@ export interface GameProgress {
   quizHighScores: Record<string, number>; // difficulty -> score
   adventureLevels: Record<number, { completed: boolean; stars: number }>;
   strategySuccess: Record<string, number>; // strategyName -> successCount
+  learningStyleSuccess: Record<string, number>; // learningStyle -> successCount
 }
 
 interface GameSettings {
@@ -48,6 +49,7 @@ export interface GameContextType {
   playFoxyAudio: (messageKey: keyof Translation) => void; // Added
   currentFoxyMessageKey: keyof Translation | null; // Added
   recordStrategySuccess: (strategyName: string) => void; // Added
+  recordLearningStyleSuccess: (learningStyle: string) => void;
 }
 
 export type FoxyAnimationState = 'idle' | 'talking' | 'happy';

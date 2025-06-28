@@ -402,6 +402,16 @@ export interface Translation {
   nearDoublesStep3?: string;
   nearDoublesPattern?: string;
   nearDoublesMnemonic?: string;
+  memoryTrickConcept?: string;
+  memory_trick_6x8?: string;
+  benchmarkConcept?: string;
+  benchmarkStep1?: string;
+  benchmarkStep2?: string;
+  benchmarkStep3?: string;
+  benchmarkStep4?: string;
+  benchmarkStep5?: string;
+  benchmarkPattern?: string;
+  benchmarkMnemonic?: string;
   bfkfConcept?: string;
   bfkfStep1?: string;
   bfkf3sStep2?: string;

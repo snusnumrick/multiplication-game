@@ -1,5 +1,6 @@
 import type { Translation } from '../../translations';
 import type { ExplanationContent } from './PracticeModeTypes';
+import { strategyLearningStyles } from './StrategyLearningStyles';
 
 // Helper functions for smart explanations
 const generateVisualDots = (a: number, b: number, t: Translation): string => {
@@ -43,7 +44,8 @@ export const generateSmartExplanation = (
   attempts: number,
   t: Translation,
   strugglingWith: number[],
-  strategySuccess: Record<string, number>, // Added strategySuccess
+  strategySuccess: Record<string, number>,
+  learningStyleSuccess: Record<string, number>,
   options?: { discoveryMode?: boolean }
 ): ExplanationContent => {
   console.log('generateSmartExplanation entry:', { initialA, initialB, attempts, strugglingWithCount: strugglingWith.length, strategySuccess, options });
@@ -264,6 +266,61 @@ export const generateSmartExplanation = (
     });
   }
 
+  // Strategy: Memory Tricks (Complexity: 8)
+  const memoryTrickKey = `memory_trick_${a}x${b}` as keyof Translation;
+  if (t[memoryTrickKey]) {
+    applicableStrategies.push({
+      name: 'memory_trick',
+      complexityOrder: 8, // Same complexity as near doubles
+      generate: () => ({
+        strategy: 'memory_trick',
+        concept: t.memoryTrickConcept || 'A fun rhyme or story to remember this fact!',
+        steps: [t[memoryTrickKey] as string],
+        mnemonics: t[memoryTrickKey] as string
+      })
+    });
+  }
+
+  // Strategy: Benchmark Numbers (Complexity: 8)
+  if ((a === 6 || a === 7 || a === 8) && b > 5) { // Check for numbers close to benchmarks 5 or 10
+    applicableStrategies.push({
+      name: 'benchmark_numbers',
+      complexityOrder: 8,
+      generate: () => {
+        let steps: string[];
+        const benchmark = (a < 8) ? 5 : 10; // Choose benchmark 5 for 6,7 and 10 for 8
+        const diff = a - benchmark;
+        const benchmarkResult = benchmark * b;
+
+        if (diff > 0) { // For 6 and 7, build up from 5
+          steps = [
+            t.benchmarkStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Let's solve ${a} × ${b}.`,
+            t.benchmarkStep2?.replace('{benchmark}', benchmark.toString()).replaceAll('{b}', b.toString()).replace('{result}', benchmarkResult.toString()) || `Start with an easy benchmark: ${benchmark} × ${b} = ${benchmarkResult}.`,
+            t.benchmarkStep3?.replaceAll('{a}', a.toString()).replace('{benchmark}', benchmark.toString()).replace('{diff}', diff.toString()) || `Now, ${a} is ${diff} more than ${benchmark}.`,
+            t.benchmarkStep4?.replace('{diff}', diff.toString()).replaceAll('{b}', b.toString()).replace('{diff_b}', (diff * b).toString()) || `So we need to add ${diff} more group(s) of ${b}, which is ${diff * b}.`,
+            t.benchmarkStep5?.replace('{benchmarkResult}', benchmarkResult.toString()).replace('{diff_b}', (diff * b).toString()).replace('{result}', (a * b).toString()) || `Finally, add them together: ${benchmarkResult} + ${diff * b} = ${a * b}.`,
+          ];
+        } else { // For 8, build down from 10
+          steps = [
+            t.benchmarkStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Let's solve ${a} × ${b}.`,
+            t.benchmarkStep2?.replace('{benchmark}', benchmark.toString()).replaceAll('{b}', b.toString()).replace('{result}', benchmarkResult.toString()) || `Start with an easy benchmark: ${benchmark} × ${b} = ${benchmarkResult}.`,
+            t.benchmarkStep3?.replaceAll('{a}', a.toString()).replace('{benchmark}', benchmark.toString()).replace('{diff}', Math.abs(diff).toString()) || `Now, ${a} is ${Math.abs(diff)} less than ${benchmark}.`,
+            t.benchmarkStep4?.replace('{diff}', Math.abs(diff).toString()).replaceAll('{b}', b.toString()).replace('{diff_b}', (Math.abs(diff) * b).toString()) || `So we need to subtract ${Math.abs(diff)} group(s) of ${b}, which is ${Math.abs(diff) * b}.`,
+            t.benchmarkStep5?.replace('{benchmarkResult}', benchmarkResult.toString()).replace('{diff_b}', (Math.abs(diff) * b).toString()).replace('{result}', (a * b).toString()) || `Finally, subtract them: ${benchmarkResult} - ${Math.abs(diff) * b} = ${a * b}.`,
+          ];
+        }
+
+        return {
+          strategy: 'benchmark_numbers',
+          concept: t.benchmarkConcept || 'Use easy numbers as stepping stones!',
+          steps: steps,
+          pattern: t.benchmarkPattern || 'Solve a nearby easy problem, then adjust.',
+          mnemonics: t.benchmarkMnemonic || 'Use a benchmark to get close, then step to the answer!'
+        };
+      }
+    });
+  }
+
   // Strategy: Building From Known Facts (BFKF) (Complexity: 9)
   if ([3, 4, 6, 7, 8].includes(a)) { // 'a' is the smaller number after swap
     // console.log('generateSmartExplanation: bfkf');
@@ -379,6 +436,16 @@ export const generateSmartExplanation = (
 
   // If specific strategies were found, sort by complexity and use 'attempts' to cycle
   if (applicableStrategies.length > 0) {
+    const preferredLearningStyle = Object.keys(learningStyleSuccess).reduce((a, b) => learningStyleSuccess[a] > learningStyleSuccess[b] ? a : b, '');
+
+    if (preferredLearningStyle) {
+      const preferredStrategies = applicableStrategies.filter(s => strategyLearningStyles[s.name] === preferredLearningStyle);
+      if (preferredStrategies.length > 0) {
+        const strategyIndex = attempts % preferredStrategies.length;
+        return preferredStrategies[strategyIndex].generate();
+      }
+    }
+
     // Sort strategies: prioritize by success count (descending), then by complexity (ascending)
     applicableStrategies.sort((s1, s2) => {
       const success1 = strategySuccess[s1.name] || 0;

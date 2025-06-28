@@ -5,12 +5,29 @@ import { useGame } from '../contexts/game-hooks';
 import type { Translation } from '../translations';
 import { ExplanationContent, UserProgress } from './practice-mode/PracticeModeTypes';
 import { generateSmartExplanation as generateSmartExplanationLogic } from './practice-mode/PracticeModeExplanations';
+import { strategyLearningStyles } from './practice-mode/StrategyLearningStyles';
+
+const MemoizedProblemDisplay = React.memo(ProblemDisplayUI);
 import { TableSelectionUI } from './practice-mode/TableSelectionUI';
 import { ProblemDisplayUI } from './practice-mode/ProblemDisplayUI';
 import { getStrategyCategory } from './practice-mode/PracticeModeUtils';
 
 export function PracticeMode() {
-  const { t, setCurrentScreen, playSound, addStars, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState, recordStrategySuccess, progress: gameProgress } = useGame();
+  const {
+    t,
+    setCurrentScreen,
+    settings,
+    showFoxyMessage,
+    playSound,
+    progress: gameProgress,
+    recordStrategySuccess,
+    recordLearningStyleSuccess,
+    addStars,
+    setFoxyAnimationState,
+    foxyMessage,
+    isFoxyVisible,
+    setIsFoxyVisible,
+  } = useGame();
 
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [currentProblem, setCurrentProblem] = useState<{ a: number; b: number } | null>(null);
@@ -33,7 +50,7 @@ export function PracticeMode() {
 
   // Smart explanation generation (now uses imported logic)
   const generateSmartExplanation = useCallback((a: number, b: number, attempts: number, discoveryMode: boolean = false): ExplanationContent => {
-    return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess, { discoveryMode });
+    return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess, gameProgress.learningStyleSuccess, { discoveryMode });
   }, [userProgress.strugglingWith, t, gameProgress.strategySuccess]);
 
   // Helper function to get a list of unique explanations based on strategy name
@@ -118,8 +135,12 @@ export function PracticeMode() {
 
       // Record strategy success if a hint was shown for this problem
       if (explanation && explanation.strategy) {
-        recordStrategySuccess?.(explanation.strategy);
+      recordStrategySuccess(explanation.strategy);
+      const learningStyle = strategyLearningStyles[explanation.strategy];
+      if (learningStyle) {
+        recordLearningStyleSuccess(learningStyle);
       }
+    }
 
       // Show Foxy encouragement using newConsecutiveCorrect
       if (newConsecutiveCorrect % 5 === 0) {

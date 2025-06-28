@@ -16,7 +16,7 @@ The game is built with React, TypeScript, and Vite, and styled with Tailwind CSS
 - **Fantasy Math:** Solve magical problems using multiplication.
 
 ### 🧠 **Smart Explanation System**
-Our revolutionary AI-powered explanation engine provides personalized learning experiences:
+Our advanced AI-powered explanation engine provides personalized learning experiences:
 
 #### **Adaptive Strategy Selection**
 - **Analyzes user performance** to detect struggling numbers (7, 8, 9 tracking)
@@ -24,22 +24,21 @@ Our revolutionary AI-powered explanation engine provides personalized learning e
 - **Tracks preferred learning styles** and remembers what works for each user
 - **Contextual intelligence** that changes strategy based on attempts and user history
 
-#### **15+ Mathematical Strategies**
+#### **Mathematical Strategies**
 1. **🔄 Symmetry Intelligence**: `7 × 3 = 3 × 7` - always choose the easier direction
-2. **⚡ 9s Magic**: Subtract from 10s, finger tricks, digit sum patterns
+2. **⚡ 9s Magic**: Subtract from 10s, finger tricks (pending), digit sum patterns (pending)
 3. **🔢 11s Wizardry**: Repeat digits for singles, middle-sum method for doubles
-4. **🖐️ 5s Mastery**: Half of 10s method, nickel counting patterns
+4. **🖐️ 5s Mastery**: Half of 10s method, nickel counting patterns (pending)
 5. **🔟 10s Power**: Add zeros rule, multiples decomposition
-6. **💰 25s Quarters**: "Quarter of 100" technique
-7. **👯 Doubles Strategy**: Pure doubles, half-and-double transformations
-8. **🎯 Near Doubles**: `n × (n+1) = n² + n` consecutive number patterns
-9. **⭐ Perfect Squares**: Memorized building blocks and shortcuts
-10. **🏗️ Building Facts**: Use 2s, 5s, 10s as foundation for harder facts
-11. **🎪 Pattern Recognition**: Special relationships (complements to 10, etc.)
-12. **🧩 Decomposition**: Break large numbers into tens and ones
-13. **🎯 Benchmark Numbers**: Use 5, 10, 15, 20, 25 as stepping stones
-14. **🧠 Memory Tricks**: "Six ate forty-eight", rhymes, and stories
-15. **🚀 Speed Techniques**: Left-to-right calculation, rounding-and-adjusting
+6. **👯 Doubles Strategy**: Pure doubles, half-and-double transformations (pending)
+7. **🎯 Near Doubles**: `n × (n+1) = n² + n` consecutive number patterns
+8. **⭐ Perfect Squares**: Memorized building blocks and shortcuts
+9. **🏗️ Building Facts**: Use 2s, 5s, 10s as foundation for harder facts
+10. **🎪 Pattern Recognition**: Special relationships (complements to 10, etc.) (partially done)
+11. **🧩 Decomposition**: Break large numbers into tens and ones
+12. **🎯 Benchmark Numbers**: Use 5, 10, 15, 20, 25 as stepping stones
+13. **🧠 Memory Tricks**: "Six ate forty-eight", rhymes, and stories
+14. **🚀 Speed Techniques**: Left-to-right calculation (pending), rounding-and-adjusting (pending)
 
 #### **Multi-Modal Learning Approaches**
 - **👁️ Visual Arrays**: Dot patterns and rectangle models for visual learners
@@ -341,7 +340,7 @@ Contributions are welcome! Please feel free to submit a Pull Request. When contr
 
 ---
 
-## 🎯 Why This System is Revolutionary
+## 🎯 Why This System is Advanced
 
 Traditional multiplication education often relies on rote memorization and single-method explanations. Eva's Multiplication Game transforms learning through:
 
