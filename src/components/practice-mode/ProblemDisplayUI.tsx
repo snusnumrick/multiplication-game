@@ -74,6 +74,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
         return t.strategyBuildingKnownFacts || 'Building From Known Facts';
       case 'ones':
         return t.strategyOnes || 'Ones';
+      case 'tens':
+        return t.strategyTens || 'Tens';
       default:
         // Fallback for any unknown strategies, convert from snake_case to Title Case
         console.warn(`Missing translation for strategy: ${strategyKey}`);

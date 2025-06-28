@@ -546,7 +546,7 @@ export const germanTranslations: Translation = {
     strategySkipCounting: "In Schritten zählen",
     strategyDecomposition: "Zerlegung",
     strategyDoubles: "Verdopplungsstrategie",
-    strategyPureDoubles: "Reine Verdopplung",
+    strategyPureDoubles: "Halbieren & Verdoppeln",
     strategyFives: "Fünferstrategie",
     strategySquares: "Quadratzahlen-Strategie",
     strategyNearDoubles: "Nahe-Doppelte-Strategie",
