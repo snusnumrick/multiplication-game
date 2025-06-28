@@ -13,25 +13,27 @@ export const getStrategyCategory = (strategy: string): StrategyCategory => {
     case 'nines':
     case 'nines_digit_sum':
     case 'elevens_simple':
-    case 'elevens_advanced':
     case 'squares':
-    case 'near_doubles':
+    case 'twos':
+    case 'doubles': // Keep old key
     case 'pattern_recognition': // Keep old key for safety
       return 'pattern';
 
-    case 'twos':
-    case 'doubles': // Keep old key
-    case 'fives':
     case 'skip_counting':
+    case 'fives_nickel_counting':
+    case 'fives': // Keep old key
       return 'counting';
 
     case 'decomposition':
-      return 'breakdown';
-
     case 'pure_doubles':
-    case 'nines_finger_trick':
     case 'benchmark_numbers':
     case 'building_known_facts':
+    case 'near_doubles':
+    case 'elevens_advanced':
+    case 'fives_half_of_ten':
+      return 'breakdown';
+
+    case 'nines_finger_trick':
       return 'kinesthetic';
 
     case 'memory_trick':
