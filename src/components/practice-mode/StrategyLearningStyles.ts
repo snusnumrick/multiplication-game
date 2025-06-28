@@ -1,0 +1,17 @@
+export const strategyLearningStyles: Record<string, string> = {
+  visual_array: 'visual',
+  ones: 'pattern',
+  tens: 'pattern',
+  twos: 'pattern',
+  fives: 'pattern',
+  elevens_simple: 'pattern',
+  squares: 'pattern',
+  nines: 'pattern',
+  near_doubles: 'pattern',
+  benchmark_numbers: 'kinesthetic',
+  building_known_facts: 'kinesthetic',
+  elevens_advanced: 'pattern',
+  memory_trick: 'auditory',
+  skip_counting: 'auditory',
+  decomposition: 'kinesthetic',
+};
