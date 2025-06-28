@@ -494,6 +494,12 @@ export interface Translation {
   strategyBuildingKnownFacts?: string;
   strategyOnes?: string;
   strategyTens?: string;
+  strategyNines?: string;
+  strategyNinesDigitSum?: string;
+  strategyElevens?: string;
+  strategyAdvancedElevens?: string;
+  strategyMemoryTrick?: string;
+  strategyBenchmark?: string;
 
   closeHintButton?: string;
   explainDifferentlyButton?: string;

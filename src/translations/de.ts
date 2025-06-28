@@ -553,6 +553,12 @@ export const germanTranslations: Translation = {
     strategyBuildingKnownFacts: "Aufbau auf Bekanntem",
     strategyOnes: "Einser-Strategie",
     strategyTens: "Zehner-Strategie",
+    strategyNines: "Neuner-Strategie",
+    strategyNinesDigitSum: "Neuner-Quersummen-Strategie",
+    strategyElevens: "Elfer-Strategie",
+    strategyAdvancedElevens: "Erweiterte Elfer-Strategie",
+    strategyMemoryTrick: "Merkspruch-Strategie",
+    strategyBenchmark: "Ankerpunkt-Strategie",
 
   closeHintButton: "Tipp schließen",
   explainDifferentlyButton: "Anders erklären",

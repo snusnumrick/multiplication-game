@@ -76,6 +76,18 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
         return t.strategyOnes || 'Ones';
       case 'tens':
         return t.strategyTens || 'Tens';
+      case 'nines':
+        return t.strategyNines || 'Nines';
+      case 'nines_digit_sum':
+        return t.strategyNinesDigitSum || 'Nines Digit Sum';
+      case 'elevens':
+        return t.strategyElevens || 'Elevens';
+      case 'advanced_elevens':
+        return t.strategyAdvancedElevens || 'Advanced Elevens';
+      case 'memory_trick':
+        return t.strategyMemoryTrick || 'Memory Trick';
+      case 'benchmark':
+        return t.strategyBenchmark || 'Benchmark';
       default:
         // Fallback for any unknown strategies, convert from snake_case to Title Case
         console.warn(`Missing translation for strategy: ${strategyKey}`);

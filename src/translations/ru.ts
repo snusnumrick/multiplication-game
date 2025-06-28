@@ -554,6 +554,12 @@ export const russianTranslations: Translation = {
     strategyBuildingKnownFacts: "Построение на известном",
     strategyOnes: "Стратегия единицы",
     strategyTens: "Стратегия десяток",
+    strategyNines: "Стратегия девяток",
+    strategyNinesDigitSum: "Стратегия суммы цифр для девяток",
+    strategyElevens: "Стратегия одиннадцати",
+    strategyAdvancedElevens: "Продвинутая стратегия одиннадцати",
+    strategyMemoryTrick: "Мнемоническая стратегия",
+    strategyBenchmark: "Стратегия опорных точек",
 
   closeHintButton: "Закрыть подсказку",
   explainDifferentlyButton: "Объяснить иначе",
