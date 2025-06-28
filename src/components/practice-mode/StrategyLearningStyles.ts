@@ -5,7 +5,7 @@ export const strategyLearningStyles: Record<string, string> = {
   twos: 'pattern',
   pure_doubles: 'pattern',
   fives_half_of_ten: 'pattern',
-  fives_nickel_counting: 'kinesthetic',
+  fives_nickel_counting: 'auditory',
   elevens_simple: 'pattern',
   squares: 'pattern',
   nines: 'pattern',
