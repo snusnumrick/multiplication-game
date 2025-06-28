@@ -553,7 +553,7 @@ export const russianTranslations: Translation = {
     strategyNearDoubles: "Стратегия «Почти двойные»",
     strategyBuildingKnownFacts: "Построение на известном",
     strategyOnes: "Стратегия единицы",
-    strategyTens: "Стратегия умножения на десять",
+    strategyTens: "Стратегия десяток",
 
   closeHintButton: "Закрыть подсказку",
   explainDifferentlyButton: "Объяснить иначе",
