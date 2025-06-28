@@ -62,6 +62,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
       case 'doubles':
       case 'twos': // Added to handle 'twos' strategy key
         return t.strategyDoubles || 'Doubles';
+      case 'pure_doubles':
+        return t.strategyPureDoubles || 'Pure Doubles';
       case 'fives':
         return t.strategyFives || 'Fives';
       case 'squares':
