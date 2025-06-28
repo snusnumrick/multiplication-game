@@ -453,6 +453,14 @@ export interface Translation {
   benchmarkStep5?: string;
   benchmarkPattern?: string;
   benchmarkMnemonic?: string;
+  roundingAndAdjustingConcept?: string;
+  roundingAndAdjustingStep1?: string;
+  roundingAndAdjustingStep2?: string;
+  roundingAndAdjustingStep3?: string;
+  roundingAndAdjustingStep4?: string;
+  roundingAndAdjustingStep5?: string;
+  roundingAndAdjustingPattern?: string;
+  roundingAndAdjustingMnemonic?: string;
   bfkfConcept?: string;
   bfkfStep1?: string;
   bfkf3sStep2?: string;
@@ -527,6 +535,7 @@ export interface Translation {
   strategyAdvancedElevens?: string;
   strategyMemoryTrick?: string;
   strategyBenchmark?: string;
+  strategyRoundingAndAdjusting?: string;
 
   closeHintButton?: string;
   explainDifferentlyButton?: string;

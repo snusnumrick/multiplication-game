@@ -375,6 +375,38 @@ export const generateSmartExplanation = (
     });
   }
 
+  // Strategy: Rounding and Adjusting (Complexity: 8)
+  if (b === 8 || b === 9) { // b is the larger number after swap
+    applicableStrategies.push({
+      name: 'rounding_and_adjusting',
+      complexityOrder: 8,
+      generate: () => {
+        const numberToRound = b;
+        const otherNumber = a;
+
+        const roundedNumber = 10;
+        const difference = roundedNumber - numberToRound;
+        const initialProduct = roundedNumber * otherNumber;
+        const adjustment = difference * otherNumber;
+        const result = initialProduct - adjustment;
+
+        return {
+          strategy: 'rounding_and_adjusting',
+          concept: t.roundingAndAdjustingConcept || 'Round to an easy number, then adjust!',
+          steps: [
+            t.roundingAndAdjustingStep1?.replaceAll('{a}', numberToRound.toString()).replace('{roundedNumber}', roundedNumber.toString()) || `Round ${numberToRound} up to ${roundedNumber}.`,
+            t.roundingAndAdjustingStep2?.replace('{roundedNumber}', roundedNumber.toString()).replaceAll('{b}', otherNumber.toString()).replace('{initialProduct}', initialProduct.toString()) || `First, multiply: ${roundedNumber} × ${otherNumber} = ${initialProduct}.`,
+            t.roundingAndAdjustingStep3?.replace('{roundedNumber}', roundedNumber.toString()).replaceAll('{a}', numberToRound.toString()).replace('{difference}', difference.toString()) || `The difference is ${roundedNumber} - ${numberToRound} = ${difference}.`,
+            t.roundingAndAdjustingStep4?.replace('{difference}', difference.toString()).replaceAll('{b}', otherNumber.toString()).replace('{adjustment}', adjustment.toString()) || `We need to adjust by ${difference} × ${otherNumber} = ${adjustment}.`,
+            t.roundingAndAdjustingStep5?.replace('{initialProduct}', initialProduct.toString()).replace('{adjustment}', adjustment.toString()).replace('{result}', result.toString()) || `Subtract the adjustment: ${initialProduct} - ${adjustment} = ${result}.`,
+          ],
+          pattern: t.roundingAndAdjustingPattern || `a × b = (rounded_a × b) - ((rounded_a - a) × b)`,
+          mnemonics: t.roundingAndAdjustingMnemonic || `Round up, multiply, then take away the extra!`
+        };
+      }
+    });
+  }
+
   // Strategy: Benchmark Numbers (Complexity: 8)
   if ((a === 6 || a === 7 || a === 8) && b > 5) { // Check for numbers close to benchmarks 5 or 10
     applicableStrategies.push({

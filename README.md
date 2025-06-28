@@ -37,8 +37,9 @@ Our advanced AI-powered explanation engine provides personalized learning experi
 10. **🎪 Pattern Recognition**: Special relationships (complements to 10, etc.) (partially done)
 11. **🧩 Decomposition**: Break large numbers into tens and ones
 12. **🎯 Benchmark Numbers**: Use 5, 10, 15, 20, 25 as stepping stones
-13. **🧠 Memory Tricks**: "Six ate forty-eight", rhymes, and stories
-14. **🚀 Speed Techniques**: Left-to-right calculation (pending), rounding-and-adjusting (pending)
+13. **⚪ Rounding & Adjusting**: Use a round number (like 10) and then correct the result (e.g., `9x7` is `10x7 - 1x7`)
+14. **🧠 Memory Tricks**: "Six ate forty-eight", rhymes, and stories
+15. **🚀 Speed Techniques**: Left-to-right calculation (pending)
 
 #### **Multi-Modal Learning Approaches**
 - **👁️ Visual Arrays**: Dot patterns and rectangle models for visual learners

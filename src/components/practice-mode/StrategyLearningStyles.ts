@@ -13,6 +13,7 @@ export const strategyLearningStyles: Record<string, string> = {
   nines_finger_trick: 'kinesthetic',
   near_doubles: 'breakdown',
   benchmark_numbers: 'breakdown',
+  rounding_and_adjusting: 'breakdown',
   building_known_facts: 'breakdown',
   elevens_advanced: 'breakdown',
   memory_trick: 'auditory',
