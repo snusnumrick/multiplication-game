@@ -158,23 +158,43 @@ export const generateSmartExplanation = (
 
   // Strategy: Fives (Complexity: 4)
   if (a === 5) { // Check only 'a' due to symmetry swap
-    // console.log('generateSmartExplanation: 5');
     const otherNum = b; // 'a' is 5 after potential swap
     const result = 5 * otherNum;
+
+    // Strategy: Fives (Half of 10)
     const tenTimesOther = 10 * otherNum;
     applicableStrategies.push({
-      name: 'fives',
+      name: 'fives_half_of_ten',
       complexityOrder: 4,
       generate: () => ({
-        strategy: 'fives', // Specific strategy name
-        concept: t.fivesConcept || `Multiplying by 5 uses the 'half of 10' trick!`,
+        strategy: 'fives_half_of_ten',
+        concept: t.fivesHalfOfTenConcept || `Multiplying by 5 uses the 'half of 10' trick!`,
         steps: [
-          t.fivesStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 5 × ${otherNum} (or ${otherNum} × 5).`,
-          t.fivesStep2?.replaceAll('{otherNum}', otherNum.toString()).replace('{tenTimesOther}', tenTimesOther.toString()) || `Think: (10 × ${otherNum}) ÷ 2. That's ${tenTimesOther} ÷ 2.`,
-          t.fivesStep3?.replace('{tenTimesOther}', tenTimesOther.toString()).replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `Half of ${tenTimesOther} is ${result}. So, 5 × ${otherNum} = ${result}.`
+          t.fivesHalfOfTenStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 5 × ${otherNum} (or ${otherNum} × 5).`,
+          t.fivesHalfOfTenStep2?.replaceAll('{otherNum}', otherNum.toString()).replace('{tenTimesOther}', tenTimesOther.toString()) || `Think: (10 × ${otherNum}) ÷ 2. That's ${tenTimesOther} ÷ 2.`,
+          t.fivesHalfOfTenStep3?.replace('{tenTimesOther}', tenTimesOther.toString()).replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `Half of ${tenTimesOther} is ${result}. So, 5 × ${otherNum} = ${result}.`
         ],
-        pattern: t.fivesPattern || `Any number × 5 = (that number × 10) ÷ 2.`,
-        mnemonics: t.fivesMnemonic || `Five is half of ten, easy to win!`
+        pattern: t.fivesHalfOfTenPattern || `Any number × 5 = (that number × 10) ÷ 2.`,
+        mnemonics: t.fivesHalfOfTenMnemonic || `Five is half of ten, easy to win!`
+      })
+    });
+
+    // Strategy: Fives (Nickel Counting)
+    applicableStrategies.push({
+      name: 'fives_nickel_counting',
+      complexityOrder: 4,
+      generate: () => ({
+        strategy: 'fives_nickel_counting',
+        concept: t.fivesNickelCountingConcept || 'Multiplying by 5 is like counting nickels!',
+        steps: [
+          t.fivesNickelCountingStep1?.replaceAll('{otherNum}', otherNum.toString()) || `This is 5 × ${otherNum}. Think of it as having ${otherNum} nickels.`,
+          t.fivesNickelCountingStep2 || 'Each nickel is worth 5 cents.',
+          t.fivesNickelCountingStep3?.replaceAll('{otherNum}', otherNum.toString()) || `You can count by 5s, ${otherNum} times.`,
+          t.fivesNickelCountingStep4?.replace('{result}', result.toString()) || `Let's count: 5, 10, 15... all the way to ${result}.`,
+          t.fivesNickelCountingStep5?.replaceAll('{otherNum}', otherNum.toString()).replace('{result}', result.toString()) || `So, ${otherNum} nickels are worth ${result} cents. ${otherNum} × 5 = ${result}.`
+        ],
+        pattern: t.fivesNickelCountingPattern || 'The answer will always end in a 5 or a 0.',
+        mnemonics: t.fivesNickelCountingMnemonic || 'Five, ten, fifteen, twenty... count the nickels, you have plenty!'
       })
     });
   }

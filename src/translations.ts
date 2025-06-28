@@ -378,6 +378,20 @@ export interface Translation {
   twosStep3?: string;
   twosPattern?: string;
   twosMnemonic?: string;
+  fivesHalfOfTenConcept?: string;
+  fivesHalfOfTenStep1?: string;
+  fivesHalfOfTenStep2?: string;
+  fivesHalfOfTenStep3?: string;
+  fivesHalfOfTenPattern?: string;
+  fivesHalfOfTenMnemonic?: string;
+  fivesNickelCountingConcept?: string;
+  fivesNickelCountingStep1?: string;
+  fivesNickelCountingStep2?: string;
+  fivesNickelCountingStep3?: string;
+  fivesNickelCountingStep4?: string;
+  fivesNickelCountingStep5?: string;
+  fivesNickelCountingPattern?: string;
+  fivesNickelCountingMnemonic?: string;
   fivesConcept?: string;
   fivesStep1?: string;
   fivesStep2?: string;
@@ -499,7 +513,8 @@ export interface Translation {
   strategyDecomposition?: string;
   strategyDoubles?: string;
   strategyPureDoubles?: string;
-  strategyFives?: string;
+  strategyFivesHalfOfTen?: string;
+  strategyFivesNickelCounting?: string;
   strategySquares?: string;
   strategyNearDoubles?: string; // Added for Near Doubles strategy name
   strategyBuildingKnownFacts?: string;
