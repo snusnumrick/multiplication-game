@@ -487,6 +487,7 @@ export const germanTranslations: Translation = {
     nearDoublesMnemonic: "Nachbarn helfen: Quadriere die Kleine, addiere sie drauf!",
     memoryTrickConcept: "Ein lustiger Reim oder eine Geschichte, um sich diesen Fakt zu merken!",
     memory_trick_6x8: "Sechs mal acht ist achtundvierzig. Also merke dir: 6 x 8 = 48!",
+    memory_trick_3x9: "Drei mal neun ist siebenundzwanzig, das ist fein!",
     benchmarkConcept: "Nutze einfache Zahlen als Sprungbrett!",
     benchmarkStep1: "Lass uns {a} × {b} lösen.",
     benchmarkStep2: "Beginne mit einem einfachen Anker: {benchmark} × {b} = {result}.",

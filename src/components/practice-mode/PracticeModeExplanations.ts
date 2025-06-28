@@ -247,9 +247,9 @@ export const generateSmartExplanation = (
 
   // Strategy: Nines (Complexity: 7)
   // Original code had 'pattern_recognition', we use 'nines'.
-  if (a === 9) { // Check only 'a' due to symmetry swap
+  if (b === 9) { // Check 'b' for 9, since 'a' is always the smaller number after swap.
     // console.log('generateSmartExplanation: 9');
-    const other = b; // 'a' is 9 after potential swap
+    const other = a; // 'b' is 9 after potential swap
     applicableStrategies.push({
       name: 'nines',
       complexityOrder: 7,
@@ -259,8 +259,8 @@ export const generateSmartExplanation = (
         steps: [
           t.ninesStep1?.replaceAll('{other}', other.toString()) || `Notice this is 9 × ${other}`,
           t.ninesStep2?.replaceAll('{other}', other.toString()).replace('{result}', (10 * other).toString()) || `Think: 10 × ${other} = ${10 * other}`,
-          t.ninesStep3?.replaceAll('{other}', other.toString()).replace('{calc1}', (10 * other).toString()).replace('{calc2}', (9 * other).toString()) || `Then subtract ${other}: ${10 * other} - ${other} = ${9 * other}`,
-          t.ninesStep4?.replaceAll('{other}', other.toString()).replace('{result}', (9 * other).toString()) || `So 9 × ${other} = ${9 * other}`
+          t.ninesStep3?.replaceAll('{other}', other.toString()).replace('{calc1}', (10 * other).toString()).replace('{calc2}', (a * b).toString()) || `Then subtract ${other}: ${10 * other} - ${other} = ${a * b}`,
+          t.ninesStep4?.replaceAll('{other}', other.toString()).replace('{result}', (a * b).toString()) || `So 9 × ${other} = ${a * b}`
         ],
         pattern: t.ninesPattern || `9 times anything: multiply by 10, then subtract the number!`,
         mnemonics: t.ninesMnemonic || `Remember: 9 is just 1 less than 10!`
@@ -269,9 +269,9 @@ export const generateSmartExplanation = (
   }
 
   // Strategy: Nines Digit Sum (Complexity: 7)
-  if (a === 9 && b < 10) { // Check only 'a' due to symmetry swap, and for single digit 'b'
-    const other = b;
-    const result = a * other;
+  if (b === 9 && a < 10) { // Check 'b' for 9, and for single digit 'a'
+    const other = a;
+    const result = a * b;
     const firstDigit = Math.floor(result / 10);
     const secondDigit = result % 10;
     applicableStrategies.push({
@@ -294,9 +294,9 @@ export const generateSmartExplanation = (
   }
 
   // Strategy: Nines Finger Trick (Complexity: 7)
-  if (a === 9 && b > 1 && b < 10) { // Check for 'a' as 9 and 'b' as a single digit > 1
-    const other = b;
-    const result = a * other;
+  if (b === 9 && a > 1 && a < 10) { // Check for 'b' as 9 and 'a' as a single digit > 1
+    const other = a;
+    const result = a * b;
     const firstDigit = other - 1;
     const secondDigit = 10 - other;
     applicableStrategies.push({

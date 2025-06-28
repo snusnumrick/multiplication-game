@@ -488,6 +488,7 @@ export const russianTranslations: Translation = {
     nearDoublesMnemonic: "Соседи помогают: возведи меньшее в квадрат, прибавь его же!",
     memoryTrickConcept: "Весёлый стишок или история, чтобы запомнить этот факт!",
     memory_trick_6x8: "Шесть на восемь - сорок восемь. Так что запомни: 6 x 8 = 48!",
+    memory_trick_3x9: "Трижды девять – двадцать семь, это нужно помнить всем!",
     benchmarkConcept: "Используй простые числа как трамплин!",
     benchmarkStep1: "Давай решим {a} × {b}.",
     benchmarkStep2: "Начни с простого ориентира: {benchmark} × {b} = {result}.",
