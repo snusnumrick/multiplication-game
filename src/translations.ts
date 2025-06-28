@@ -382,6 +382,14 @@ export interface Translation {
   fivesStep3?: string;
   fivesPattern?: string;
   fivesMnemonic?: string;
+  pureDoublesConcept?: string;
+  pureDoublesStep1?: string;
+  pureDoublesStep2?: string;
+  pureDoublesStep3?: string;
+  pureDoublesStep4?: string;
+  pureDoublesStep5?: string;
+  pureDoublesPattern?: string;
+  pureDoublesMnemonic?: string;
   squaresConcept?: string;
   squaresStep1?: string;
   squaresStep2?: string;
@@ -479,6 +487,7 @@ export interface Translation {
   strategySkipCounting?: string;
   strategyDecomposition?: string;
   strategyDoubles?: string;
+  strategyPureDoubles?: string;
   strategyFives?: string;
   strategySquares?: string;
   strategyNearDoubles?: string; // Added for Near Doubles strategy name

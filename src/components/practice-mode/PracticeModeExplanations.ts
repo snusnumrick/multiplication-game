@@ -178,6 +178,30 @@ export const generateSmartExplanation = (
       })
     });
   }
+
+  // Strategy: Pure Doubles (for even numbers) (Complexity: 5)
+  if (a % 2 === 0 && a > 2) { // Check for even numbers other than 2
+    const halfA = a / 2;
+    const result = a * b;
+    const halfResult = halfA * b;
+    applicableStrategies.push({
+      name: 'pure_doubles',
+      complexityOrder: 5,
+      generate: () => ({
+        strategy: 'pure_doubles',
+        concept: t.pureDoublesConcept || 'Double it up! Use smaller facts you know.',
+        steps: [
+          t.pureDoublesStep1?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Problem: ${a} × ${b}.`,
+          t.pureDoublesStep2?.replaceAll('{a}', a.toString()).replaceAll('{halfA}', halfA.toString()) || `Since ${a} is an even number, you can split it in half: ${a} = ${halfA} + ${halfA}.`,
+          t.pureDoublesStep3?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()).replaceAll('{halfA}', halfA.toString()) || `So, ${a} × ${b} is the same as (${halfA} × ${b}) + (${halfA} × ${b}).`,
+          t.pureDoublesStep4?.replaceAll('{halfA}', halfA.toString()).replaceAll('{b}', b.toString()).replaceAll('{halfResult}', halfResult.toString()) || `First, calculate ${halfA} × ${b} = ${halfResult}.`,
+          t.pureDoublesStep5?.replaceAll('{halfResult}', halfResult.toString()).replaceAll('{result}', result.toString()) || `Now, just double that result: ${halfResult} + ${halfResult} = ${result}.`
+        ],
+        pattern: t.pureDoublesPattern || `For even numbers: N × M = (N/2 × M) + (N/2 × M).`,
+        mnemonics: t.pureDoublesMnemonic || `When a number's even, split it in two, solve one part, then double through!`
+      })
+    });
+  }
   
   // Strategy: Elevens (Simple) (Complexity: 5)
   // Original code had 'pattern_recognition', we use 'elevens_simple'.
