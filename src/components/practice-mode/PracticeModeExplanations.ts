@@ -292,6 +292,31 @@ export const generateSmartExplanation = (
       })
     });
   }
+
+  // Strategy: Nines Finger Trick (Complexity: 7)
+  if (a === 9 && b > 1 && b < 10) { // Check for 'a' as 9 and 'b' as a single digit > 1
+    const other = b;
+    const result = a * other;
+    const firstDigit = other - 1;
+    const secondDigit = 10 - other;
+    applicableStrategies.push({
+      name: 'nines_finger_trick',
+      complexityOrder: 7,
+      generate: () => ({
+        strategy: 'nines_finger_trick',
+        concept: t.ninesFingerTrickConcept || 'Use your fingers to solve 9s!',
+        steps: [
+          t.ninesFingerTrickStep1 || 'Hold up both hands in front of you.',
+          t.ninesFingerTrickStep2?.replaceAll('{other}', other.toString()) || `To multiply 9 by ${other}, bend down your ${other}th finger (from the left).`,
+          t.ninesFingerTrickStep3?.replace('{firstDigit}', firstDigit.toString()) || `The fingers to the left of the bent finger are the tens digit. You have ${firstDigit} finger(s) up.`,
+          t.ninesFingerTrickStep4?.replace('{secondDigit}', secondDigit.toString()) || `The fingers to the right are the ones digit. You have ${secondDigit} finger(s) up.`,
+          t.ninesFingerTrickStep5?.replace('{result}', result.toString()) || `So, the answer is ${result}.`
+        ],
+        pattern: t.ninesFingerTrickPattern || 'Bend the Nth finger for 9xN. Left fingers are tens, right fingers are ones.',
+        mnemonics: t.ninesFingerTrickMnemonic || 'Your ten fingers are a magic 9s calculator!'
+      })
+    });
+  }
   
   // Strategy: Near Doubles (Complexity: 8)
   if (b === a + 1) { // 'a' is smaller due to symmetry swap

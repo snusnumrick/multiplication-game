@@ -420,6 +420,14 @@ export interface Translation {
   ninesDigitSumStep5?: string;
   ninesDigitSumPattern?: string;
   ninesDigitSumMnemonic?: string;
+  ninesFingerTrickConcept?: string;
+  ninesFingerTrickStep1?: string;
+  ninesFingerTrickStep2?: string;
+  ninesFingerTrickStep3?: string;
+  ninesFingerTrickStep4?: string;
+  ninesFingerTrickStep5?: string;
+  ninesFingerTrickPattern?: string;
+  ninesFingerTrickMnemonic?: string;
   benchmarkConcept?: string;
   benchmarkStep1?: string;
   benchmarkStep2?: string;
