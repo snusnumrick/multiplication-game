@@ -30,7 +30,7 @@ Our advanced AI-powered explanation engine provides personalized learning experi
 3. **🔢 11s Wizardry**: Repeat digits for singles, middle-sum method for doubles
 4. **🖐️ 5s Mastery**: Half of 10s method, nickel counting patterns
 5. **🔟 10s Power**: Add zeros rule, multiples decomposition
-6. **👯 Doubles Strategy**: Pure doubles (implemented), half-and-double transformations
+6. **👯 Doubles Strategy**: Pure doubles, half-and-double transformations
 7. **🎯 Near Doubles**: `n × (n+1) = n² + n` consecutive number patterns
 8. **⭐ Perfect Squares**: Memorized building blocks and shortcuts
 9. **🏗️ Building Facts**: Use 2s, 5s, 10s as foundation for harder facts
