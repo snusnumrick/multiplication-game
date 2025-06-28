@@ -53,19 +53,18 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
     switch (strategyKey) {
       case 'visual_array':
         return t.strategyVisualArray || 'Visual Array';
-      case 'pattern_recognition':
-        return t.strategyPatternRecognition || 'Pattern Recognition';
       case 'skip_counting':
         return t.strategySkipCounting || 'Skip Counting';
       case 'decomposition':
         return t.strategyDecomposition || 'Decomposition';
-      case 'doubles':
-      case 'twos': // Added to handle 'twos' strategy key
+      case 'twos':
         return t.strategyDoubles || 'Doubles';
       case 'pure_doubles':
         return t.strategyPureDoubles || 'Pure Doubles';
-      case 'fives':
-        return t.strategyFives || 'Fives';
+      case 'fives_half_of_ten':
+        return t.strategyFivesHalfOfTen || 'Fives (Half of Ten)';
+      case 'fives_nickel_counting':
+        return t.strategyFivesNickelCounting || 'Fives (Nickel Counting)';
       case 'squares':
         return t.strategySquares || 'Squares';
       case 'near_doubles':
@@ -80,14 +79,16 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
         return t.strategyNines || 'Nines';
       case 'nines_digit_sum':
         return t.strategyNinesDigitSum || 'Nines Digit Sum';
-      case 'elevens':
+      case 'nines_finger_trick':
+        return t.strategyNinesFingerTrick || 'Nines Finger Trick';
+      case 'elevens_simple':
         return t.strategyElevens || 'Elevens';
-      case 'advanced_elevens':
+      case 'elevens_advanced':
         return t.strategyAdvancedElevens || 'Advanced Elevens';
       case 'memory_trick':
         return t.strategyMemoryTrick || 'Memory Trick';
-      case 'benchmark':
-        return t.strategyBenchmark || 'Benchmark';
+      case 'benchmark_numbers':
+        return t.strategyBenchmark || 'Benchmark Numbers';
       default:
         // Fallback for any unknown strategies, convert from snake_case to Title Case
         console.warn(`Missing translation for strategy: ${strategyKey}`);
