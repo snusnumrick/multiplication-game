@@ -3,7 +3,7 @@ export const strategyLearningStyles: Record<string, string> = {
   ones: 'pattern',
   tens: 'pattern',
   twos: 'pattern',
-  pure_doubles: 'pattern',
+  pure_doubles: 'kinesthetic',
   fives: 'pattern',
   elevens_simple: 'pattern',
   squares: 'pattern',
