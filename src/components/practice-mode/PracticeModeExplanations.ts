@@ -243,6 +243,31 @@ export const generateSmartExplanation = (
       })
     });
   }
+
+  // Strategy: Nines Digit Sum (Complexity: 7)
+  if (a === 9 && b < 10) { // Check only 'a' due to symmetry swap, and for single digit 'b'
+    const other = b;
+    const result = a * other;
+    const firstDigit = Math.floor(result / 10);
+    const secondDigit = result % 10;
+    applicableStrategies.push({
+      name: 'nines_digit_sum',
+      complexityOrder: 7,
+      generate: () => ({
+        strategy: 'nines_digit_sum',
+        concept: t.ninesDigitSumConcept || 'The magic of 9s: the digits of the answer always add up to 9!',
+        steps: [
+          t.ninesDigitSumStep1?.replaceAll('{other}', other.toString()) || `For 9 × ${other}, the first digit of the answer is one less than ${other}.`,
+          t.ninesDigitSumStep2?.replaceAll('{other}', other.toString()).replace('{firstDigit}', (other - 1).toString()) || `So, the first digit is ${other} - 1 = ${other - 1}.`,
+          t.ninesDigitSumStep3?.replace('{firstDigit}', firstDigit.toString()).replace('{sum}', '9') || `The two digits of the answer must add up to 9. So, ${firstDigit} + ? = 9.`,
+          t.ninesDigitSumStep4?.replace('{secondDigit}', secondDigit.toString()) || `The second digit must be ${secondDigit}.`,
+          t.ninesDigitSumStep5?.replace('{result}', result.toString()) || `The answer is ${result}.`
+        ],
+        pattern: t.ninesDigitSumPattern || `For 9 × N, the first digit is N-1, and the second digit makes the sum of both digits 9.`,
+        mnemonics: t.ninesDigitSumMnemonic || `With nines, the digits always make a perfect nine!`
+      })
+    });
+  }
   
   // Strategy: Near Doubles (Complexity: 8)
   if (b === a + 1) { // 'a' is smaller due to symmetry swap

@@ -404,6 +404,14 @@ export interface Translation {
   nearDoublesMnemonic?: string;
   memoryTrickConcept?: string;
   memory_trick_6x8?: string;
+  ninesDigitSumConcept?: string;
+  ninesDigitSumStep1?: string;
+  ninesDigitSumStep2?: string;
+  ninesDigitSumStep3?: string;
+  ninesDigitSumStep4?: string;
+  ninesDigitSumStep5?: string;
+  ninesDigitSumPattern?: string;
+  ninesDigitSumMnemonic?: string;
   benchmarkConcept?: string;
   benchmarkStep1?: string;
   benchmarkStep2?: string;

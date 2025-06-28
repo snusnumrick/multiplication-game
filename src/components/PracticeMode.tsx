@@ -51,7 +51,7 @@ export function PracticeMode() {
   // Smart explanation generation (now uses imported logic)
   const generateSmartExplanation = useCallback((a: number, b: number, attempts: number, discoveryMode: boolean = false): ExplanationContent => {
     return generateSmartExplanationLogic(a, b, attempts, t as Translation, userProgress.strugglingWith, gameProgress.strategySuccess, gameProgress.learningStyleSuccess, { discoveryMode });
-  }, [userProgress.strugglingWith, t, gameProgress.strategySuccess]);
+  }, [userProgress.strugglingWith, t, gameProgress.strategySuccess, gameProgress.learningStyleSuccess]);
 
   // Helper function to get a list of unique explanations based on strategy name
   const getUniqueExplanationsList = useCallback((): ExplanationContent[] => {
@@ -165,7 +165,7 @@ export function PracticeMode() {
         consecutiveCorrect: 0
       }));
     }
-  }, [currentProblem, userAnswer, playSound, addStars, setFoxyAnimationState, showFoxyMessage, generateProblem, explanation, recordStrategySuccess, userProgress.consecutiveCorrect]);
+  }, [currentProblem, userAnswer, playSound, addStars, setFoxyAnimationState, showFoxyMessage, generateProblem, explanation, recordStrategySuccess, userProgress.consecutiveCorrect, recordLearningStyleSuccess]);
 
   const showSmartHint = useCallback(() => {
     if (!currentProblem) return;
