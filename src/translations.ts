@@ -212,6 +212,8 @@ export interface Translation {
   patternStrategyLabel: string;
   countingStrategyLabel: string;
   breakdownStrategyLabel: string;
+  kinestheticStrategyLabel: string;
+  auditoryStrategyLabel: string;
 
 
   // Encouragement Messages
@@ -505,6 +507,7 @@ export interface Translation {
   strategyTens?: string;
   strategyNines?: string;
   strategyNinesDigitSum?: string;
+  strategyNinesFingerTrick?: string;
   strategyElevens?: string;
   strategyAdvancedElevens?: string;
   strategyMemoryTrick?: string;

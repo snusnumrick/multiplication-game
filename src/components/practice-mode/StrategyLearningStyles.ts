@@ -9,6 +9,7 @@ export const strategyLearningStyles: Record<string, string> = {
   squares: 'pattern',
   nines: 'pattern',
   nines_digit_sum: 'pattern',
+  nines_finger_trick: 'kinesthetic',
   near_doubles: 'pattern',
   benchmark_numbers: 'kinesthetic',
   building_known_facts: 'kinesthetic',

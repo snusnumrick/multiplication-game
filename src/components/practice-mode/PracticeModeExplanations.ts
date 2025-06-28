@@ -48,7 +48,7 @@ export const generateSmartExplanation = (
   learningStyleSuccess: Record<string, number>,
   options?: { discoveryMode?: boolean }
 ): ExplanationContent => {
-  console.log('generateSmartExplanation entry:', { initialA, initialB, attempts, strugglingWithCount: strugglingWith.length, strategySuccess, options });
+  // console.log('generateSmartExplanation entry:', { initialA, initialB, attempts, strugglingWithCount: strugglingWith.length, strategySuccess, options });
 
   let a = initialA;
   let b = initialB;
@@ -61,7 +61,7 @@ export const generateSmartExplanation = (
   // This override is skipped if in discoveryMode.
   // We check strugglingWith against initialA and initialB as those are the numbers from the problem context.
   if (!options?.discoveryMode && (strugglingWith.includes(initialA) || strugglingWith.includes(initialB)) || attempts > 10) {
-    console.log('generateSmartExplanation: visual (priority due to struggle/attempts)', { initialA, initialB, a, b, attempts, strugglingWith });
+    // console.log('generateSmartExplanation: visual (priority due to struggle/attempts)', { initialA, initialB, a, b, attempts, strugglingWith });
     return {
       strategy: 'visual_array',
       concept: t.visualArrayConcept?.replaceAll('{a}', a.toString()).replaceAll('{b}', b.toString()) || `Think of ${a} × ${b} as making ${b} groups of ${a} objects`,
@@ -535,7 +535,7 @@ export const generateSmartExplanation = (
     // Use 'attempts' to cycle through the sorted strategies.
     // This applies if not struggling and attempts <= 1 (usually 0 or 1 for hints).
     const strategyIndex = attempts % applicableStrategies.length;
-    console.log(`generateSmartExplanation: specific strategy (index: ${strategyIndex}, not struggling)`);
+    // console.log(`generateSmartExplanation: specific strategy (index: ${strategyIndex}, not struggling)`);
     return applicableStrategies[strategyIndex].generate();
   }
 

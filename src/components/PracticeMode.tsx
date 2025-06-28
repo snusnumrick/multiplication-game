@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Brain, Eye, Zap, Target } from 'lucide-react';
+import { ArrowLeft, Brain, Eye, Zap, Target, Hand, Ear } from 'lucide-react';
 import { AnimatedFoxy } from './AnimatedFoxy';
 import { useGame } from '../contexts/game-hooks';
 import type { Translation } from '../translations';
@@ -74,7 +74,7 @@ export function PracticeMode() {
       }
     }
     const uniqueList = Array.from(uniqueMap.values());
-    console.log('uniqueList', uniqueList);
+    // console.log('uniqueList', uniqueList);
     return uniqueList;
   }, [currentProblem, generateSmartExplanation]);
 
@@ -370,24 +370,32 @@ export function PracticeMode() {
 
       {/* Strategy Legend */}
       {selectedTable && (
-          <div className="fixed bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl max-w-xs transition-all duration-300">
-            <h4 className="font-bold text-gray-700 mb-2 text-sm">{t.smartStrategiesTitle}</h4>
-            <div className="space-y-2 text-xs">
-              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'visual' ? 'bg-green-100 scale-105' : 'bg-transparent'}`}>
+          <div className="fixed bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-2xl p-3 shadow-xl max-w-xs transition-all duration-300">
+            <h4 className="font-bold text-gray-700 mb-1 text-sm">{t.smartStrategiesTitle}</h4>
+            <div className="space-y-1 text-xs">
+              <div className={`flex items-center py-1 px-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'visual' ? 'bg-green-100 scale-105' : 'bg-transparent'}`}>
                 <Eye className="w-4 h-4 text-green-500 mr-2" />
                 <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'visual' ? 'font-bold text-green-800' : 'text-gray-600'}`}>{t.visualStrategyLabel}</span>
               </div>
-              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'pattern' ? 'bg-purple-100 scale-105' : 'bg-transparent'}`}>
+              <div className={`flex items-center py-1 px-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'pattern' ? 'bg-purple-100 scale-105' : 'bg-transparent'}`}>
                 <Zap className="w-4 h-4 text-purple-500 mr-2" />
                 <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'pattern' ? 'font-bold text-purple-800' : 'text-gray-600'}`}>{t.patternStrategyLabel}</span>
               </div>
-              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'counting' ? 'bg-blue-100 scale-105' : 'bg-transparent'}`}>
+              <div className={`flex items-center py-1 px-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'counting' ? 'bg-blue-100 scale-105' : 'bg-transparent'}`}>
                 <Target className="w-4 h-4 text-blue-500 mr-2" />
                 <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'counting' ? 'font-bold text-blue-800' : 'text-gray-600'}`}>{t.countingStrategyLabel}</span>
               </div>
-              <div className={`flex items-center p-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'breakdown' ? 'bg-orange-100 scale-105' : 'bg-transparent'}`}>
+              <div className={`flex items-center py-1 px-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'breakdown' ? 'bg-orange-100 scale-105' : 'bg-transparent'}`}>
                 <Brain className="w-4 h-4 text-orange-500 mr-2" />
                 <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'breakdown' ? 'font-bold text-orange-800' : 'text-gray-600'}`}>{t.breakdownStrategyLabel}</span>
+              </div>
+              <div className={`flex items-center py-1 px-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'kinesthetic' ? 'bg-red-100 scale-105' : 'bg-transparent'}`}>
+                <Hand className="w-4 h-4 text-red-500 mr-2" />
+                <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'kinesthetic' ? 'font-bold text-red-800' : 'text-gray-600'}`}>{t.kinestheticStrategyLabel}</span>
+              </div>
+              <div className={`flex items-center py-1 px-2 rounded-lg transition-all duration-300 ${explanation && getStrategyCategory(explanation.strategy) === 'auditory' ? 'bg-yellow-100 scale-105' : 'bg-transparent'}`}>
+                <Ear className="w-4 h-4 text-yellow-500 mr-2" />
+                <span className={`${explanation && getStrategyCategory(explanation.strategy) === 'auditory' ? 'font-bold text-yellow-800' : 'text-gray-600'}`}>{t.auditoryStrategyLabel}</span>
               </div>
             </div>
           </div>

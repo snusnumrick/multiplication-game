@@ -1,10 +1,9 @@
-import React from 'react';
-import { Eye, Zap, Target, Brain, Lightbulb } from 'lucide-react';
+import { Eye, Zap, Target, Brain, Lightbulb, Hand, Ear } from 'lucide-react';
 
-export type StrategyCategory = 'visual' | 'pattern' | 'counting' | 'breakdown' | 'default';
+export type StrategyCategory = 'visual' | 'pattern' | 'counting' | 'breakdown' | 'kinesthetic' | 'auditory' | 'default';
 
 export const getStrategyCategory = (strategy: string): StrategyCategory => {
-  console.log('getStrategyCategory', strategy);
+  // console.log('getStrategyCategory', strategy);
   switch (strategy) {
     case 'visual_array':
       return 'visual';
@@ -12,6 +11,7 @@ export const getStrategyCategory = (strategy: string): StrategyCategory => {
     case 'ones':
     case 'tens':
     case 'nines':
+    case 'nines_digit_sum':
     case 'elevens_simple':
     case 'elevens_advanced':
     case 'squares':
@@ -25,9 +25,17 @@ export const getStrategyCategory = (strategy: string): StrategyCategory => {
     case 'skip_counting':
       return 'counting';
 
-    case 'building_known_facts':
     case 'decomposition':
       return 'breakdown';
+
+    case 'pure_doubles':
+    case 'nines_finger_trick':
+    case 'benchmark_numbers':
+    case 'building_known_facts':
+      return 'kinesthetic';
+
+    case 'memory_trick':
+      return 'auditory';
 
     default:
       return 'default';
@@ -40,6 +48,8 @@ export const getStrategyIcon = (strategy: string): JSX.Element => {
     case 'pattern_recognition': return <Zap className="w-5 h-5" />;
     case 'skip_counting': return <Target className="w-5 h-5" />;
     case 'decomposition': return <Brain className="w-5 h-5" />;
+    case 'nines_finger_trick': return <Hand className="w-5 h-5" />;
+    case 'memory_trick': return <Ear className="w-5 h-5" />;
     default: return <Lightbulb className="w-5 h-5" />;
   }
 };
