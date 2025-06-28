@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Star, Brain, Eye, Zap, Target, Lightbulb, Check, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Brain, Eye, Zap, Target } from 'lucide-react';
 import { AnimatedFoxy } from './AnimatedFoxy';
 import { useGame } from '../contexts/game-hooks';
 import type { Translation } from '../translations';

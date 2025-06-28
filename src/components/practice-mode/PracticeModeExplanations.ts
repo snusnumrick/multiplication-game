@@ -1,4 +1,4 @@
-import type { Translation } from '../../translations';
+import type { Translation } from '@/translations.ts';
 import type { ExplanationContent } from './PracticeModeTypes';
 import { strategyLearningStyles } from './StrategyLearningStyles';
 
