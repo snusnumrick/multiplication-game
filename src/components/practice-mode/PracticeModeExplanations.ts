@@ -518,6 +518,33 @@ export const generateSmartExplanation = (
     });
   }
 
+  // Strategy: Left-to-right calculation (Complexity: 9)
+  if (a < 10 && b >= 10 && b < 100) { // single digit times two-digit
+    applicableStrategies.push({
+      name: 'left_to_right',
+      complexityOrder: 9,
+      generate: () => {
+        const tens = Math.floor(b / 10) * 10;
+        const ones = b % 10;
+        const tensResult = a * tens;
+        const onesResult = a * ones;
+        const result = a * b;
+        return {
+          strategy: 'left_to_right',
+          concept: t.leftToRightConcept || 'Calculate from left to right for speed!',
+          steps: [
+            t.leftToRightStep1?.replaceAll('{b}', b.toString()).replace('{tens}', tens.toString()).replace('{ones}', ones.toString()) || `Break down the larger number: ${b} = ${tens} + ${ones}.`,
+            t.leftToRightStep2?.replaceAll('{a}', a.toString()).replace('{tens}', tens.toString()).replace('{tensResult}', tensResult.toString()) || `Multiply the tens part: ${a} × ${tens} = ${tensResult}.`,
+            t.leftToRightStep3?.replaceAll('{a}', a.toString()).replace('{ones}', ones.toString()).replace('{onesResult}', onesResult.toString()) || `Multiply the ones part: ${a} × ${ones} = ${onesResult}.`,
+            t.leftToRightStep4?.replace('{tensResult}', tensResult.toString()).replace('{onesResult}', onesResult.toString()).replace('{result}', result.toString()) || `Add them together: ${tensResult} + ${onesResult} = ${result}.`
+          ],
+          pattern: t.leftToRightPattern || 'a × (T+O) = (a×T) + (a×O)',
+          mnemonics: t.leftToRightMnemonic || 'Go left to right, it makes math light!'
+        };
+      }
+    });
+  }
+
   // Strategy: Elevens (Advanced) (Complexity: 10)
   // Original code had 'pattern_recognition', we use 'elevens_advanced'.
   if (a === 11 && b >= 10 && b < 100) { // 'a' is 11 after potential swap, 'b' is the two-digit number

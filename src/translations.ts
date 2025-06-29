@@ -461,6 +461,13 @@ export interface Translation {
   roundingAndAdjustingStep5?: string;
   roundingAndAdjustingPattern?: string;
   roundingAndAdjustingMnemonic?: string;
+  leftToRightConcept?: string;
+  leftToRightStep1?: string;
+  leftToRightStep2?: string;
+  leftToRightStep3?: string;
+  leftToRightStep4?: string;
+  leftToRightPattern?: string;
+  leftToRightMnemonic?: string;
   bfkfConcept?: string;
   bfkfStep1?: string;
   bfkf3sStep2?: string;
@@ -536,6 +543,7 @@ export interface Translation {
   strategyMemoryTrick?: string;
   strategyBenchmark?: string;
   strategyRoundingAndAdjusting?: string;
+  strategyLeftToRight?: string;
 
   closeHintButton?: string;
   explainDifferentlyButton?: string;

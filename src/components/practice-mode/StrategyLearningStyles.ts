@@ -15,6 +15,7 @@ export const strategyLearningStyles: Record<string, string> = {
   benchmark_numbers: 'breakdown',
   rounding_and_adjusting: 'breakdown',
   building_known_facts: 'breakdown',
+  left_to_right: 'breakdown',
   elevens_advanced: 'breakdown',
   memory_trick: 'auditory',
   skip_counting: 'counting',
