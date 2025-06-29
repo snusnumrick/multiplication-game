@@ -89,6 +89,31 @@
   .animate-bounce-gentle {
     animation: bounce-gentle 2s ease-in-out infinite;
   }
+
+    /* Auto-select input text after incorrect answer */
+    .input-auto-select {
+        user-select: all;
+        -webkit-user-select: all;
+        -moz-user-select: all;
+        -ms-user-select: all;
+    }
+
+    /* Mobile button size fix */
+    @media (max-width: 768px) {
+        .mobile-compact button {
+            padding: 0.75rem 1rem !important;
+            font-size: 0.9rem !important;
+            min-height: 44px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .mobile-compact button {
+            padding: 0.6rem 0.8rem !important;
+            font-size: 0.85rem !important;
+            min-height: 40px !important;
+        }
+    }
 }
 
 @keyframes float {
