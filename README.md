@@ -39,7 +39,7 @@ Our advanced AI-powered explanation engine provides personalized learning experi
 12. **🎯 Benchmark Numbers**: Use 5, 10, 15, 20, 25 as stepping stones
 13. **⚪ Rounding & Adjusting**: Use a round number (like 10) and then correct the result (e.g., `9x7` is `10x7 - 1x7`)
 14. **🧠 Memory Tricks**: "Six ate forty-eight", rhymes, and stories
-15. **🚀 Speed Techniques**: Left-to-right calculation (pending)
+15. **🚀 Speed Techniques**: Left-to-right calculation
 
 #### **Multi-Modal Learning Approaches**
 - **👁️ Visual Arrays**: Dot patterns and rectangle models for visual learners
