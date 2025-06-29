@@ -285,7 +285,7 @@ export function AdventureMode() {
   if (!isMounted) {
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-200 to-green-300 flex items-center justify-center">
-          <div className="text-2xl font-bold text-gray-700">Loading...</div>
+          <div className="text-2xl font-bold text-gray-700">{t.loading || 'Loading...'}</div>
         </div>
     );
   }

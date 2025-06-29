@@ -84,6 +84,7 @@ export const germanTranslations: Translation = {
     check: "Prüfen",
     hint: "Tipp",
     answer: "Antwort",
+    loading: "Laden...",
     
     // Menu descriptions
     practiceModeDesc: "Übe mit Foxy in deinem eigenen Tempo",
@@ -104,6 +105,8 @@ export const germanTranslations: Translation = {
     points: "Punkte",
     correctAnswer: "Richtige Antwort",
     quizFinished: "Quiz beendet!",
+    highScore: "Highscore",
+    quizHighScores: "Quiz Highscores",
     
     // Settings specific
     soundEnabled: "Töne und Effekte sind aktiviert",

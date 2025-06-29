@@ -234,7 +234,7 @@ export function QuizMode() {
   if (!isMounted) {
     return (
         <div className="min-h-screen bg-gradient-to-br from-orange-200 via-red-200 to-pink-300 flex items-center justify-center">
-          <div className="text-2xl font-bold text-gray-700">Loading...</div>
+          <div className="text-2xl font-bold text-gray-700">{t.loading || 'Loading...'}</div>
         </div>
     );
   }
@@ -311,7 +311,7 @@ export function QuizMode() {
               <div className="flex items-center">
                 <Clock className="w-6 h-6 text-red-500 mr-2" />
                 <span className={`text-xl font-bold ${timeLeft <= 10 ? 'text-red-600 animate-pulse' : 'text-gray-700'}`}>
-                {timeLeft}s
+                {timeLeft}{t.timeSecondsSuffix || 's'}
               </span>
               </div>
             </div>

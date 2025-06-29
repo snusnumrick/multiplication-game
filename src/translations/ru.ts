@@ -86,6 +86,7 @@ export const russianTranslations: Translation = {
     check: "Проверить",
     hint: "Подсказка",
     answer: "Ответ",
+    loading: "Загрузка...",
     
     // Menu descriptions
     practiceModeDesc: "Тренируйся с Фокси в своём темпе",
@@ -106,6 +107,8 @@ export const russianTranslations: Translation = {
     points: "очков",
     correctAnswer: "Правильный ответ",
     quizFinished: "Викторина закончена!",
+    highScore: "Рекорд",
+    quizHighScores: "Рекорды викторины",
     
     // Settings specific
     soundEnabled: "Звуки и эффекты включены",
