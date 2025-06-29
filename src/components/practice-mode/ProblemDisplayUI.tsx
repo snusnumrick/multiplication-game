@@ -89,6 +89,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
         return t.strategyMemoryTrick || 'Memory Trick';
       case 'benchmark_numbers':
         return t.strategyBenchmark || 'Benchmark Numbers';
+      case 'rounding_and_adjusting':
+        return t.strategyRoundingAndAdjusting || 'Rounding and Adjusting';
       default:
         // Fallback for any unknown strategies, convert from snake_case to Title Case
         console.warn(`Missing translation for strategy: ${strategyKey}`);
