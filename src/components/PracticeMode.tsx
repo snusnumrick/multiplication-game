@@ -39,6 +39,7 @@ export function PracticeMode() {
   const [totalAnswers, setTotalAnswers] = useState(0);
   const [explanation, setExplanation] = useState<ExplanationContent | null>(null);
   const [canShowAlternative, setCanShowAlternative] = useState(false); // New state
+  const [showAnswer, setShowAnswer] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [shuffledMultipliers, setShuffledMultipliers] = useState<number[]>([]);
@@ -128,6 +129,7 @@ export function PracticeMode() {
     setShowHint(false);
     setIsCorrect(null);
     setExplanation(null);
+    setShowAnswer(false);
     setAttempts(0);
   }, [shuffledMultipliers, currentMultiplierIndex]);
 
@@ -190,23 +192,20 @@ export function PracticeMode() {
   const showSmartHint = useCallback(() => {
     if (!currentProblem) return;
 
-    const uniqueExplanations = getUniqueExplanationsList();
-    if (uniqueExplanations.length === 0) {
-      return;
-    }
-
-    const smartExp = uniqueExplanations[0];
+    const smartExp = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts); // This now calls the useCallback wrapper
     setExplanation(smartExp);
     setShowHint(true);
     playSound?.('click');
 
     // Show Foxy hint message
     showFoxyMessage?.('foxyHintMessage');
-
+    
     // Determine if alternative explanations exist
-    const hasAlternatives = uniqueExplanations.length > 1;
+    const uniqueExplanations = getUniqueExplanationsList();
+    const hasAlternatives = uniqueExplanations.some(ue => ue.strategy !== smartExp.strategy);
     setCanShowAlternative(hasAlternatives);
-  }, [currentProblem, getUniqueExplanationsList, playSound, showFoxyMessage]);
+
+  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage, getUniqueExplanationsList]);
 
   const restartProblem = useCallback(() => {
     if (selectedTable) {
@@ -255,6 +254,13 @@ export function PracticeMode() {
       setCanShowAlternative(false);
     }
   }, [currentProblem, explanation, getUniqueExplanationsList, playSound, showFoxyMessage, setExplanation, setCanShowAlternative]);
+
+  const handleShowAnswer = useCallback(() => {
+    setShowAnswer(true);
+    playSound?.('click');
+    // NOTE: A new translation key 'foxyShowAnswer' will be needed
+    showFoxyMessage?.('foxyShowAnswer');
+  }, [playSound, showFoxyMessage]);
 
   useEffect(() => {
     if (selectedTable && updateProgress) {
@@ -406,6 +412,8 @@ export function PracticeMode() {
             onCloseHint={handleCloseHint} // Pass the new handler
             hasAlternativeStrategy={canShowAlternative && !!explanation} // Use new state
             onExplainDifferently={handleExplainDifferently}
+            showAnswer={showAnswer}
+            onShowAnswer={handleShowAnswer}
           />
         )}
       </div>

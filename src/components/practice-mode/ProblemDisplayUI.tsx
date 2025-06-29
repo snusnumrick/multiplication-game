@@ -23,6 +23,8 @@ interface ProblemDisplayUIProps {
   onCloseHint: () => void;
   hasAlternativeStrategy?: boolean;
   onExplainDifferently?: () => void;
+  showAnswer: boolean;
+  onShowAnswer: () => void;
 }
 
 export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
@@ -44,6 +46,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
   onCloseHint,
   hasAlternativeStrategy,
   onExplainDifferently,
+  showAnswer,
+  onShowAnswer,
 }) => {
   if (!currentProblem) return null;
 
@@ -255,9 +259,10 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
             {isCorrect === false && (
               <div className="bg-red-100 rounded-2xl p-4 mb-6">
                 <div className="text-xl font-bold text-red-800 mb-2">
-                  {t.tryAgain} {t.correctAnswerIs} {correctAnswer}
+                  {t.tryAgain}
+                  {showAnswer && ` - ${t.correctAnswerIs} ${correctAnswer}`}
                 </div>
-                {attempts > 1 && (
+                {attempts > 1 && !showAnswer && (
                   <div className="text-sm text-red-600">
                     {t.keepTryingMessage}
                   </div>
@@ -267,7 +272,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
 
             {/* Action Buttons */}
             <div className="flex justify-center space-x-4 flex-wrap gap-2">
-              {!isCorrect && (
+              {!isCorrect && !showAnswer && (
                 <>
                   <button
                     onClick={onCheckAnswer}
@@ -284,6 +289,15 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                     <Brain className="w-5 h-5" />
                     <span className="ml-2">{t.hint}</span>
                   </button>
+                  {isCorrect === false && (
+                    <button
+                      onClick={onShowAnswer}
+                      className="bg-rose-500 text-white px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-rose-600 transform transition-all duration-200 hover:scale-105 active:scale-95 flex items-center"
+                    >
+                      <Eye className="w-5 h-5 mr-2" />
+                      {t.showAnswerButton || 'Show Answer'}
+                    </button>
+                  )}
                 </>
               )}
 
