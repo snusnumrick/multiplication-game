@@ -70,6 +70,7 @@ export interface Translation {
   check: string;
   hint: string;
   answer: string;
+  loading: string;
   
   // Menu descriptions
   practiceModeDesc: string;
@@ -90,6 +91,8 @@ export interface Translation {
   points: string;
   correctAnswer: string;
   quizFinished: string;
+  highScore: string;
+  quizHighScores: string;
   
   // Settings specific
   soundEnabled: string;
