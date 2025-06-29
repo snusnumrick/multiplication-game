@@ -17,6 +17,7 @@ interface GameSettings {
   difficulty: 'easy' | 'medium' | 'hard';
   soundEnabled: boolean;
   foxyEnabled: boolean; // Added for Foxy visibility
+  legendEnabled: boolean;
 }
 
 export interface GameContextType {

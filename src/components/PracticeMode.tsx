@@ -418,7 +418,7 @@ export function PracticeMode() {
       </div>
 
       {/* Strategy Legend */}
-      {selectedTable && (
+      {selectedTable && settings.legendEnabled && (
           <div className="fixed bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-2xl p-3 shadow-xl max-w-xs transition-all duration-300">
             <h4 className="font-bold text-gray-700 mb-1 text-sm">{t.smartStrategiesTitle}</h4>
             <div className="space-y-1 text-xs">

@@ -219,6 +219,9 @@ export interface Translation {
   kinestheticStrategyLabel: string;
   auditoryStrategyLabel: string;
 
+  smartStrategiesDescriptionShow: string;
+  smartStrategiesDescriptionHide: string;
+
 
   // Encouragement Messages
   keepTryingMessage: string;

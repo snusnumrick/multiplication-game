@@ -28,6 +28,11 @@ export function Settings() {
     playSound('click');
   };
 
+  const toggleSmartStrategies = () => {
+    updateSettings({ legendEnabled: !settings.legendEnabled });
+    playSound('click');
+  };
+
   return (
     <div className="h-screen bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-300 p-4 overflow-hidden">
       {/* Header */}
@@ -209,6 +214,48 @@ export function Settings() {
               {settings.foxyEnabled 
                 ? t.foxyVisibilityDescriptionShow
                 : t.foxyVisibilityDescriptionHide
+              }
+            </p>
+          </div>
+
+          {/* Smart Strategies Settings */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+            <div className="flex items-center mb-4">
+              {settings.legendEnabled ? (
+                <Eye className="w-6 h-6 text-cyan-500 mr-3" />
+              ) : (
+                <EyeOff className="w-6 h-6 text-gray-500 mr-3" />
+              )}
+              <h2 className="text-xl font-bold text-gray-800">{t.smartStrategiesTitle}</h2>
+            </div>
+            
+            <div className="flex justify-center">
+              <button
+                onClick={toggleSmartStrategies}
+                className={`px-8 py-4 rounded-xl text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center space-x-3 ${
+                  settings.legendEnabled
+                    ? 'bg-gradient-to-br from-cyan-500 to-teal-600 text-white shadow-lg'
+                    : 'bg-gradient-to-br from-gray-500 to-gray-700 text-white shadow-lg'
+                }`}
+              >
+                {settings.legendEnabled ? (
+                  <>
+                    <Eye className="w-5 h-5" />
+                    <span>{t.foxyShow}</span>
+                  </>
+                ) : (
+                  <>
+                    <EyeOff className="w-5 h-5" />
+                    <span>{t.foxyHide}</span>
+                  </>
+                )}
+              </button>
+            </div>
+            
+            <p className="text-center text-gray-600 mt-3 text-sm">
+              {settings.legendEnabled 
+                ? t.smartStrategiesDescriptionShow
+                : t.smartStrategiesDescriptionHide
               }
             </p>
           </div>

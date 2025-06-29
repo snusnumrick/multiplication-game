@@ -23,6 +23,8 @@ export const germanTranslations: Translation = {
     breakdownStrategyLabel: "Aufteilen: Große Zahlen teilen",
     kinestheticStrategyLabel: "Anfassen: Mit den Händen lernen",
     auditoryStrategyLabel: "Hören: Reime und Geräusche",
+    smartStrategiesDescriptionShow: "Die intelligenten Strategien werden auf dem Übungsbildschirm angezeigt.",
+    smartStrategiesDescriptionHide: "Die intelligenten Strategien werden auf dem Übungsbildschirm ausgeblendet.",
     practiceAreasTitle: "Übungsbereiche:",
     practiceAreasMessage: "Du übst gerade das Einmaleins für: {tables}. Das wird bestimmt super – die schlauen Tipps helfen dir dabei!",
     keepTryingMessage: "Gib nicht auf! Probiere den schlauen Tipp für einen anderen Lösungsweg.",

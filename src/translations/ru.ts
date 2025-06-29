@@ -23,6 +23,8 @@ export const russianTranslations: Translation = {
     breakdownStrategyLabel: "Разбивать: Делить большие числа",
     kinestheticStrategyLabel: "Осязать: Учить руками",
     auditoryStrategyLabel: "Слышать: Рифмы и звуки",
+    smartStrategiesDescriptionShow: "Умные стратегии будут показаны на экране практики.",
+    smartStrategiesDescriptionHide: "Умные стратегии будут скрыты на экране практики.",
     practiceAreasTitle: "Области практики:",
     practiceAreasMessage: "Ты сейчас тренируешь умножение на: {tables}. У тебя всё получится, а умные подсказки помогут!",
     keepTryingMessage: "Не сдавайся! Попробуй умную подсказку для помощи.",
