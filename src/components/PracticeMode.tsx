@@ -294,7 +294,8 @@ export function PracticeMode() {
     if (selectedTable && isMounted) {
       generateProblem(selectedTable);
     }
-  }, [selectedTable, isMounted, generateProblem]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTable, isMounted]);
 
   // Keyboard event handler (preserved from original)
   useEffect(() => {
