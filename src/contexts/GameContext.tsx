@@ -271,11 +271,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [_setInternalFoxyAnimationState]); // Dependency is the internal setter
 
   const playFoxyAudio = useCallback((messageKey: keyof Translation) => {
-    if (!settings.soundEnabled || !settings.foxyEnabled || !foxyAudioRef.current || !hasUserInteracted) {
+    if (!settings.soundEnabled || !foxyAudioRef.current || !hasUserInteracted) {
       if (!hasUserInteracted) {
         console.log(`User has not interacted yet, not playing audio for: ${String(messageKey)}`);
+      } else {
+        console.log(`Sound disabled or audio element not ready, not playing audio for: ${String(messageKey)}`);
       }
-      console.log(`Sound or Foxy disabled, audio element not ready, or no user interaction, not playing audio for: ${String(messageKey)}`);
       return;
     }
 
@@ -307,11 +308,21 @@ export function GameProvider({ children }: { children: ReactNode }) {
     };
 
     audio.onerror = (e) => {
+      // Ignore abort errors, which are expected when audio is interrupted
+      if (audio.error?.code === MediaError.MEDIA_ERR_ABORTED) {
+        console.log(`[GameContext] Audio playback for "${String(messageKey)}" was aborted. This is expected.`);
+        return;
+      }
       console.error(`[GameContext] Error event for Foxy audio "${String(messageKey)}" (${audioFile}):`, e);
       setFoxyAnimationStateWithHappyLogic('idle');
     };
     
     audio.play().catch(error => {
+      // AbortError is expected when audio is interrupted, so we can ignore it
+      if (error.name === 'AbortError') {
+        console.log(`[GameContext] Audio playback for "${String(messageKey)}" was interrupted. This is expected.`);
+        return;
+      }
       console.error(`[GameContext] Error calling play() for Foxy audio "${String(messageKey)}" (${audioFile}):`, error);
       // If play() itself fails, ensure Foxy is idle.
       setFoxyAnimationStateWithHappyLogic('idle');
@@ -327,14 +338,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
   ) => {
     if (foxyTimeoutRef.current) {
       clearTimeout(foxyTimeoutRef.current);
-      foxyTimeoutRef.current = null;
     }
 
     const messageText = t[messageKey] as string;
     if (messageText) {
       setFoxyMessage(messageText);
       setCurrentFoxyMessageKey(messageKey);
-      setIsFoxyVisible(true);
+      if (settings.foxyEnabled) {
+        setIsFoxyVisible(true);
+      }
 
       let shouldPlayAudio = true;
       if (options.isInitialGreeting) {
@@ -380,7 +392,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   // useEffect to handle cleanup when Foxy is hidden or message is cleared
   useEffect(() => {
-    if (!isFoxyVisible || !foxyMessage) {
+    // Stop audio if there's no message, OR if Foxy is enabled but not visible.
+    // This allows audio to play when Foxy is disabled but sound is on.
+    if (!foxyMessage || (settings.foxyEnabled && !isFoxyVisible)) {
       // Foxy is hidden or message is cleared, ensure she is idle and audio is stopped.
       if (foxyAudioRef.current) { // Check if audio ref exists
         if (!foxyAudioRef.current.paused) { // If playing, pause it
@@ -395,7 +409,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     // Note: Transitions like 'talking' -> 'idle' (on audio end) or 'idle' -> 'talking' (on audio start)
     // are now handled by audio event listeners in playFoxyAudio.
     // The 'happy' state is managed by setFoxyAnimationStateWithHappyLogic.
-  }, [isFoxyVisible, foxyMessage, setFoxyAnimationStateWithHappyLogic]);
+  }, [foxyMessage, isFoxyVisible, settings.foxyEnabled, setFoxyAnimationStateWithHappyLogic]);
 
   const prevScreenRef = useRef<string | null>(null);
 
