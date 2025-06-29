@@ -289,7 +289,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                     <Brain className="w-5 h-5" />
                     <span className="ml-2">{t.hint}</span>
                   </button>
-                  {isCorrect === false && (
+{/*                  {isCorrect === false && (
                     <button
                       onClick={onShowAnswer}
                       className="bg-rose-500 text-white px-8 py-3 rounded-2xl text-lg font-bold shadow-lg hover:bg-rose-600 transform transition-all duration-200 hover:scale-105 active:scale-95 flex items-center"
@@ -297,7 +297,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                       <Eye className="w-5 h-5 mr-2" />
                       {t.showAnswerButton || 'Show Answer'}
                     </button>
-                  )}
+                  )}*/}
                 </>
               )}
 
