@@ -190,20 +190,23 @@ export function PracticeMode() {
   const showSmartHint = useCallback(() => {
     if (!currentProblem) return;
 
-    const smartExp = generateSmartExplanation(currentProblem.a, currentProblem.b, attempts); // This now calls the useCallback wrapper
+    const uniqueExplanations = getUniqueExplanationsList();
+    if (uniqueExplanations.length === 0) {
+      return;
+    }
+
+    const smartExp = uniqueExplanations[0];
     setExplanation(smartExp);
     setShowHint(true);
     playSound?.('click');
 
     // Show Foxy hint message
     showFoxyMessage?.('foxyHintMessage');
-    
-    // Determine if alternative explanations exist
-    const uniqueExplanations = getUniqueExplanationsList();
-    const hasAlternatives = uniqueExplanations.some(ue => ue.strategy !== smartExp.strategy);
-    setCanShowAlternative(hasAlternatives);
 
-  }, [currentProblem, attempts, generateSmartExplanation, playSound, showFoxyMessage, getUniqueExplanationsList]);
+    // Determine if alternative explanations exist
+    const hasAlternatives = uniqueExplanations.length > 1;
+    setCanShowAlternative(hasAlternatives);
+  }, [currentProblem, getUniqueExplanationsList, playSound, showFoxyMessage]);
 
   const restartProblem = useCallback(() => {
     if (selectedTable) {
