@@ -234,7 +234,13 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                                 value={userAnswer}
                                 onChange={(e) => setUserAnswer(e.target.value)}
                                 onKeyDown={onKeyPress}
-                                className="text-4xl font-bold text-center bg-gray-50 border-2 border-gray-300 rounded-2xl p-4 w-48 mx-auto block focus:border-blue-500 focus:outline-none"
+                                className={`text-4xl font-bold text-center bg-gray-50 border-2 rounded-2xl p-4 w-48 mx-auto block focus:outline-none ${
+                                    isCorrect === true 
+                                        ? 'border-green-500 focus:border-green-600' 
+                                        : isCorrect === false 
+                                            ? 'border-red-500 focus:border-red-600' 
+                                            : 'border-gray-300 focus:border-blue-500'
+                                }`}
                                 placeholder="?"
                                 autoFocus
                             />
