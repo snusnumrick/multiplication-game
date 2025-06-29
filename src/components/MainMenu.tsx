@@ -4,7 +4,7 @@ import { Star, Settings, Trophy, BookOpen, Puzzle, Gamepad2, Calculator, Sparkle
 import { AnimatedFoxy } from './AnimatedFoxy';
 
 export function MainMenu() {
-  const { t, setCurrentScreen, playSound, progress, foxyMessage, showFoxyMessage, isFoxyVisible, setIsFoxyVisible } = useGame();
+  const { t, setCurrentScreen, playSound, progress, foxyMessage, showFoxyMessage, isFoxyVisible, setIsFoxyVisible, settings } = useGame();
   const [isMounted, setIsMounted] = useState(false);
 
   // Memoize the foxy initialization to ensure stable reference
@@ -144,7 +144,7 @@ export function MainMenu() {
         <div className="text-center mb-4 md:mb-6">
           <div className="flex flex-col sm:flex-row justify-center items-center mb-3">
             <img
-                src="/images/eva-cartoon-square.png"
+                src={settings.foxyEnabled ? "/images/eva-cartoon-square.png" : "/images/foxy-mascot.png"}
                 alt="Foxy the Fox"
                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-white shadow-lg mb-2 sm:mb-0 sm:mr-4"
             />

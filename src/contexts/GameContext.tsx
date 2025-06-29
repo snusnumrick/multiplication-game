@@ -30,7 +30,19 @@ const defaultSettings: GameSettings = {
 };
 
 export function GameProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<GameSettings>(defaultSettings);
+  const [settings, setSettings] = useState<GameSettings>(() => {
+    const savedSettings = localStorage.getItem('multiplicationGame_settings');
+    if (savedSettings) {
+      return { ...defaultSettings, ...JSON.parse(savedSettings) };
+    }
+    // No saved settings, determine defaults based on device
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+    return {
+      ...defaultSettings,
+      foxyEnabled: !isMobileDevice,
+      legendEnabled: !isMobileDevice,
+    };
+  });
   const [progress, setProgress] = useState<GameProgress>(defaultProgress);
   const [currentScreen, setCurrentScreen] = useState('menu');
   const [foxyMessage, setFoxyMessage] = useState<string | null>(null);
