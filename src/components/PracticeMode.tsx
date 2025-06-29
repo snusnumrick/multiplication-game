@@ -41,6 +41,8 @@ export function PracticeMode() {
   const [canShowAlternative, setCanShowAlternative] = useState(false); // New state
   const [attempts, setAttempts] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const [shuffledMultipliers, setShuffledMultipliers] = useState<number[]>([]);
+  const [currentMultiplierIndex, setCurrentMultiplierIndex] = useState(0);
   const [userProgress, setUserProgress] = useState<UserProgress>({
     level: 3,
     strugglingWith: [1, 10], // Match the screenshot example 1×10
@@ -103,14 +105,31 @@ export function PracticeMode() {
   }, [setIsFoxyVisible]);
 
   const generateProblem = useCallback((table: number) => {
-    const multiplier = Math.floor(Math.random() * 10) + 1;
+    let nextIndex = currentMultiplierIndex;
+    let multipliers = shuffledMultipliers;
+
+    if (nextIndex >= multipliers.length) {
+      const newMultipliers = [...Array(10).keys()].map(i => i + 1);
+      // Fisher-Yates shuffle for better randomness
+      for (let i = newMultipliers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newMultipliers[i], newMultipliers[j]] = [newMultipliers[j], newMultipliers[i]];
+      }
+      multipliers = newMultipliers;
+      setShuffledMultipliers(multipliers);
+      nextIndex = 0;
+    }
+
+    const multiplier = multipliers[nextIndex];
+    setCurrentMultiplierIndex(nextIndex + 1);
+
     setCurrentProblem({ a: table, b: multiplier });
     setUserAnswer('');
     setShowHint(false);
     setIsCorrect(null);
     setExplanation(null);
     setAttempts(0);
-  }, []);
+  }, [shuffledMultipliers, currentMultiplierIndex]);
 
   const checkAnswer = useCallback(() => {
     if (!currentProblem || !userAnswer) return;
@@ -305,6 +324,8 @@ export function PracticeMode() {
     setSelectedTable(table);
     setCorrectAnswers(0);
     setTotalAnswers(0);
+    setShuffledMultipliers([]); // This will trigger a reshuffle on the next problem
+    setCurrentMultiplierIndex(0);
     setUserProgress(prev => ({
       ...prev,
       strugglingWith: [], // Clear struggling numbers; line will appear on first mistake with specific numbers
