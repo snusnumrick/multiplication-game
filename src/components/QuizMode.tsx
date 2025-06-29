@@ -420,7 +420,7 @@ export function QuizMode() {
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl p-6 mb-6">
               <div className="text-lg font-medium mb-2">{t?.yourResult || 'Your Result:'}</div>
               <div className="text-4xl font-bold">{score} {t?.points || 'Points'}</div>
-              <div className="text-lg">{percentage}% {t?.correct || 'correct'}</div>
+              <div className="text-lg">{percentage}% {t?.correctAnswersSuffix || 'correct'}</div>
             </div>
 
             {/* Action Buttons */}
