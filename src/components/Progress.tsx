@@ -161,6 +161,28 @@ export function Progress() {
           </div>
         </div>
 
+        {/* Quiz High Scores */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl mb-12">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+            <Trophy className="w-8 h-8 text-yellow-600 mr-3" />
+            {t.quizHighScores || 'Quiz High Scores'}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div className="bg-green-100 p-4 rounded-2xl">
+              <h3 className="text-xl font-bold text-green-800">{t.easy || 'Easy'}</h3>
+              <p className="text-3xl font-bold text-green-900 mt-2">{progress.quizHighScores?.easy || 0}</p>
+            </div>
+            <div className="bg-yellow-100 p-4 rounded-2xl">
+              <h3 className="text-xl font-bold text-yellow-800">{t.medium || 'Medium'}</h3>
+              <p className="text-3xl font-bold text-yellow-900 mt-2">{progress.quizHighScores?.medium || 0}</p>
+            </div>
+            <div className="bg-red-100 p-4 rounded-2xl">
+              <h3 className="text-xl font-bold text-red-800">{t.hard || 'Hard'}</h3>
+              <p className="text-3xl font-bold text-red-900 mt-2">{progress.quizHighScores?.hard || 0}</p>
+            </div>
+          </div>
+        </div>
+
         {/* Achievements */}
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">

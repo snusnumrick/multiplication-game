@@ -56,128 +56,18 @@ export function AdventureMode() {
   const [starsEarned, setStarsEarned] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
 
-  const levels: Level[] = useMemo(() => [
-    {
-      id: 1,
-      title: 'Kleine Schritte',
-      description: 'Lerne die 1er und 2er Reihe',
-      tables: [1, 2],
-      questionsCount: 5,
-      timeLimit: 60,
-      requiredAccuracy: 60,
-      stars: 0,
-      unlocked: true,
-      completed: false,
-    },
-    {
-      id: 2,
-      title: 'Dreifacher Spaß',
-      description: 'Meistere die 3er Reihe',
-      tables: [1, 2, 3],
-      questionsCount: 8,
-      timeLimit: 90,
-      requiredAccuracy: 70,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 3,
-      title: 'Viereckige Zahlen',
-      description: 'Entdecke die 4er Reihe',
-      tables: [2, 3, 4],
-      questionsCount: 10,
-      timeLimit: 100,
-      requiredAccuracy: 70,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 4,
-      title: 'Fünf Sterne',
-      description: 'Die 5er Reihe wartet auf dich!',
-      tables: [3, 4, 5],
-      questionsCount: 12,
-      timeLimit: 110,
-      requiredAccuracy: 75,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 5,
-      title: 'Sechser Zauber',
-      description: 'Bezaubere mit der 6er Reihe',
-      tables: [4, 5, 6],
-      questionsCount: 15,
-      timeLimit: 120,
-      requiredAccuracy: 75,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 6,
-      title: 'Glückszahl Sieben',
-      description: 'Die 7er Reihe bringt Glück!',
-      tables: [5, 6, 7],
-      questionsCount: 15,
-      timeLimit: 130,
-      requiredAccuracy: 80,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 7,
-      title: 'Acht Achterbahn',
-      description: 'Fahre mit der 8er Reihe Achterbahn',
-      tables: [6, 7, 8],
-      questionsCount: 18,
-      timeLimit: 140,
-      requiredAccuracy: 80,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 8,
-      title: 'Neun Leben',
-      description: 'Die 9er Reihe hat neun Leben',
-      tables: [7, 8, 9],
-      questionsCount: 18,
-      timeLimit: 150,
-      requiredAccuracy: 85,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 9,
-      title: 'Perfekte Zehn',
-      description: 'Erreiche die Perfektion mit der 10er Reihe',
-      tables: [8, 9, 10],
-      questionsCount: 20,
-      timeLimit: 160,
-      requiredAccuracy: 85,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-    {
-      id: 10,
-      title: 'Großer Champion',
-      description: 'Meistere alle Reihen zusammen!',
-      tables: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      questionsCount: 25,
-      timeLimit: 200,
-      requiredAccuracy: 90,
-      stars: 0,
-      unlocked: false,
-      completed: false,
-    },
-  ], []);
+  const [levels, setLevels] = useState<Level[]>(() => [
+    { id: 1, title: '', description: '', tables: [1, 2], questionsCount: 5, timeLimit: 60, requiredAccuracy: 60, stars: 0, unlocked: true, completed: false },
+    { id: 2, title: '', description: '', tables: [1, 2, 3], questionsCount: 8, timeLimit: 90, requiredAccuracy: 70, stars: 0, unlocked: false, completed: false },
+    { id: 3, title: '', description: '', tables: [2, 3, 4], questionsCount: 10, timeLimit: 100, requiredAccuracy: 70, stars: 0, unlocked: false, completed: false },
+    { id: 4, title: '', description: '', tables: [3, 4, 5], questionsCount: 12, timeLimit: 110, requiredAccuracy: 75, stars: 0, unlocked: false, completed: false },
+    { id: 5, title: '', description: '', tables: [4, 5, 6], questionsCount: 15, timeLimit: 120, requiredAccuracy: 75, stars: 0, unlocked: false, completed: false },
+    { id: 6, title: '', description: '', tables: [5, 6, 7], questionsCount: 15, timeLimit: 130, requiredAccuracy: 80, stars: 0, unlocked: false, completed: false },
+    { id: 7, title: '', description: '', tables: [6, 7, 8], questionsCount: 18, timeLimit: 140, requiredAccuracy: 80, stars: 0, unlocked: false, completed: false },
+    { id: 8, title: '', description: '', tables: [7, 8, 9], questionsCount: 18, timeLimit: 150, requiredAccuracy: 85, stars: 0, unlocked: false, completed: false },
+    { id: 9, title: '', description: '', tables: [8, 9, 10], questionsCount: 20, timeLimit: 160, requiredAccuracy: 85, stars: 0, unlocked: false, completed: false },
+    { id: 10, title: '', description: '', tables: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], questionsCount: 25, timeLimit: 200, requiredAccuracy: 90, stars: 0, unlocked: false, completed: false },
+  ]);
 
   // Memoize the foxy initialization to ensure stable reference
   const initializeFoxy = useCallback(() => {
@@ -214,23 +104,30 @@ export function AdventureMode() {
   useEffect(() => {
     if (!progress?.adventureLevels) return;
 
-    levels.forEach((level, index) => {
-      const levelProgress = progress.adventureLevels[level.id];
-      if (levelProgress) {
-        level.completed = levelProgress.completed;
-        level.stars = levelProgress.stars;
-      }
+    setLevels(prevLevels => {
+      const newLevels = prevLevels.map((level) => {
+        const updatedLevel = { ...level };
+        const levelProgress = progress.adventureLevels[level.id];
+        if (levelProgress) {
+          updatedLevel.completed = levelProgress.completed;
+          updatedLevel.stars = levelProgress.stars;
+        }
+        return updatedLevel;
+      });
 
-      // Unlock logic
-      if (index === 0) {
-        level.unlocked = true;
-      } else {
-        const previousLevel = levels[index - 1];
-        const prevLevelProgress = progress.adventureLevels[previousLevel.id];
-        level.unlocked = prevLevelProgress?.completed || false;
-      }
+      // Update unlock status based on the latest completion data
+      newLevels.forEach((level, index) => {
+        if (index > 0) {
+          const previousLevel = newLevels[index - 1];
+          level.unlocked = previousLevel.completed;
+        } else {
+          level.unlocked = true; // Level 1 is always unlocked
+        }
+      });
+      
+      return newLevels;
     });
-  }, [progress?.adventureLevels, levels]);
+  }, [progress.adventureLevels]);
 
   const generateQuestions = useCallback((level: Level) => {
     const newQuestions: Question[] = [];

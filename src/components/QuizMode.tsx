@@ -11,7 +11,7 @@ interface QuizQuestion {
 }
 
 export function QuizMode() {
-  const { t, setCurrentScreen, playSound, addStars, settings, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState } = useGame();
+  const { t, setCurrentScreen, playSound, addStars, settings, showFoxyMessage, setIsFoxyVisible, foxyMessage, isFoxyVisible, setFoxyAnimationState, progress, updateProgress } = useGame();
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -109,6 +109,19 @@ export function QuizMode() {
       clearInterval(timerRef.current);
     }
 
+    // Update high score
+    if (updateProgress && progress) {
+      const currentHighScore = progress.quizHighScores?.[difficulty] || 0;
+      if (score > currentHighScore) {
+        updateProgress({
+          quizHighScores: {
+            ...progress.quizHighScores,
+            [difficulty]: score,
+          },
+        });
+      }
+    }
+
     // Bonus stars for completion
     const bonusStars = Math.floor(score / 50);
     if (bonusStars > 0 && addStars) {
@@ -116,7 +129,7 @@ export function QuizMode() {
     }
     // Determine if happy animation should play based on score/stars in renderResults
     playSound?.('success');
-  }, [score, addStars, playSound]);
+  }, [score, addStars, playSound, difficulty, progress, updateProgress]);
 
   const selectAnswer = useCallback((answer: number) => {
     if (answered) return;
@@ -240,6 +253,9 @@ export function QuizMode() {
             <div className="text-lg opacity-90">{t?.tables1to5 || 'Tables 1-5'}</div>
             <div className="text-lg opacity-90">{t?.seconds90 || '90 seconds'}</div>
             <div className="text-lg opacity-90">{t?.questions10 || '10 questions'}</div>
+            {progress?.quizHighScores?.easy > 0 && (
+              <div className="text-lg opacity-90 mt-2">{t?.highScore || 'High Score'}: {progress.quizHighScores.easy}</div>
+            )}
           </button>
 
           <button
@@ -250,6 +266,9 @@ export function QuizMode() {
             <div className="text-lg opacity-90">{t?.tables1to10 || 'Tables 1-10'}</div>
             <div className="text-lg opacity-90">{t?.seconds60 || '60 seconds'}</div>
             <div className="text-lg opacity-90">{t?.questions10 || '10 questions'}</div>
+            {progress?.quizHighScores?.medium > 0 && (
+              <div className="text-lg opacity-90 mt-2">{t?.highScore || 'High Score'}: {progress.quizHighScores.medium}</div>
+            )}
           </button>
 
           <button
@@ -260,6 +279,9 @@ export function QuizMode() {
             <div className="text-lg opacity-90">{t?.tables1to12 || 'Tables 1-12'}</div>
             <div className="text-lg opacity-90">{t?.seconds45 || '45 seconds'}</div>
             <div className="text-lg opacity-90">{t?.questions10 || '10 questions'}</div>
+            {progress?.quizHighScores?.hard > 0 && (
+              <div className="text-lg opacity-90 mt-2">{t?.highScore || 'High Score'}: {progress.quizHighScores.hard}</div>
+            )}
           </button>
         </div>
       </div>
