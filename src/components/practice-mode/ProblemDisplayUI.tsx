@@ -262,7 +262,7 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
                   {t.tryAgain}
                   {showAnswer && ` - ${t.correctAnswerIs} ${correctAnswer}`}
                 </div>
-                {attempts > 1 && !showAnswer && (
+                {attempts >= 1 && !showAnswer && (
                   <div className="text-sm text-red-600">
                     {t.keepTryingMessage}
                   </div>
