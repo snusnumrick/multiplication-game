@@ -328,7 +328,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setFoxyAnimationStateWithHappyLogic('idle');
     });
 
-  }, [settings.soundEnabled, settings.foxyEnabled, settings.language, setFoxyAnimationStateWithHappyLogic, hasUserInteracted]);
+  }, [settings.soundEnabled, settings.language, setFoxyAnimationStateWithHappyLogic, hasUserInteracted]);
 
   // Update showFoxyMessage to also trigger audio playback
   const showFoxyMessageAndUpdate = useCallback((
@@ -375,7 +375,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setFoxyMessage(null);
       setCurrentFoxyMessageKey(null);
     }
-  }, [t, setIsFoxyVisible, setFoxyMessage, playFoxyAudio, foxyInitialGreetingPlayed, setFoxyInitialGreetingPlayed, setCurrentFoxyMessageKey]);
+  }, [t, setIsFoxyVisible, setFoxyMessage, playFoxyAudio, foxyInitialGreetingPlayed, setFoxyInitialGreetingPlayed, setCurrentFoxyMessageKey, settings.foxyEnabled]);
 
 
   // Clear timeouts on unmount
