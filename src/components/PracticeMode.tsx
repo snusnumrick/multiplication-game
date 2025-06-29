@@ -258,7 +258,6 @@ export function PracticeMode() {
   const handleShowAnswer = useCallback(() => {
     setShowAnswer(true);
     playSound?.('click');
-    // NOTE: A new translation key 'foxyShowAnswer' will be needed
     showFoxyMessage?.('foxyShowAnswer');
   }, [playSound, showFoxyMessage]);
 

@@ -221,6 +221,7 @@ export const russianTranslations: Translation = {
     correctAnswerIs: "Правильный ответ",
     newProblemButton: "Новое задание",
     selectOtherTableButton: "Выбрать другую таблицу",
+    showAnswerButton: "Показать ответ",
 
     // Progress specific
     achievedStatus: "Достигнуто!",
@@ -405,6 +406,7 @@ export const russianTranslations: Translation = {
     foxyHintMessage: "Хмм, нужна небольшая подсказка от Фокси?",
     foxyGeneralCorrectMessage: "Отлично, Ева! Фокси очень рада за тебя!", // Added for general correct answer feedback
     foxyLetsPracticeNewTable: "Отличный выбор! Давай начнем тренировать эту таблицу.",
+    foxyShowAnswer: "Вот правильный ответ. Посмотри внимательно!",
 
     // PracticeMode Smart Explanations
     visualDotsResult: "{b} рядов × {a} точек = {result} всего",

@@ -205,6 +205,7 @@ export interface Translation {
   correctAnswerIs: string;
   newProblemButton: string;
   selectOtherTableButton: string;
+  showAnswerButton?: string;
   practiceAreasTitle: string;
   practiceAreasMessage: string;
 
@@ -343,6 +344,7 @@ export interface Translation {
   foxyHintMessage: string;
   foxyGeneralCorrectMessage: string; // Added for general correct answer feedback
   foxyLetsPracticeNewTable?: string; // Added for PracticeMode table selection
+  foxyShowAnswer?: string;
   foxyAlternativeHintMessage?: string; // Added for when "Explain Differently" is used
   foxyNoMoreHintsMessage?: string; // Added for when no more alternative hints are available
 
