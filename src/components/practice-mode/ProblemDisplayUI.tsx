@@ -53,6 +53,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
     switch (strategyKey) {
       case 'visual_array':
         return t.strategyVisualArray || 'Visual Array';
+      case 'pattern_recognition':
+        return t.strategyPatternRecognition || 'Pattern Recognition';
       case 'skip_counting':
         return t.strategySkipCounting || 'Skip Counting';
       case 'decomposition':
@@ -91,6 +93,8 @@ export const ProblemDisplayUI: React.FC<ProblemDisplayUIProps> = ({
         return t.strategyBenchmark || 'Benchmark Numbers';
       case 'rounding_and_adjusting':
         return t.strategyRoundingAndAdjusting || 'Rounding and Adjusting';
+      case 'left_to_right':
+        return t.strategyLeftToRight || 'Left-to-Right Calculation';
       default:
         // Fallback for any unknown strategies, convert from snake_case to Title Case
         console.warn(`Missing translation for strategy: ${strategyKey}`);
