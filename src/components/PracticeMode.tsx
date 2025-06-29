@@ -20,6 +20,7 @@ export function PracticeMode() {
     showFoxyMessage,
     playSound,
     progress: gameProgress,
+    updateProgress,
     recordStrategySuccess,
     recordLearningStyleSuccess,
     addStars,
@@ -233,6 +234,20 @@ export function PracticeMode() {
     }
   }, [currentProblem, explanation, getUniqueExplanationsList, playSound, showFoxyMessage, setExplanation, setCanShowAlternative]);
 
+  useEffect(() => {
+    if (selectedTable && updateProgress) {
+      const currentScore = gameProgress.practiceProgress[selectedTable] || 0;
+      if (correctAnswers > currentScore) {
+        updateProgress({
+          practiceProgress: {
+            ...gameProgress.practiceProgress,
+            [selectedTable]: correctAnswers,
+          },
+        });
+      }
+    }
+  }, [correctAnswers, selectedTable, updateProgress, gameProgress.practiceProgress]);
+
 
   // Client-side mount detection (preserved from original)
   useEffect(() => {
@@ -288,6 +303,8 @@ export function PracticeMode() {
   // Handler for table selection from the UI component
   const handleTableSelect = (table: number) => {
     setSelectedTable(table);
+    setCorrectAnswers(0);
+    setTotalAnswers(0);
     setUserProgress(prev => ({
       ...prev,
       strugglingWith: [], // Clear struggling numbers; line will appear on first mistake with specific numbers
