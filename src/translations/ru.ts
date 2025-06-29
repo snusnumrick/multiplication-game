@@ -117,7 +117,7 @@ export const russianTranslations: Translation = {
     soundDisabled: "Звуки и эффекты выключены",
     aboutGame: "Об игре",
     gameDescription: "Привет, Ева! Эта игра поможет тебе и Фокси выучить таблицу умножения, играя. Выбирай между разными режимами игры и собирай звёзды за правильные ответы!",
-    versionInfo: "Версия 2.1 • Специально оптимизировано для iPad",
+    versionInfo: "Версия 2.2 • Специально оптимизировано для iPad",
     
     // Adventure mode specific
     chooseAdventure: "Выбери своё приключение!",

@@ -115,7 +115,7 @@ export const germanTranslations: Translation = {
     soundDisabled: "Töne und Effekte sind deaktiviert",
     aboutGame: "Über das Spiel",
     gameDescription: "Hallo Eva! Dieses Spiel hilft dir und Foxy dabei, das Einmaleins spielerisch zu lernen. Wähle zwischen verschiedenen Spielmodi und sammle Sterne für richtige Antworten!",
-    versionInfo: "Version 2.1 • Speziell für iPad optimiert",
+    versionInfo: "Version 2.2 • Speziell für iPad optimiert",
     
     // Adventure mode specific
     chooseAdventure: "Wähle dein Abenteuer!",
