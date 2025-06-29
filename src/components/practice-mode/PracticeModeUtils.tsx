@@ -31,6 +31,8 @@ export const getStrategyCategory = (strategy: string): StrategyCategory => {
     case 'near_doubles':
     case 'elevens_advanced':
     case 'fives_half_of_ten':
+    case 'rounding_and_adjusting':
+    case 'left_to_right':
       return 'breakdown';
 
     case 'nines_finger_trick':
