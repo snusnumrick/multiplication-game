@@ -234,23 +234,21 @@ export function Progress() {
             </div>
             
             {/* Motivational Message */}
-            <div className="text-center">
-              <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-2xl p-4 shadow-lg">
-                <h3 className="text-base font-bold">
-                  {progress.totalStars >= 100 
-                    ? t.mathChampion 
-                    : progress.totalStars >= 50
-                      ? t.fantasticsProgress
-                      : t.greatKeepGoing
-                  }
-                </h3>
-                <p className="text-sm opacity-90">
-                  {progress.tablesLearned.length === 10 
-                    ? t.allTablesMastered
-                    : t.tablesToMaster.replace('{count}', (10 - progress.tablesLearned.length).toString())
-                  }
-                </p>
-              </div>
+            <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-2xl p-4 shadow-lg text-center">
+              <h3 className="text-base font-bold">
+                {progress.totalStars >= 100 
+                  ? t.mathChampion 
+                  : progress.totalStars >= 50
+                    ? t.fantasticsProgress
+                    : t.greatKeepGoing
+                }
+              </h3>
+              <p className="text-sm opacity-90">
+                {progress.tablesLearned.length === 10 
+                  ? t.allTablesMastered
+                  : t.tablesToMaster.replace('{count}', (10 - progress.tablesLearned.length).toString())
+                }
+              </p>
             </div>
           </div>
         </div>
