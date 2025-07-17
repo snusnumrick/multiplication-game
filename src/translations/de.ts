@@ -614,7 +614,7 @@ export const germanTranslations: Translation = {
     // Welcome Modal
     welcomeModalTitle: "Willkommen bei Evas Einmaleins Spiel!",
     welcomeModalDescription: "Lerne mit Foxy das Einmaleins auf spielerische Weise! Dieses Spiel hilft dir dabei, die Multiplikation zu meistern und macht dabei richtig Spaß.",
-    welcomeModalTabletNote: "💡 Tipp: Dieses Spiel funktioniert am besten auf einem Tablet (wie dem iPad) für die beste Erfahrung!",
+    welcomeModalTabletNote: "💡 Tipp: Dieses Spiel funktioniert am besten auf einem Tablet (wie dem iPad) oder Mobilgerät. Für die beste Erfahrung speichere diese Seite auf deinem Startbildschirm - sie wird sich wie eine native App anfühlen!",
     welcomeModalDontShowAgain: "Diese Nachricht nicht mehr anzeigen",
     welcomeModalChooseLanguage: "Wähle deine Sprache:",
     welcomeModalGerman: "Deutsch",

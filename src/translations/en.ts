@@ -614,7 +614,7 @@ export const englishTranslations: Translation = {
     // Welcome Modal
     welcomeModalTitle: "Welcome to Eva's Multiplication Game!",
     welcomeModalDescription: "Learn multiplication with Foxy in a fun way! This game helps you master multiplication while having lots of fun.",
-    welcomeModalTabletNote: "💡 Tip: This game works best on a tablet (like iPad) for the best experience!",
+    welcomeModalTabletNote: "💡 Tip: This game works best on a tablet (like iPad) or mobile device. For the best experience, save this page to your home screen - it will look and feel like a native app!",
     welcomeModalDontShowAgain: "Don't show this message again",
     welcomeModalChooseLanguage: "Choose your language:",
     welcomeModalGerman: "Deutsch",
