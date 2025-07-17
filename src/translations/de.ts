@@ -349,7 +349,7 @@ export const germanTranslations: Translation = {
     // Foxy contextual messages
     foxyIntroPracticeMode: "Hallo Eva! Im Übungsmodus kannst du ganz in Ruhe die Einmaleinsreihen trainieren. Foxy ist da, um dir zu helfen!",
     foxyIntroQuizMode: "Zeit für ein Quiz, Eva! Zeig Foxy, was du gelernt hast. Viel Erfolg!",
-    foxyIntroAdventureMode: "Auf ins Abenteuer, Eva! Foxy begleitet dich auf dieser spannenden Reise durch die Welt der Zahlen.",
+    foxyIntroAdventureMode: "Auf ins Abenteuer, Eva! Foxy begleitet dich auf deiner spannenden Reise durch die Zahlen-Welt.",
     foxyIntroMemoryGame: "Finde die passenden Karten, Eva! Foxy drückt dir die Daumen für dieses knifflige Memory.",
     foxyIntroRealWorldMath: "Schau mal, Eva! Hier zeigt dir Foxy, wo Mathe im Alltag überall steckt. Spannend, oder?",
     foxyIntroFantasyMath: "Willkommen in der Zauberwelt, Eva! Foxy und magische Wesen warten darauf, mit dir Mathe zu entdecken.",
@@ -363,7 +363,7 @@ export const germanTranslations: Translation = {
     foxyCongrats3: "Juhu, geschafft! Foxy feiert mit dir diesen Erfolg!",
     foxyCongratsAdventureLevel: "Super, Eva! Level geschafft! Foxy ist stolz auf deine Abenteuerlust!",
     foxyCongratsQuiz: "Klasse Leistung im Quiz, Eva! Foxy wusste, dass du es rockst!",
-    foxyCongratsQuizHigh: "Unglaubliche Punktzahl, Eva! Foxy jubelt über deine Mathe-Künste!",
+    foxyCongratsQuizHigh: "Wahnsinn, Eva! Foxy jubelt über deine Mathe-Künste!",
     foxyCongratsQuizMid: "Tolle Arbeit, Eva! Foxy sieht einen Mathe-Star heranwachsen!",
     foxyCongratsQuizLow: "Gut gemacht, Eva! Übe weiter, und Foxy weiß, du wirst noch besser!",
 

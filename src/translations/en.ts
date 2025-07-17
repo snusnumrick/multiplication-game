@@ -387,7 +387,7 @@ export const englishTranslations: Translation = {
     // RealWorldMath specific Foxy messages
     foxyRealWorldProblem: "Here's a real-world problem, Eva! Think about how multiplication can help.",
     foxyRealWorldExpression: "Which calculation fits the story, Eva? Foxy is curious!",
-    foxyRealWorldAnswer: "Great! And what's the solution? Foxy knows you can calculate that!",
+    foxyRealWorldAnswer: "Great! And what's the answer? Foxy knows you can figure that out!",
     foxyRealWorldCorrect: "Exactly! You solved that like a pro, Eva! Foxy is super impressed!",
     foxyRealWorldIncorrect: "Hmm, that's not quite right. Let's look at the solution together and learn from it, Eva!",
 
