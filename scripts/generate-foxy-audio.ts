@@ -28,8 +28,9 @@ const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
 // Replace with your actual Voice IDs from Eleven Labs
 const VOICE_ID_GERMAN = 'VD1if7jDVYtAKs4P0FIY'; // Milly Maple
 const VOICE_ID_RUSSIAN = 'ycbyWsnf4hqZgdpKHqiU'; // Rina
+const VOICE_ID_ENGLISH = 'piI8Kku0DcvcL6TTSeQt'; // Flicker
 
-const SUPPORTED_LANGUAGES: Array<'de' | 'ru'> = ['de', 'ru'];
+const SUPPORTED_LANGUAGES: Array<'de' | 'ru' | 'en'> = ['de', 'ru', 'en'];
 
 // ESM-friendly path resolution
 const __filename = fileURLToPath(import.meta.url);
@@ -159,7 +160,7 @@ async function main() {
     const langDir = path.join(OUTPUT_BASE_DIR, lang);
     ensureDirectoryExists(langDir);
 
-    const voiceId = lang === 'de' ? VOICE_ID_GERMAN : VOICE_ID_RUSSIAN;
+    const voiceId = lang === 'de' ? VOICE_ID_GERMAN : lang === 'ru' ? VOICE_ID_RUSSIAN : VOICE_ID_ENGLISH;
     const langTranslations = translations[lang];
 
     if (!langTranslations) {

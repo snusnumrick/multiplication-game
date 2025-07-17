@@ -5,7 +5,7 @@ import { ArrowLeft, Volume2, VolumeX, Globe, Zap, Eye, EyeOff, MessageSquare } f
 export function Settings() {
   const { t, setCurrentScreen, settings, updateSettings, playSound } = useGame();
 
-  const handleLanguageChange = (language: 'de' | 'ru') => {
+  const handleLanguageChange = (language: 'de' | 'ru' | 'en') => {
     updateSettings({ language });
     playSound('click');
   };
@@ -63,7 +63,7 @@ export function Settings() {
                   <h2 className="text-lg sm:text-xl font-bold text-gray-800">{t.language}</h2>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <button
                       onClick={() => handleLanguageChange('de')}
                       className={`p-3 sm:p-4 rounded-xl text-sm sm:text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 ${
@@ -84,6 +84,17 @@ export function Settings() {
                       }`}
                   >
                     🇷🇺 {t.russianLanguage}
+                  </button>
+
+                  <button
+                      onClick={() => handleLanguageChange('en')}
+                      className={`p-3 sm:p-4 rounded-xl text-sm sm:text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 ${
+                          settings.language === 'en'
+                              ? 'bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-lg'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                  >
+                    🇺🇸 {t.englishLanguage}
                   </button>
                 </div>
               </div>

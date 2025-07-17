@@ -246,6 +246,7 @@ export interface Translation {
   // Settings specific
   germanLanguage: string;
   russianLanguage: string;
+  englishLanguage: string;
 
   // Scenario Data (RealWorldMath & FantasyMath)
   realWorldScenarioData: ScenarioText[];
@@ -564,6 +565,7 @@ export interface Translation {
   welcomeModalChooseLanguage: string;
   welcomeModalGerman: string;
   welcomeModalRussian: string;
+  welcomeModalEnglish: string;
 }
 
 export interface ScenarioText {
@@ -574,8 +576,10 @@ export interface ScenarioText {
 
 import { germanTranslations } from './translations/de.js';
 import { russianTranslations } from './translations/ru.js';
+import { englishTranslations } from './translations/en.js';
 
 export const translations: Record<string, Translation> = {
   de: germanTranslations,
   ru: russianTranslations,
+  en: englishTranslations,
 };

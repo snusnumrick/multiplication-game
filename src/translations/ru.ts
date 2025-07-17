@@ -241,6 +241,7 @@ export const russianTranslations: Translation = {
     // Settings specific
     germanLanguage: "Немецкий",
     russianLanguage: "Русский",
+    englishLanguage: "English",
 
     // Scenario Data (RealWorldMath)
     realWorldScenarioData: [
@@ -617,4 +618,5 @@ export const russianTranslations: Translation = {
     welcomeModalChooseLanguage: "Выбери свой язык:",
     welcomeModalGerman: "Deutsch",
     welcomeModalRussian: "Русский",
+    welcomeModalEnglish: "English",
 };

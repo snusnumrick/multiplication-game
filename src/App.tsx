@@ -50,7 +50,7 @@ function AppWithWelcome() {
     }
   }, []);
 
-  const handleLanguageSelect = (language: 'de' | 'ru') => {
+  const handleLanguageSelect = (language: 'de' | 'ru' | 'en') => {
     // Update the language in GameContext
     updateSettings({ language });
     setShowWelcomeModal(false);

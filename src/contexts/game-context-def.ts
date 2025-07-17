@@ -13,7 +13,7 @@ export interface GameProgress {
 }
 
 interface GameSettings {
-  language: 'de' | 'ru';
+  language: 'de' | 'ru' | 'en';
   difficulty: 'easy' | 'medium' | 'hard';
   soundEnabled: boolean;
   foxyEnabled: boolean; // Added for Foxy visibility
@@ -25,17 +25,17 @@ export interface GameContextType {
   settings: GameSettings;
   updateSettings: (newSettings: Partial<GameSettings>) => void;
   t: Translation;
-  
+
   // Progress
   progress: GameProgress;
   updateProgress: (newProgress: Partial<GameProgress>) => void;
   addStars: (count: number) => void;
   completeTable: (table: number) => void;
-  
+
   // Game State
   currentScreen: string;
   setCurrentScreen: (screen: string) => void;
-  
+
   // Sound Effects
   playSound: (type: 'correct' | 'incorrect' | 'success' | 'click') => void;
 
@@ -56,4 +56,3 @@ export interface GameContextType {
 export type FoxyAnimationState = 'idle' | 'talking' | 'happy';
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
-
