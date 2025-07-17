@@ -287,6 +287,11 @@ export function Settings() {
               <div className="mt-2 text-xs text-gray-500">
                 {t.versionInfo}
               </div>
+              <div className="mt-2 text-xs text-gray-500">
+                <a href="https://www.ponto.studio/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-700 transition-colors">
+                  {t.copyrightInfo.replace('{year}', new Date().getFullYear().toString())}
+                </a>
+              </div>
             </div>
           </div>
         </div>

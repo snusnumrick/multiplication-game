@@ -116,6 +116,7 @@ export const russianTranslations: Translation = {
     aboutGame: "Об игре",
     gameDescription: "Привет, Ева! Эта игра поможет тебе и Фокси выучить таблицу умножения, играя. Выбирай между разными режимами игры и собирай звёзды за правильные ответы!",
     versionInfo: "Версия 2.2 • Специально оптимизировано для iPad",
+    copyrightInfo: "© {year} Ponto Studio. Все права защищены.",
 
     // Adventure mode specific
     chooseAdventure: "Выбери своё приключение!",

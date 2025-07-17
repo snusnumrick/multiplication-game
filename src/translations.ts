@@ -100,6 +100,7 @@ export interface Translation {
   aboutGame: string;
   gameDescription: string;
   versionInfo: string;
+  copyrightInfo: string;
 
   // Adventure mode specific
   chooseAdventure: string;
