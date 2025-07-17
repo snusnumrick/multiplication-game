@@ -331,18 +331,29 @@ export function MemoryGame() {
                     <div className="text-2xl font-bold">+{matches * 2 + 10} {t?.stars || 'stars'}</div>
                   </div>
 
-                  <div className="flex space-x-4">
+                  <div className="flex flex-col space-y-3">
+                    <div className="flex space-x-4">
+                      <button
+                          onClick={resetGame}
+                          className="flex-1 bg-green-500 text-white py-3 rounded-2xl font-bold hover:bg-green-600 transition-colors"
+                      >
+                        {t?.playAgain || 'Play Again'}
+                      </button>
+                      <button
+                          onClick={() => setSelectedDifficulty(null)}
+                          className="flex-1 bg-blue-500 text-white py-3 rounded-2xl font-bold hover:bg-blue-600 transition-colors"
+                      >
+                        {t?.newDifficultyButton || 'New Difficulty'}
+                      </button>
+                    </div>
                     <button
-                        onClick={resetGame}
-                        className="flex-1 bg-green-500 text-white py-3 rounded-2xl font-bold hover:bg-green-600 transition-colors"
+                        onClick={() => {
+                          playSound?.('click');
+                          setCurrentScreen?.('menu');
+                        }}
+                        className="w-full bg-gray-500 text-white py-3 rounded-2xl font-bold hover:bg-gray-600 transition-colors"
                     >
-                      {t?.playAgain || 'Play Again'}
-                    </button>
-                    <button
-                        onClick={() => setSelectedDifficulty(null)}
-                        className="flex-1 bg-blue-500 text-white py-3 rounded-2xl font-bold hover:bg-blue-600 transition-colors"
-                    >
-                      {t?.newDifficultyButton || 'New Difficulty'}
+                      {t?.backToMenu || 'Back to Menu'}
                     </button>
                   </div>
                 </div>
