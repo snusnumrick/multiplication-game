@@ -115,7 +115,7 @@ export const englishTranslations: Translation = {
     soundDisabled: "Sounds and effects are disabled",
     aboutGame: "About the game",
     gameDescription: "Hello Eva! This game helps you and Foxy learn multiplication in a fun way. Choose between different game modes and collect stars for correct answers!",
-    versionInfo: "Version 2.2 • Specially optimized for iPad",
+    versionInfo: "Version 2.3 • Specially optimized for iPad",
     copyrightInfo: "© {year} Ponto Studio. All rights reserved",
 
     // Adventure mode specific
