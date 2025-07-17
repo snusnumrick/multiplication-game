@@ -24,6 +24,8 @@ export function FantasyMath() {
   const [userAnswer, setUserAnswer] = useState<string>('');
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [wrongSelection, setWrongSelection] = useState<string>('');
+  const [buttonOrder, setButtonOrder] = useState<string[]>([]);
 
   const baseScenarios: Omit<FantasyScenario, 'title' | 'description' | 'problem'>[] = [
     {
@@ -152,24 +154,61 @@ export function FantasyMath() {
     setSelectedExpression('');
     setUserAnswer('');
     setIsCorrect(false);
+    setWrongSelection('');
+    // Initialize button order when scenario is selected
+    const initialOrder = [scenario.calculation, ...scenario.wrongOptions].sort(() => Math.random() - 0.5);
+    setButtonOrder(initialOrder);
     playSound?.('click');
   }, [playSound]);
 
   const selectExpression = useCallback((expression: string) => {
+    if (!selectedScenario) return;
+
+    // Check if the selected expression is the correct multiplication expression
+    const isCorrectExpression = expression === selectedScenario.calculation;
+
     setSelectedExpression(expression);
-    setGameStep('answer');
-    playSound?.('click');
-  }, [playSound]);
+
+    if (isCorrectExpression) {
+      // Only proceed to answer step if correct expression is selected
+      setGameStep('answer');
+      playSound?.('click');
+      setWrongSelection(''); // Clear any previous wrong selection
+    } else {
+      // For wrong expressions, play incorrect sound and stay on expression step
+      playSound?.('incorrect');
+      setWrongSelection(expression); // Mark this expression as wrong for visual feedback
+      // Reset after a short delay to allow user to try again
+      setTimeout(() => {
+        setSelectedExpression('');
+        setWrongSelection(''); // Clear the wrong selection visual feedback
+        // Re-randomize button order after visual feedback is complete
+        const newOrder = [selectedScenario.calculation, ...selectedScenario.wrongOptions].sort(() => Math.random() - 0.5);
+        setButtonOrder(newOrder);
+      }, 1000);
+    }
+  }, [playSound, selectedScenario]);
 
   const submitAnswer = useCallback(() => {
-    const isExpressionCorrect = selectedExpression === selectedScenario?.calculation;
-    const isAnswerCorrect = parseInt(userAnswer) === selectedScenario?.answer;
+    if (!selectedScenario) return;
+
+    // Ensure we're comparing the exact correct multiplication expression
+    const correctExpression = selectedScenario.calculation;
+    const isExpressionCorrect = selectedExpression === correctExpression;
+    const isAnswerCorrect = parseInt(userAnswer) === selectedScenario.answer;
+
+    // Only consider it correct if BOTH the expression AND answer are correct
+    // This prevents any edge case where wrong operations might be treated as correct
     const bothCorrect = isExpressionCorrect && isAnswerCorrect;
 
-    setIsCorrect(bothCorrect);
+    // Additional validation: ensure the selected expression contains multiplication symbol
+    const isMultiplicationExpression = selectedExpression.includes('×');
+    const finalResult = bothCorrect && isMultiplicationExpression;
+
+    setIsCorrect(finalResult);
     setGameStep('result');
 
-    if (bothCorrect) {
+    if (finalResult) {
       playSound?.('correct');
       addStars?.(3); // Award 3 stars for getting both parts right
       setFoxyAnimationState?.('happy');
@@ -299,15 +338,22 @@ export function FantasyMath() {
                       🔮 {t?.magicExpressionQuestion || 'Which magic spell is correct?'} 🔮
                     </h2>
                     <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
-                      {[selectedScenario.calculation, ...selectedScenario.wrongOptions].sort(() => Math.random() - 0.5).map((option, index) => (
+                      {buttonOrder.map((option, index) => {
+                        const isWrongSelection = wrongSelection === option;
+                        return (
                           <button
                               key={index}
                               onClick={() => selectExpression(option)}
-                              className="bg-gradient-to-r from-indigo-400 to-purple-600 text-white py-6 px-4 rounded-2xl text-2xl font-bold hover:from-indigo-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                              className={`bg-gradient-to-r from-indigo-400 to-purple-600 text-white py-6 px-4 rounded-2xl text-2xl font-bold hover:from-indigo-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg ${
+                                isWrongSelection 
+                                  ? 'border-4 border-red-500 animate-pulse shadow-lg shadow-red-500/50' 
+                                  : ''
+                              }`}
                           >
                             ✨ {option} ✨
                           </button>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
               )}
