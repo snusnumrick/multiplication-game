@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {
   Dialog,
-  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogPortal,
+  DialogOverlay,
 } from './ui/dialog';
+import { cn } from '../lib/utils';
 import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
 import { translations } from '../translations';
@@ -16,6 +19,27 @@ interface WelcomeModalProps {
   onLanguageSelect: (language: 'de' | 'ru' | 'en') => void;
   onDontShowAgain: (dontShow: boolean) => void;
 }
+
+// Custom DialogContent without close button for welcome modal
+const WelcomeDialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-zinc-200 bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg dark:border-zinc-800 dark:bg-zinc-950",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </DialogPrimitive.Content>
+  </DialogPortal>
+));
+WelcomeDialogContent.displayName = "WelcomeDialogContent";
 
 export function WelcomeModal({ isOpen, onLanguageSelect, onDontShowAgain }: WelcomeModalProps) {
   const [selectedLanguage, setSelectedLanguage] = useState<'de' | 'ru' | 'en' | null>(null);
@@ -43,7 +67,7 @@ export function WelcomeModal({ isOpen, onLanguageSelect, onDontShowAgain }: Welc
 
   return (
     <Dialog open={isOpen}>
-      <DialogContent className="max-w-md sm:max-w-lg">
+      <WelcomeDialogContent className="max-w-md sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="text-center text-xl sm:text-2xl md:text-3xl mb-2">
             🎯 Einmaleins / Умножение / Multiplications
@@ -133,7 +157,7 @@ export function WelcomeModal({ isOpen, onLanguageSelect, onDontShowAgain }: Welc
             </div>
           )}
         </div>
-      </DialogContent>
+      </WelcomeDialogContent>
     </Dialog>
   );
 }
