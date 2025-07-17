@@ -8,13 +8,13 @@ export interface Translation {
   memoryGame: string;
   settings: string;
   progress: string;
-  
+
   // Practice Mode
   practiceTitle: string;
   selectTable: string;
   showHints: string;
   backToMenu: string;
-  
+
   // Quiz Mode
   quizTitle: string;
   score: string;
@@ -27,19 +27,19 @@ export interface Translation {
   excellent: string;
   fantastic: string;
   yourResult: string;
-  
+
   // Adventure Mode
   adventureTitle: string;
   level: string;
   stars: string;
   complete: string;
   nextLevel: string;
-  
+
   // Memory Game
   memoryTitle: string;
   findPairs: string;
   moves: string;
-  
+
   // Settings
   settingsTitle: string;
   language: string;
@@ -50,13 +50,13 @@ export interface Translation {
   easy: string;
   medium: string;
   hard: string;
-  
+
   // Progress
   progressTitle: string;
   tablesLearned: string;
   totalStars: string;
   achievements: string;
-  
+
   // Common
   welcomeMessage: string;
   start: string;
@@ -71,13 +71,13 @@ export interface Translation {
   hint: string;
   answer: string;
   loading: string;
-  
+
   // Menu descriptions
   practiceModeDesc: string;
   quizModeDesc: string;
   adventureModeDesc: string;
   memoryGameDesc: string;
-  
+
   // Quiz specific
   chooseDifficulty: string;
   tables1to5: string;
@@ -93,14 +93,14 @@ export interface Translation {
   quizFinished: string;
   highScore: string;
   quizHighScores: string;
-  
+
   // Settings specific
   soundEnabled: string;
   soundDisabled: string;
   aboutGame: string;
   gameDescription: string;
   versionInfo: string;
-  
+
   // Adventure mode specific
   chooseAdventure: string;
   tables: string;
@@ -108,7 +108,7 @@ export interface Translation {
   time: string;
   required: string;
   completeLevel: string;
-  
+
   // Level titles and descriptions
   level1Title: string;
   level1Desc: string;
@@ -130,19 +130,19 @@ export interface Translation {
   level9Desc: string;
   level10Title: string;
   level10Desc: string;
-  
+
   // Memory game specific
   pairs: string;
   memoryComplete: string;
   reward: string;
   playAgain: string;
-  
+
   // Real-world math
   realWorldMath: string;
   fantasyMath: string;
   realWorldDesc: string;
   fantasyDesc: string;
-  
+
   // Progress/Achievement specific
   tablesProgress: string;
   mathChampion: string;
@@ -151,7 +151,7 @@ export interface Translation {
   requiredLabel: string;
   fantasticsProgress: string;
   greatKeepGoing: string;
-  
+
   // Achievement titles
   firstStarTitle: string;
   starCollectorTitle: string;
@@ -159,7 +159,7 @@ export interface Translation {
   tableMasterTitle: string;
   hardWorkerTitle: string;
   mathChampionTitle: string;
-  
+
   // Achievement descriptions
   firstStarDesc: string;
   starCollectorDesc: string;
@@ -555,6 +555,15 @@ export interface Translation {
 
   closeHintButton?: string;
   explainDifferentlyButton?: string;
+
+  // Welcome Modal
+  welcomeModalTitle: string;
+  welcomeModalDescription: string;
+  welcomeModalTabletNote: string;
+  welcomeModalDontShowAgain: string;
+  welcomeModalChooseLanguage: string;
+  welcomeModalGerman: string;
+  welcomeModalRussian: string;
 }
 
 export interface ScenarioText {

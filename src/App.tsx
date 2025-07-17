@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GameProvider } from './contexts/GameContext';
 import { useGame } from './contexts/game-hooks';
 import { MainMenu } from './components/MainMenu';
@@ -11,6 +11,7 @@ import { FantasyMath } from './components/FantasyMath';
 import { Settings } from './components/Settings';
 import { Progress } from './components/Progress';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { WelcomeModal } from './components/WelcomeModal';
 
 function GameRouter() {
   const { currentScreen } = useGame();
@@ -37,12 +38,48 @@ function GameRouter() {
   }
 }
 
+function AppWithWelcome() {
+  const { updateSettings } = useGame();
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+
+  useEffect(() => {
+    // Check if welcome modal should be shown
+    const dontShowWelcome = localStorage.getItem('multiplicationGame_dontShowWelcome');
+    if (!dontShowWelcome) {
+      setShowWelcomeModal(true);
+    }
+  }, []);
+
+  const handleLanguageSelect = (language: 'de' | 'ru') => {
+    // Update the language in GameContext
+    updateSettings({ language });
+    setShowWelcomeModal(false);
+  };
+
+  const handleDontShowAgain = (dontShow: boolean) => {
+    if (dontShow) {
+      localStorage.setItem('multiplicationGame_dontShowWelcome', 'true');
+    }
+  };
+
+  return (
+    <>
+      <GameRouter />
+      <WelcomeModal
+        isOpen={showWelcomeModal}
+        onLanguageSelect={handleLanguageSelect}
+        onDontShowAgain={handleDontShowAgain}
+      />
+    </>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <GameProvider>
         <div className="app">
-          <GameRouter />
+          <AppWithWelcome />
         </div>
       </GameProvider>
     </ErrorBoundary>

@@ -608,4 +608,13 @@ export const germanTranslations: Translation = {
     explainDifferentlyButton: "Anders erklären",
     foxyAlternativeHintMessage: "Okay, Eva! Foxy hat einen anderen Tipp für dich. Schau mal!",
     foxyNoMoreHintsMessage: "Foxy hat dir alle Tricks für diese Aufgabe gezeigt!",
+
+    // Welcome Modal
+    welcomeModalTitle: "Willkommen bei Evas Einmaleins Spiel!",
+    welcomeModalDescription: "Lerne mit Foxy das Einmaleins auf spielerische Weise! Dieses Spiel hilft dir dabei, die Multiplikation zu meistern und macht dabei richtig Spaß.",
+    welcomeModalTabletNote: "💡 Tipp: Dieses Spiel funktioniert am besten auf einem Tablet (wie dem iPad) für die beste Erfahrung!",
+    welcomeModalDontShowAgain: "Diese Nachricht nicht mehr anzeigen",
+    welcomeModalChooseLanguage: "Wähle deine Sprache:",
+    welcomeModalGerman: "Deutsch",
+    welcomeModalRussian: "Русский",
 };
