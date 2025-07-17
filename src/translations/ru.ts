@@ -347,12 +347,12 @@ export const russianTranslations: Translation = {
     foxyVisibilityDescriptionHide: "Фокси скрыта.",
 
     // Foxy contextual messages
-    foxyIntroPracticeMode: "Привет, Ева! В режиме практики ты можешь спокойно тренировать таблицы умножения. Фокси здесь, чтобы помочь!",
+    foxyIntroPracticeMode: "Привет, Ева! В режиме практики ты можешь спокойно тренировать таблицы умножения. Фокси поможет тебе!",
     foxyIntroQuizMode: "Время для викторины, Ева! Покажи Фокси, что ты выучила. Удачи!",
     foxyIntroAdventureMode: "Вперёд, в приключение, Ева! Фокси будет сопровождать тебя в этом увлекательном путешествии по миру чисел.",
     foxyIntroMemoryGame: "Найди подходящие карточки, Ева! Фокси держит за тебя кулачки в этой хитрой игре мемори.",
     foxyIntroRealWorldMath: "Смотри, Ева! Здесь Фокси покажет тебе, где математика встречается в повседневной жизни. Интересно, правда?",
-    foxyIntroFantasyMath: "Добро пожаловать в волшебный мир, Ева! Фокси и магические существа ждут, чтобы вместе с тобой открывать математику.",
+    foxyIntroFantasyMath: "Добро пожаловать в волшебный мир, Ева! Фокси и магические существа ждут, чтобы вместе изучать математику.",
 
     foxyEncouragement1: "Ты отлично справляешься, Ева! Фокси гордится тобой. Продолжай в том же духе!",
     foxyEncouragement2: "Фокси знает, что у тебя всё получится! Не сдавайся!",
@@ -493,7 +493,7 @@ export const russianTranslations: Translation = {
     advElevensStep2: "Раздели цифры числа {b}: {firstDigit} и {secondDigit}.",
     advElevensStep3: "Сложи их: {firstDigit} + {secondDigit} = {middleSum}.",
     advElevensStep4: "Запиши сумму посередине: {firstDigit}{middleSum}{secondDigit}. Итак, 11 × {b} = {result}.",
-    advElevensStep5: "{middleSum} - двузначное число. Используй {middleDigit} для середины, перенеси {carry} к первой цифре.",
+    advElevensStep5: "{middleSum} - двузначное число. Используй {middleDigit} в середину, перенеси {carry} к первой цифре.",
     advElevensStep6: "Новая первая цифра: {firstDigit}+{carry}={newFirstDigit}. Результат: {newFirstDigit}{middleDigit}{secondDigit}. Итак, 11 × {b} = {result}.",
     advElevensPattern: "11 × АБ = А (А+Б) Б. Если А+Б > 9, переноси.",
     advElevensMnemonic: "11-е хитрые, но классные!",
