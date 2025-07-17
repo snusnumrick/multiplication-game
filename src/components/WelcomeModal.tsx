@@ -10,7 +10,6 @@ import {
   DialogOverlay,
 } from './ui/dialog';
 import { cn } from '../lib/utils';
-import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
 import { translations } from '../translations';
 
@@ -20,17 +19,33 @@ interface WelcomeModalProps {
   onDontShowAgain: (dontShow: boolean) => void;
 }
 
+// Custom DialogOverlay with gradient background
+const WelcomeDialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    ref={ref}
+    className={cn(
+      "fixed inset-0 z-50 bg-gradient-to-br from-yellow-200/95 via-pink-200/95 to-purple-300/95 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+  />
+));
+WelcomeDialogOverlay.displayName = "WelcomeDialogOverlay";
+
 // Custom DialogContent without close button for welcome modal
 const WelcomeDialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
   <DialogPortal>
-    <DialogOverlay />
+    <WelcomeDialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-zinc-200 bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg dark:border-zinc-800 dark:bg-zinc-950",
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 bg-white/95 backdrop-blur-sm p-6 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-2xl border border-white/50",
         className
       )}
       {...props}
@@ -85,74 +100,74 @@ export function WelcomeModal({ isOpen, onLanguageSelect, onDontShowAgain }: Welc
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button
+                <button
                   onClick={() => handleLanguageSelect('de')}
-                  variant="outline"
-                  size="lg"
-                  className="min-w-32"
+                  className="min-w-32 p-4 rounded-xl text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg hover:shadow-xl"
                 >
                   🇩🇪 {germanTranslations.welcomeModalGerman}
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={() => handleLanguageSelect('ru')}
-                  variant="outline"
-                  size="lg"
-                  className="min-w-32"
+                  className="min-w-32 p-4 rounded-xl text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-lg hover:shadow-xl"
                 >
                   🇷🇺 {russianTranslations.welcomeModalRussian}
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={() => handleLanguageSelect('en')}
-                  variant="outline"
-                  size="lg"
-                  className="min-w-32"
+                  className="min-w-32 p-4 rounded-xl text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-lg hover:shadow-xl"
                 >
                   🇺🇸 {englishTranslations.welcomeModalEnglish}
-                </Button>
+                </button>
               </div>
             </div>
           ) : (
             // Explanation in selected language step
             <div className="space-y-4">
               <DialogDescription className="text-center">
-                <div className="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                  <p className="text-gray-700 mb-2 text-base sm:text-lg">
+                <div className="p-4 bg-gradient-to-r from-orange-100/80 to-yellow-100/80 backdrop-blur-sm rounded-xl border border-orange-200/50 shadow-md">
+                  <p className="text-gray-800 mb-3 text-base sm:text-lg font-medium">
                     {currentTranslations?.welcomeModalDescription}
                   </p>
-                  <p className="text-sm sm:text-base text-blue-600">
+                  <p className="text-sm sm:text-base text-orange-700 font-medium">
                     {currentTranslations?.welcomeModalTabletNote}
                   </p>
                 </div>
               </DialogDescription>
 
               {/* Don't show again checkbox */}
-              <div className="flex items-center space-x-2 justify-center">
+              <div className="flex items-center space-x-3 justify-center p-3 bg-gradient-to-r from-gray-50/80 to-gray-100/80 backdrop-blur-sm rounded-xl border border-gray-200/50 shadow-sm hover:shadow-md transition-all duration-200">
                 <Checkbox
                   id="dont-show-again"
                   checked={dontShowAgain}
                   onCheckedChange={handleDontShowAgainChange}
+                  className="h-5 w-5 transition-colors duration-200"
+                  style={{
+                    border: '2px solid #6b7280',
+                    backgroundColor: dontShowAgain ? '#2563eb' : 'white',
+                    borderColor: dontShowAgain ? '#2563eb' : '#6b7280'
+                  }}
                 />
-                <label htmlFor="dont-show-again" className="text-sm sm:text-base text-gray-600">
+                <label 
+                  htmlFor="dont-show-again" 
+                  className="text-sm sm:text-base text-gray-700 font-medium cursor-pointer select-none hover:text-gray-900 transition-colors duration-200"
+                >
                   {currentTranslations?.welcomeModalDontShowAgain}
                 </label>
               </div>
 
               <DialogFooter className="flex justify-center space-x-3">
-                <Button
+                <button
                   onClick={() => setSelectedLanguage(null)}
-                  variant="outline"
-                  size="sm"
+                  className="bg-white/90 backdrop-blur-sm text-gray-700 px-4 py-2 sm:px-6 sm:py-3 rounded-xl shadow-md flex items-center justify-center space-x-2 hover:bg-white transition-all duration-200 transform hover:scale-105 active:scale-95 font-medium"
                 >
                   {currentTranslations?.previous || 'Zurück / Назад'}
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={handleStart}
-                  variant="default"
-                  size="lg"
-                  className="min-w-24"
+                  className="min-w-24 px-6 py-3 rounded-xl text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 bg-gradient-to-br from-green-500 to-green-700 text-white shadow-lg hover:shadow-xl"
                 >
                   {currentTranslations?.start} 🚀
-                </Button>
+                </button>
               </DialogFooter>
             </div>
           )}
